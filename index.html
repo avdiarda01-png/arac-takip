@@ -123,6 +123,7 @@
             cursor: pointer;
             font-family: 'Orbitron', sans-serif;
             letter-spacing: 2px;
+            user-select: none;
         }
         .nav-center span { color: var(--highlight-color); }
 
@@ -149,6 +150,7 @@
             align-items: center;
             justify-content: center;
             min-height: 85vh;
+            width: 100%; /* Genişlik sorunu çözümü */
         }
 
         .neon-logo-img {
@@ -166,9 +168,29 @@
             font-size: 1.2em;
             letter-spacing: 3px;
             margin-top: -10px;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             text-transform: uppercase;
             opacity: 0.9;
+        }
+
+        /* ANA SAYFA KAYAN YAZI KUTUSU */
+        .marquee-home-container {
+            width: 90%;
+            max-width: 700px;
+            background: rgba(255,255,255,0.05); /* Çok hafif şeffaf zemin */
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--accent-color);
+            margin-bottom: 40px; /* Butonla arası */
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+        
+        .marquee-text {
+            color: var(--text-color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 15px;
+            font-weight: 600;
+            letter-spacing: 1px;
         }
 
         .big-btn {
@@ -198,26 +220,9 @@
             border-radius: 20px;
             border: 1px solid var(--input-border);
             max-width: 550px;
-            margin: 0 auto 10px auto; /* Marquee için boşluk azaldı */
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-        }
-
-        /* Yeni Yıl Mesajı (Kayan Yazı) */
-        .marquee-container {
-            max-width: 550px;
             margin: 0 auto 30px auto;
-            background: transparent;
-            padding: 10px;
-            border-bottom: 1px solid var(--input-border);
-            border-radius: 0 0 20px 20px;
-        }
-        .marquee-text {
-            color: var(--text-color);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 1px;
-            opacity: 0.8;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+            transition: background 0.4s;
         }
 
         input[type="text"] {
@@ -238,7 +243,7 @@
 
         .search-btn {
             background: var(--accent-color);
-            color: #fff; /* Yazı beyaz */
+            color: #fff;
             font-weight: bold;
             border: none;
             padding: 15px 30px;
@@ -251,8 +256,6 @@
             font-family: 'Orbitron';
             text-transform: uppercase;
         }
-        /* Açık modda buton yazısı koyu olsun */
-        .light-mode .search-btn { color: #fff; } 
         
         .search-btn:hover { opacity: 0.9; box-shadow: 0 0 25px var(--shadow-color); transform: scale(1.02); }
 
@@ -279,6 +282,7 @@
             text-align: left;
             color: var(--text-color);
             box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+            transition: background 0.4s;
         }
         .info-box h2 { 
             color: var(--accent-color); 
@@ -321,6 +325,7 @@
             .info-box { padding: 30px; }
             .big-btn { width: 100%; padding: 15px; font-size: 16px; }
             #harita { height: 400px; }
+            .marquee-home-container { width: 95%; } /* Mobilde tam genişlik */
         }
     </style>
 </head>
@@ -354,6 +359,12 @@
         
         <p class="slogan">Tek Ödeme. Ömür Boyu Özgürlük.</p>
         
+        <div class="marquee-home-container">
+            <marquee behavior="scroll" direction="left" scrollamount="8" class="marquee-text">
+                🎄 Mutlu Yıllar! TekGPS Ailesi Olarak Yeni Yılda Size ve Sevdiklerinize Güvenli, Huzurlu ve Keyifli Sürüşler Dileriz. Yolunuz Açık Olsun! ✨
+            </marquee>
+        </div>
+
         <button class="big-btn" onclick="sayfaDegistir('tracking')">
             🚀 SİSTEME GİRİŞ / SORGULAMA
         </button>
@@ -368,12 +379,6 @@
             <br>
             <button class="search-btn" onclick="cihaziBul()">🛰️ UYDU BAĞLANTISI KUR</button>
             <div id="durumMesaji" style="margin-top: 25px; font-weight: bold; font-size: 1.2em;"></div>
-        </div>
-
-        <div class="marquee-container">
-            <marquee behavior="scroll" direction="left" scrollamount="6" class="marquee-text">
-                🎄 Mutlu Yıllar! TekGPS Ailesi Olarak Yeni Yılda Size ve Sevdiklerinize Güvenli, Huzurlu ve Keyifli Sürüşler Dileriz. Yolunuz Açık Olsun! ✨
-            </marquee>
         </div>
 
         <div id="harita"></div>
