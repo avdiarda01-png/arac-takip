@@ -21,6 +21,7 @@
             --accent-color: #00f2fe; /* Neon Mavi */
             --highlight-color: #ff0055; /* Neon Kırmızı */
             --shadow-color: rgba(0, 242, 254, 0.2);
+            --tip-box-bg: rgba(0, 242, 254, 0.05); /* İpucu kutusu zemin */
         }
 
         /* BEYAZ TEMA (Light Mode - Kurumsal) */
@@ -33,7 +34,8 @@
             --input-border: #dfe6e9;          
             --accent-color: #2980b9; /* Kurumsal Mavi */      
             --highlight-color: #c0392b; /* Kurumsal Kırmızı */
-            --shadow-color: rgba(0, 0, 0, 0.05); 
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --tip-box-bg: #eef7ff; 
         }
 
         /* --- GENEL TASARIM --- */
@@ -150,7 +152,7 @@
             align-items: center;
             justify-content: center;
             min-height: 85vh;
-            width: 100%; /* Genişlik sorunu çözümü */
+            width: 100%;
         }
 
         .neon-logo-img {
@@ -177,11 +179,11 @@
         .marquee-home-container {
             width: 90%;
             max-width: 700px;
-            background: rgba(255,255,255,0.05); /* Çok hafif şeffaf zemin */
+            background: rgba(255,255,255,0.05);
             padding: 15px;
             border-radius: 10px;
             border: 1px solid var(--accent-color);
-            margin-bottom: 40px; /* Butonla arası */
+            margin-bottom: 40px;
             box-shadow: 0 0 15px var(--shadow-color);
         }
         
@@ -270,7 +272,7 @@
             z-index: 1;
         }
 
-        /* --- BİLGİ KUTULARI --- */
+        /* --- BİLGİ KUTULARI (GÜNCELLENDİ) --- */
         .info-box {
             background: var(--box-bg);
             padding: 60px;
@@ -303,6 +305,25 @@
         }
         .info-box p, .info-box li { font-size: 17px; opacity: 0.9; margin-bottom: 10px; }
         
+        /* SIM KART BİLGİ KUTUSU (YENİ) */
+        .sim-info-box {
+            background: var(--tip-box-bg);
+            border: 2px dashed var(--accent-color);
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+        .sim-title {
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Orbitron', sans-serif;
+        }
+
         .step-number {
             background: var(--highlight-color);
             color: #fff;
@@ -325,7 +346,8 @@
             .info-box { padding: 30px; }
             .big-btn { width: 100%; padding: 15px; font-size: 16px; }
             #harita { height: 400px; }
-            .marquee-home-container { width: 95%; } /* Mobilde tam genişlik */
+            .marquee-home-container { width: 95%; } 
+            .sim-title { font-size: 1em; flex-direction: column; align-items: flex-start;}
         }
     </style>
 </head>
@@ -387,13 +409,23 @@
     <section id="setup-section" class="page-section">
         <div class="info-box">
             <h2>🔧 Pratik Kurulum Rehberi</h2>
-            <p>TekGPS cihazınızı aracınıza monte etmek için teknik servise ihtiyacınız yok. İşte adım adım yapmanız gerekenler:</p>
+            
+            <div class="sim-info-box">
+                <div class="sim-title">💡 EKONOMİK İPUCU: Hangi Hattı Almalıyım?</div>
+                <p>Yeni ve pahalı bir faturalı hat almanıza gerek yok! Operatörünüze gidip <strong>"Mevcut paketime bağlı Data Hattı (Multi SIM)"</strong> çıkartmak istediğinizi söyleyin.</p>
+                <ul style="margin-top: 10px;">
+                    <li><strong>✅ Avantajı:</strong> Kendi telefonunuzdaki internet paketini kullanır. (GPS ayda sadece 50-100 MB harcar, paketinizi bitirmez).</li>
+                    <li><strong>💰 Maliyeti:</strong> Yeni hat ücreti ödemezsiniz. Faturanıza sadece ortalama <strong>40-60 TL</strong> civarı bir "Hizmet Bedeli" eklenir.</li>
+                    <li>Bu yöntem, yeni bir hat almaktan çok daha hesaplıdır.</li>
+                </ul>
+            </div>
+
+            <p>SIM kartınız hazırsa, aşağıdaki adımları takip ederek montajı yapabilirsiniz:</p>
             
             <h3><div class="step-number">1</div> SIM Kart Hazırlığı</h3>
-            <p>Cihazın çalışması için standart bir SIM karta ihtiyacı vardır. Herhangi bir operatörden faturasız veya düşük ücretli bir hat alabilirsiniz.</p>
             <ul>
-                <li>⚠️ <strong>Önemli:</strong> Aldığınız SIM kartı önce telefonunuza takın ve <strong>PIN kodunu kaldırın.</strong></li>
-                <li>Hattın internete açık olduğundan emin olun.</li>
+                <li>⚠️ <strong>Önemli:</strong> Aldığınız SIM kartı önce telefonunuza takın ve <strong>Ayarlar menüsünden PIN kodunu kaldırın.</strong> (PIN kodu açık kalırsa cihaz çalışmaz).</li>
+                <li>Hattın internete bağlandığını test edin.</li>
                 <li>Daha sonra kartı TekGPS cihazına takın.</li>
             </ul>
 
@@ -405,10 +437,10 @@
             </ul>
 
             <h3><div class="step-number">3</div> Montaj Konumu</h3>
-            <p>Cihazı sigorta kutusunun arkasına veya plastik panellerin altına gizleyebilirsiniz. Cihazın üstünü metal ile kapatmamaya özen gösterin.</p>
+            <p>Cihazı sigorta kutusunun arkasına veya plastik panellerin altına gizleyebilirsiniz. Cihazın üstünü tamamen metal bir yüzeyle kapatmamaya özen gösterin.</p>
 
             <h3><div class="step-number">4</div> İzlemeye Başla</h3>
-            <p>Kurulum tamam! Bu sitedeki sorgulama ekranına cihazınızın numarasını girerek aracınızı anında haritada görebilirsiniz.</p>
+            <p>Kurulum tamam! Cihaz ışıkları yandıktan sonra bu sitedeki sorgulama ekranına cihazınızın numarasını girerek takibe başlayabilirsiniz.</p>
         </div>
     </section>
 
