@@ -9,14 +9,42 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     
     <style>
-        /* --- GENEL TASARIM (NEON TEMA) --- */
+        /* --- RENK TANIMLAMALARI (CSS VARIABLES) --- */
+        :root {
+            /* Varsayılan: SİYAH TEMA (Dark Mode) */
+            --bg-color: #050505;
+            --text-color: #ffffff;
+            --nav-bg: rgba(0, 0, 0, 0.8);
+            --box-bg: rgba(20, 20, 20, 0.9);
+            --input-bg: #000;
+            --input-border: #333;
+            --accent-color: #00f2fe; /* Neon Mavi */
+            --shadow-color: rgba(0, 242, 254, 0.2);
+            --btn-text: #fff;
+        }
+
+        /* BEYAZ TEMA (Light Mode) Ayarları */
+        .light-mode {
+            --bg-color: #f0f2f5;           /* Açık Gri Arka Plan */
+            --text-color: #333333;         /* Koyu Gri Yazı */
+            --nav-bg: rgba(255, 255, 255, 0.95); /* Beyaz Menü */
+            --box-bg: #ffffff;             /* Beyaz Kutular */
+            --input-bg: #fff;              /* Beyaz Input */
+            --input-border: #ccc;          /* Gri Kenarlık */
+            --accent-color: #007bff;       /* Standart Mavi */
+            --shadow-color: rgba(0, 0, 0, 0.1); /* Yumuşak Gölge */
+            --btn-text: #333;
+        }
+
+        /* --- GENEL TASARIM --- */
         body {
             margin: 0;
             padding: 0;
-            background-color: #050505; /* Çok koyu siyah */
-            color: #fff;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s; /* Yumuşak Geçiş Efekti */
         }
 
         /* --- ÜST MENÜ (NAVBAR) --- */
@@ -25,13 +53,21 @@
             justify-content: space-between;
             align-items: center;
             padding: 20px 40px;
-            background: rgba(0, 0, 0, 0.8);
-            border-bottom: 2px solid #00f2fe; /* Neon Mavi Çizgi */
+            background: var(--nav-bg);
+            border-bottom: 2px solid var(--accent-color);
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+            box-shadow: 0 0 20px var(--shadow-color);
+            transition: all 0.3s;
+        }
+
+        /* Menü Öğeleri */
+        .nav-left, .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 20px; /* Butonlar arası boşluk */
         }
 
         .nav-item {
@@ -41,44 +77,65 @@
             letter-spacing: 1px;
             transition: all 0.3s;
             text-transform: uppercase;
+            color: var(--text-color); /* Yazı rengi değişkene bağlandı */
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .nav-item:hover {
-            color: #00f2fe;
-            text-shadow: 0 0 10px #00f2fe;
+            color: var(--accent-color);
+            text-shadow: 0 0 10px var(--accent-color);
+        }
+
+        /* Tema Değiştirme Butonu */
+        .theme-btn {
+            background: transparent;
+            border: 1px solid var(--accent-color);
+            color: var(--text-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        .theme-btn:hover {
+            background: var(--accent-color);
+            color: #fff;
         }
 
         /* ORTA LOGO ALANI */
         .nav-center {
             font-size: 24px;
             font-weight: bold;
-            color: #fff;
+            color: var(--text-color);
             text-align: center;
             cursor: pointer;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
         }
-        .nav-center span { color: #ff0055; } /* Kırmızı GPS yazısı */
+        .nav-center span { color: #ff0055; }
 
         /* --- SAYFA İÇERİKLERİ --- */
         .page-section {
-            display: none; /* Başlangıçta hepsi gizli */
+            display: none;
             padding: 40px 20px;
             min-height: 80vh;
             animation: fadeIn 0.5s ease;
             text-align: center;
         }
 
-        .active-section {
-            display: block; /* Sadece aktif olan görünür */
-        }
+        .active-section { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ANA SAYFA (HOME) --- */
+        /* --- ANA SAYFA --- */
         #home-section {
-            display: flex; /* Flexbox ile ortalama */
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -87,13 +144,11 @@
         .neon-logo-img {
             max-width: 300px;
             border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3), 0 0 60px rgba(255, 0, 85, 0.2);
+            box-shadow: 0 0 30px var(--shadow-color);
             margin-bottom: 30px;
             transition: transform 0.3s;
         }
-        .neon-logo-img:hover {
-            transform: scale(1.05);
-        }
+        .neon-logo-img:hover { transform: scale(1.05); }
 
         .big-btn {
             background: linear-gradient(90deg, #ff0055, #ff4d4d);
@@ -106,41 +161,39 @@
             font-family: 'Orbitron', sans-serif;
             box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
             transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
         }
-        
         .big-btn:hover {
             transform: scale(1.1);
             box-shadow: 0 0 40px rgba(255, 0, 85, 1);
         }
 
-        /* --- TAKİP EKRANI TASARIMI --- */
+        /* --- TAKİP EKRANI --- */
         .kontrol-kutusu {
-            background: rgba(20, 20, 20, 0.9);
+            background: var(--box-bg); /* Değişken arkaplan */
             padding: 30px;
             border-radius: 15px;
-            border: 1px solid #333;
+            border: 1px solid var(--input-border);
             max-width: 500px;
             margin: 0 auto 30px auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: background 0.3s;
         }
 
         input[type="text"] {
             width: 70%;
             padding: 12px;
-            background: #000;
-            border: 2px solid #333;
-            color: #00f2fe;
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            color: var(--text-color);
             border-radius: 8px;
             font-family: 'Orbitron', sans-serif;
             text-align: center;
             outline: none;
         }
-        input:focus { border-color: #00f2fe; box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
+        input:focus { border-color: var(--accent-color); box-shadow: 0 0 10px var(--shadow-color); }
 
         .search-btn {
-            background: #00f2fe;
+            background: var(--accent-color);
             color: #000;
             font-weight: bold;
             border: none;
@@ -150,7 +203,7 @@
             margin-top: 10px;
             transition: 0.3s;
         }
-        .search-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+        .search-btn:hover { opacity: 0.8; }
 
         #harita {
             height: 500px;
@@ -158,70 +211,78 @@
             max-width: 1000px;
             margin: 0 auto;
             border-radius: 15px;
-            border: 2px solid #333;
+            border: 4px solid var(--box-bg); /* Çerçeve rengi dinamik */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             z-index: 1;
         }
 
-        /* --- METİN KUTULARI (Hakkımızda & Kurulum) --- */
+        /* --- METİN KUTULARI --- */
         .info-box {
-            background: rgba(255, 255, 255, 0.05);
+            background: var(--box-bg);
             padding: 40px;
             border-radius: 20px;
             max-width: 800px;
             margin: 0 auto;
             line-height: 1.6;
-            border-left: 4px solid #00f2fe;
+            border-left: 4px solid var(--accent-color);
             text-align: left;
+            color: var(--text-color);
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
         }
-        .info-box h2 { color: #00f2fe; font-family: 'Orbitron', sans-serif; }
+        .info-box h2 { color: var(--accent-color); font-family: 'Orbitron', sans-serif; }
         .info-box h3 { color: #ff0055; margin-top: 30px; }
 
         /* MOBİL UYUM */
         @media (max-width: 600px) {
             nav { flex-direction: column; gap: 15px; padding: 15px; }
-            .nav-item { font-size: 12px; }
-            #harita { height: 350px; }
+            .nav-center { position: static; transform: none; margin: 10px 0; }
+            .nav-right { width: 100%; justify-content: center; }
+            .nav-left { width: 100%; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
     <nav>
-        <div class="nav-item" onclick="sayfaDegistir('setup')">
-            🔧 Cihaz Kurulumu
+        <div class="nav-left">
+            <div class="nav-item" onclick="sayfaDegistir('setup')">
+                🔧 Cihaz Kurulumu
+            </div>
         </div>
 
         <div class="nav-center" onclick="sayfaDegistir('home')">
             TEK<span>GPS</span>
         </div>
 
-        <div class="nav-item" onclick="sayfaDegistir('about')">
-            ℹ️ Hakkımızda
+        <div class="nav-right">
+            <button class="theme-btn" onclick="temaDegistir()" id="temaBtn">
+                ☀️ Modu Değiştir
+            </button>
+
+            <div class="nav-item" onclick="sayfaDegistir('about')">
+                ℹ️ Hakkımızda
+            </div>
         </div>
     </nav>
 
     <section id="home-section" class="active-section" style="display: flex;">
         <img src="logo.jpg" alt="TekGPS Logo" class="neon-logo-img">
-        
         <h1 style="font-family: 'Orbitron'; font-size: 2.5em; margin-bottom: 10px;">ARACINIZ GÜVENDE</h1>
-        <p style="color: #aaa; margin-bottom: 40px;">Kesintisiz uydu takibi ve anlık konum hizmeti.</p>
-        
+        <p style="opacity: 0.8; margin-bottom: 40px;">Kesintisiz uydu takibi ve anlık konum hizmeti.</p>
         <button class="big-btn" onclick="sayfaDegistir('tracking')">
             🚀 SİSTEME GİRİŞ / SORGULAMA
         </button>
     </section>
 
     <section id="tracking-section" class="page-section">
-        <h2 style="font-family: 'Orbitron'; color: #00f2fe;">CANLI KONUM İZLEME</h2>
-        
+        <h2 style="font-family: 'Orbitron'; color: var(--accent-color);">CANLI KONUM İZLEME</h2>
         <div class="kontrol-kutusu">
-            <p style="color: #ccc; margin-bottom: 15px;">Cihaz üzerindeki Seri Numarasını giriniz.</p>
+            <p style="opacity: 0.7; margin-bottom: 15px;">Cihaz üzerindeki Seri Numarasını giriniz.</p>
             <input type="text" id="seriNo" placeholder="Seri No (Örn: 1001)">
             <br>
             <button class="search-btn" onclick="cihaziBul()">🛰️ UYDU BAĞLANTISI KUR</button>
             <div id="durumMesaji" style="margin-top: 15px; font-weight: bold;"></div>
         </div>
-
         <div id="harita"></div>
     </section>
 
@@ -229,13 +290,10 @@
         <div class="info-box">
             <h2>🔧 Cihaz Kurulumu Nasıl Yapılır?</h2>
             <p>TekGPS cihazınızı aracınıza monte etmek oldukça basittir. Aşağıdaki adımları takip edin:</p>
-            
             <h3>Adım 1: SIM Kartı Takın</h3>
             <p>Cihazın yan kapağını açın ve PIN kodu kaldırılmış aktif bir SIM kartı yuvaya yerleştirin.</p>
-            
             <h3>Adım 2: Kablo Bağlantısı</h3>
-            <p>Kırmızı kabloyu aracın (+) kutbuna, Siyah kabloyu (-) şaseye bağlayın. Cihaz üzerindeki ışıklar yanmaya başlayacaktır.</p>
-            
+            <p>Kırmızı kabloyu aracın (+) kutbuna, Siyah kabloyu (-) şaseye bağlayın.</p>
             <h3>Adım 3: Aktivasyon</h3>
             <p>Cihaz ışıkları sabitlendiğinde, bu sitedeki "Sorgulama" ekranına seri numaranızı girerek takibe başlayabilirsiniz.</p>
         </div>
@@ -244,13 +302,11 @@
     <section id="about-section" class="page-section">
         <div class="info-box">
             <h2>Biz Kimiz?</h2>
-            <p>TekGPS, 2025 yılında İzmir'de kurulmuş yerli bir teknoloji girişimidir. Amacımız, araç güvenliğini herkes için ulaşılabilir ve uygun fiyatlı hale getirmektir.</p>
-            
+            <p>TekGPS, 2025 yılında İzmir'de kurulmuş yerli bir teknoloji girişimidir.</p>
             <h3>Neden Aidat Yok?</h3>
-            <p>Klasik sistemlerin aksine, sunucu maliyetlerini optimize ederek kullanıcılarımızdan aylık ücret talep etmiyoruz. Cihazı bir kere alırsınız, ömür boyu kullanırsınız.</p>
-            
+            <p>Klasik sistemlerin aksine, sunucu maliyetlerini optimize ederek kullanıcılarımızdan aylık ücret talep etmiyoruz.</p>
             <br>
-            <p style="text-align: center; color: #888;">&copy; 2025 TekGPS - Tüm Hakları Saklıdır.</p>
+            <p style="text-align: center; opacity: 0.6;">&copy; 2025 TekGPS - Tüm Hakları Saklıdır.</p>
         </div>
     </section>
 
@@ -259,28 +315,41 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // --- 1. MENÜ GEÇİŞ SİSTEMİ ---
+        // --- TEMA DEĞİŞTİRME FONKSİYONU ---
+        function temaDegistir() {
+            var body = document.body;
+            var btn = document.getElementById("temaBtn");
+            
+            // "light-mode" sınıfını ekle/çıkar
+            body.classList.toggle("light-mode");
+
+            // Buton üzerindeki yazıyı ve ikonu değiştir
+            if (body.classList.contains("light-mode")) {
+                btn.innerHTML = "🌑 Koyu Mod";
+            } else {
+                btn.innerHTML = "☀️ Açık Mod";
+            }
+        }
+
+        // --- MENÜ GEÇİŞ SİSTEMİ ---
         function sayfaDegistir(sayfaId) {
-            // Tüm sayfaları gizle
             document.getElementById('home-section').style.display = 'none';
             document.getElementById('tracking-section').style.display = 'none';
             document.getElementById('setup-section').style.display = 'none';
             document.getElementById('about-section').style.display = 'none';
 
-            // İstenen sayfayı aç (Flex veya Block olarak)
-            if(sayfaId === 'home-section') {
+            if(sayfaId === 'home') {
                 document.getElementById(sayfaId + '-section').style.display = 'flex';
             } else {
                 document.getElementById(sayfaId + '-section').style.display = 'block';
             }
 
-            // Eğer harita ekranı açıldıysa haritayı güncelle (Gri ekran sorununu çözer)
             if(sayfaId === 'tracking') {
                 setTimeout(function(){ map.invalidateSize(); }, 200);
             }
         }
 
-        // --- 2. FIREBASE VE HARİTA AYARLARI (SENİN ESKİ KODUN) ---
+        // --- FIREBASE VE HARİTA ---
         const firebaseConfig = {
           apiKey: "AIzaSyDKIGjt_USZ7Xc1gw8vEEt7fZbVfzE0-FI",
           authDomain: "arac-takip-sistemi-536e0.firebaseapp.com",
@@ -291,17 +360,20 @@
           appId: "1:363603708186:web:d7aad0022a33eb4c5b04a3"
         };
 
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        } else {
+            firebase.app();
+        }
+        
         const db = firebase.database();
         var mevcutMarker = null;
 
-        // Haritayı Başlat
         var map = L.map('harita').setView([39.0, 35.0], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Cihaz Bulma Fonksiyonu
         function cihaziBul() {
             var seriNo = document.getElementById("seriNo").value;
             var mesajKutusu = document.getElementById("durumMesaji");
@@ -313,7 +385,7 @@
             }
 
             mesajKutusu.innerHTML = "📡 " + seriNo + " uydudan aranıyor...";
-            mesajKutusu.style.color = "#00f2fe";
+            mesajKutusu.style.color = "var(--accent-color)"; // Tema rengine göre mavi
 
             var aracYolu = db.ref('araclar/' + seriNo);
             aracYolu.on('value', (snapshot) => {
@@ -326,14 +398,13 @@
 
                     if (mevcutMarker) { map.removeLayer(mevcutMarker); }
 
-                    // Özel İkon (Opsiyonel, şimdilik standart)
                     mevcutMarker = L.marker([enlem, boylam]).addTo(map)
                         .bindPopup("<b>Cihaz: " + seriNo + "</b><br>Hız: " + hiz + " km/s<br>Durum: Aktif")
                         .openPopup();
 
                     map.setView([enlem, boylam], 15);
                     mesajKutusu.innerHTML = "✅ Sinyal Alındı! Canlı izleniyor.";
-                    mesajKutusu.style.color = "#00ff00";
+                    mesajKutusu.style.color = "#00ff00"; // Yeşil her zaman yeşildir
                 } else {
                     mesajKutusu.innerHTML = "❌ Cihaz bulunamadı veya kapalı!";
                     mesajKutusu.style.color = "#ff4d4d";
