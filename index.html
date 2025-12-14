@@ -11,29 +11,29 @@
     <style>
         /* --- RENK TANIMLAMALARI (CSS VARIABLES) --- */
         :root {
-            /* Varsayılan: SİYAH TEMA (Dark Mode) */
+            /* Varsayılan: SİYAH TEMA (Dark Mode - Premium) */
             --bg-color: #050505;
             --text-color: #ffffff;
-            --nav-bg: rgba(0, 0, 0, 0.8);
-            --box-bg: rgba(20, 20, 20, 0.9);
+            --nav-bg: rgba(0, 0, 0, 0.95);
+            --box-bg: rgba(20, 20, 20, 0.95);
             --input-bg: #000;
             --input-border: #333;
             --accent-color: #00f2fe; /* Neon Mavi */
+            --highlight-color: #ff0055; /* Neon Kırmızı */
             --shadow-color: rgba(0, 242, 254, 0.2);
-            --btn-text: #fff;
         }
 
-        /* BEYAZ TEMA (Light Mode) Ayarları */
+        /* BEYAZ TEMA (Light Mode - Kurumsal) */
         .light-mode {
-            --bg-color: #f0f2f5;           /* Açık Gri Arka Plan */
-            --text-color: #333333;         /* Koyu Gri Yazı */
-            --nav-bg: rgba(255, 255, 255, 0.95); /* Beyaz Menü */
-            --box-bg: #ffffff;             /* Beyaz Kutular */
-            --input-bg: #fff;              /* Beyaz Input */
-            --input-border: #ccc;          /* Gri Kenarlık */
-            --accent-color: #007bff;       /* Standart Mavi */
-            --shadow-color: rgba(0, 0, 0, 0.1); /* Yumuşak Gölge */
-            --btn-text: #333;
+            --bg-color: #f4f6f9;           
+            --text-color: #2c3e50;         
+            --nav-bg: #ffffff; 
+            --box-bg: #ffffff;             
+            --input-bg: #f8f9fa;              
+            --input-border: #dfe6e9;          
+            --accent-color: #2980b9; /* Kurumsal Mavi */      
+            --highlight-color: #c0392b; /* Kurumsal Kırmızı */
+            --shadow-color: rgba(0, 0, 0, 0.05); 
         }
 
         /* --- GENEL TASARIM --- */
@@ -44,7 +44,7 @@
             color: var(--text-color);
             font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s; /* Yumuşak Geçiş Efekti */
+            transition: all 0.4s ease;
         }
 
         /* --- ÜST MENÜ (NAVBAR) --- */
@@ -52,84 +52,93 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 40px;
+            padding: 15px 40px;
             background: var(--nav-bg);
             border-bottom: 2px solid var(--accent-color);
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
-            box-shadow: 0 0 20px var(--shadow-color);
-            transition: all 0.3s;
+            box-shadow: 0 0 30px var(--shadow-color);
         }
 
-        /* Menü Öğeleri */
         .nav-left, .nav-right {
             display: flex;
             align-items: center;
-            gap: 20px; /* Butonlar arası boşluk */
+            gap: 20px;
+            flex: 1;
         }
+        
+        .nav-right { justify-content: flex-end; }
 
         .nav-item {
             cursor: pointer;
             font-family: 'Orbitron', sans-serif;
-            font-size: 14px;
+            font-size: 13px;
             letter-spacing: 1px;
             transition: all 0.3s;
             text-transform: uppercase;
-            color: var(--text-color); /* Yazı rengi değişkene bağlandı */
+            color: var(--text-color);
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            font-weight: 600;
+            padding: 8px 12px;
+            border-radius: 8px;
         }
 
         .nav-item:hover {
             color: var(--accent-color);
-            text-shadow: 0 0 10px var(--accent-color);
+            background: rgba(255,255,255,0.05);
         }
 
-        /* Tema Değiştirme Butonu */
+        /* Tema Butonu */
         .theme-btn {
             background: transparent;
-            border: 1px solid var(--accent-color);
+            border: 2px solid var(--accent-color);
             color: var(--text-color);
-            padding: 5px 10px;
+            padding: 6px 15px;
             border-radius: 20px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 12px;
+            font-weight: bold;
+            font-family: 'Orbitron', sans-serif;
             transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
         .theme-btn:hover {
             background: var(--accent-color);
             color: #fff;
+            box-shadow: 0 0 15px var(--accent-color);
         }
 
         /* ORTA LOGO ALANI */
         .nav-center {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 800;
             color: var(--text-color);
             text-align: center;
             cursor: pointer;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
         }
-        .nav-center span { color: #ff0055; }
+        .nav-center span { color: var(--highlight-color); }
 
         /* --- SAYFA İÇERİKLERİ --- */
         .page-section {
             display: none;
             padding: 40px 20px;
             min-height: 80vh;
-            animation: fadeIn 0.5s ease;
+            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             text-align: center;
         }
 
         .active-section { display: block; }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
@@ -139,105 +148,179 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 85vh;
         }
 
         .neon-logo-img {
-            max-width: 300px;
+            max-width: 250px;
             border-radius: 20px;
-            box-shadow: 0 0 30px var(--shadow-color);
+            box-shadow: 0 0 50px var(--shadow-color);
             margin-bottom: 30px;
             transition: transform 0.3s;
         }
-        .neon-logo-img:hover { transform: scale(1.05); }
+        .neon-logo-img:hover { transform: scale(1.03); }
+
+        .slogan {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--accent-color);
+            font-size: 1.2em;
+            letter-spacing: 3px;
+            margin-top: -10px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
 
         .big-btn {
-            background: linear-gradient(90deg, #ff0055, #ff4d4d);
+            background: linear-gradient(135deg, var(--highlight-color), #d63031);
             color: white;
-            padding: 15px 40px;
-            font-size: 20px;
+            padding: 18px 50px;
+            font-size: 18px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-family: 'Orbitron', sans-serif;
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: all 0.3s;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: bold;
         }
         .big-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 40px rgba(255, 0, 85, 1);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 0, 85, 0.4);
         }
 
         /* --- TAKİP EKRANI --- */
         .kontrol-kutusu {
-            background: var(--box-bg); /* Değişken arkaplan */
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid var(--input-border);
-            max-width: 500px;
-            margin: 0 auto 30px auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            transition: background 0.3s;
-        }
-
-        input[type="text"] {
-            width: 70%;
-            padding: 12px;
-            background: var(--input-bg);
-            border: 2px solid var(--input-border);
-            color: var(--text-color);
-            border-radius: 8px;
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            outline: none;
-        }
-        input:focus { border-color: var(--accent-color); box-shadow: 0 0 10px var(--shadow-color); }
-
-        .search-btn {
-            background: var(--accent-color);
-            color: #000;
-            font-weight: bold;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
-        .search-btn:hover { opacity: 0.8; }
-
-        #harita {
-            height: 500px;
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 15px;
-            border: 4px solid var(--box-bg); /* Çerçeve rengi dinamik */
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            z-index: 1;
-        }
-
-        /* --- METİN KUTULARI --- */
-        .info-box {
             background: var(--box-bg);
             padding: 40px;
             border-radius: 20px;
-            max-width: 800px;
+            border: 1px solid var(--input-border);
+            max-width: 550px;
+            margin: 0 auto 10px auto; /* Marquee için boşluk azaldı */
+            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+        }
+
+        /* Yeni Yıl Mesajı (Kayan Yazı) */
+        .marquee-container {
+            max-width: 550px;
+            margin: 0 auto 30px auto;
+            background: transparent;
+            padding: 10px;
+            border-bottom: 1px solid var(--input-border);
+            border-radius: 0 0 20px 20px;
+        }
+        .marquee-text {
+            color: var(--text-color);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            opacity: 0.8;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 15px;
+            background: var(--input-bg);
+            border: 2px solid var(--input-border);
+            color: var(--text-color);
+            border-radius: 12px;
+            font-family: 'Orbitron', sans-serif;
+            text-align: center;
+            outline: none;
+            font-size: 18px;
+            transition: 0.3s;
+            letter-spacing: 2px;
+        }
+        input:focus { border-color: var(--accent-color); box-shadow: 0 0 20px var(--shadow-color); }
+
+        .search-btn {
+            background: var(--accent-color);
+            color: #fff; /* Yazı beyaz */
+            font-weight: bold;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: 0.3s;
+            font-size: 16px;
+            width: 85%;
+            font-family: 'Orbitron';
+            text-transform: uppercase;
+        }
+        /* Açık modda buton yazısı koyu olsun */
+        .light-mode .search-btn { color: #fff; } 
+        
+        .search-btn:hover { opacity: 0.9; box-shadow: 0 0 25px var(--shadow-color); transform: scale(1.02); }
+
+        #harita {
+            height: 550px;
+            width: 95%;
+            max-width: 1200px;
             margin: 0 auto;
-            line-height: 1.6;
-            border-left: 4px solid var(--accent-color);
+            border-radius: 15px;
+            border: 4px solid var(--box-bg);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            z-index: 1;
+        }
+
+        /* --- BİLGİ KUTULARI --- */
+        .info-box {
+            background: var(--box-bg);
+            padding: 60px;
+            border-radius: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+            line-height: 1.8;
+            border-left: 6px solid var(--accent-color);
             text-align: left;
             color: var(--text-color);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
         }
-        .info-box h2 { color: var(--accent-color); font-family: 'Orbitron', sans-serif; }
-        .info-box h3 { color: #ff0055; margin-top: 30px; }
+        .info-box h2 { 
+            color: var(--accent-color); 
+            font-family: 'Orbitron', sans-serif; 
+            font-size: 32px; 
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--input-border);
+            padding-bottom: 15px;
+        }
+        .info-box h3 { 
+            color: var(--highlight-color); 
+            margin-top: 40px; 
+            font-size: 22px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 700;
+        }
+        .info-box p, .info-box li { font-size: 17px; opacity: 0.9; margin-bottom: 10px; }
+        
+        .step-number {
+            background: var(--highlight-color);
+            color: #fff;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-family: 'Orbitron';
+            font-size: 18px;
+        }
 
         /* MOBİL UYUM */
-        @media (max-width: 600px) {
+        @media (max-width: 768px) {
             nav { flex-direction: column; gap: 15px; padding: 15px; }
-            .nav-center { position: static; transform: none; margin: 10px 0; }
-            .nav-right { width: 100%; justify-content: center; }
-            .nav-left { width: 100%; justify-content: center; }
+            .nav-left, .nav-right { width: 100%; justify-content: center; }
+            .nav-center { margin: 10px 0; font-size: 24px; }
+            .info-box { padding: 30px; }
+            .big-btn { width: 100%; padding: 15px; font-size: 16px; }
+            #harita { height: 400px; }
         }
     </style>
 </head>
@@ -246,7 +329,7 @@
     <nav>
         <div class="nav-left">
             <div class="nav-item" onclick="sayfaDegistir('setup')">
-                🔧 Cihaz Kurulumu
+                🔧 KURULUM REHBERİ
             </div>
         </div>
 
@@ -256,57 +339,90 @@
 
         <div class="nav-right">
             <button class="theme-btn" onclick="temaDegistir()" id="temaBtn">
-                ☀️ Modu Değiştir
+                ☀️ AÇIK MOD
             </button>
-
             <div class="nav-item" onclick="sayfaDegistir('about')">
-                ℹ️ Hakkımızda
+                ℹ️ HAKKIMIZDA
             </div>
         </div>
     </nav>
 
     <section id="home-section" class="active-section" style="display: flex;">
         <img src="logo.jpg" alt="TekGPS Logo" class="neon-logo-img">
-        <h1 style="font-family: 'Orbitron'; font-size: 2.5em; margin-bottom: 10px;">ARACINIZ GÜVENDE</h1>
-        <p style="opacity: 0.8; margin-bottom: 40px;">Kesintisiz uydu takibi ve anlık konum hizmeti.</p>
+        
+        <h1 style="font-family: 'Orbitron'; font-size: 2.5em; margin-bottom: 5px; text-shadow: 0 0 30px var(--accent-color);">ARACINIZ GÜVENDE</h1>
+        
+        <p class="slogan">Tek Ödeme. Ömür Boyu Özgürlük.</p>
+        
         <button class="big-btn" onclick="sayfaDegistir('tracking')">
             🚀 SİSTEME GİRİŞ / SORGULAMA
         </button>
     </section>
 
     <section id="tracking-section" class="page-section">
-        <h2 style="font-family: 'Orbitron'; color: var(--accent-color);">CANLI KONUM İZLEME</h2>
+        <h2 style="font-family: 'Orbitron'; color: var(--accent-color); margin-bottom: 20px;">CANLI KONUM İZLEME</h2>
+        
         <div class="kontrol-kutusu">
-            <p style="opacity: 0.7; margin-bottom: 15px;">Cihaz üzerindeki Seri Numarasını giriniz.</p>
-            <input type="text" id="seriNo" placeholder="Seri No (Örn: 1001)">
+            <p style="opacity: 0.8; margin-bottom: 20px;">Lütfen Cihaz Seri Numarasını Giriniz</p>
+            <input type="text" id="seriNo" placeholder="Örn: 1001">
             <br>
             <button class="search-btn" onclick="cihaziBul()">🛰️ UYDU BAĞLANTISI KUR</button>
-            <div id="durumMesaji" style="margin-top: 15px; font-weight: bold;"></div>
+            <div id="durumMesaji" style="margin-top: 25px; font-weight: bold; font-size: 1.2em;"></div>
         </div>
+
+        <div class="marquee-container">
+            <marquee behavior="scroll" direction="left" scrollamount="6" class="marquee-text">
+                🎄 Mutlu Yıllar! TekGPS Ailesi Olarak Yeni Yılda Size ve Sevdiklerinize Güvenli, Huzurlu ve Keyifli Sürüşler Dileriz. Yolunuz Açık Olsun! ✨
+            </marquee>
+        </div>
+
         <div id="harita"></div>
     </section>
 
     <section id="setup-section" class="page-section">
         <div class="info-box">
-            <h2>🔧 Cihaz Kurulumu Nasıl Yapılır?</h2>
-            <p>TekGPS cihazınızı aracınıza monte etmek oldukça basittir. Aşağıdaki adımları takip edin:</p>
-            <h3>Adım 1: SIM Kartı Takın</h3>
-            <p>Cihazın yan kapağını açın ve PIN kodu kaldırılmış aktif bir SIM kartı yuvaya yerleştirin.</p>
-            <h3>Adım 2: Kablo Bağlantısı</h3>
-            <p>Kırmızı kabloyu aracın (+) kutbuna, Siyah kabloyu (-) şaseye bağlayın.</p>
-            <h3>Adım 3: Aktivasyon</h3>
-            <p>Cihaz ışıkları sabitlendiğinde, bu sitedeki "Sorgulama" ekranına seri numaranızı girerek takibe başlayabilirsiniz.</p>
+            <h2>🔧 Pratik Kurulum Rehberi</h2>
+            <p>TekGPS cihazınızı aracınıza monte etmek için teknik servise ihtiyacınız yok. İşte adım adım yapmanız gerekenler:</p>
+            
+            <h3><div class="step-number">1</div> SIM Kart Hazırlığı</h3>
+            <p>Cihazın çalışması için standart bir SIM karta ihtiyacı vardır. Herhangi bir operatörden faturasız veya düşük ücretli bir hat alabilirsiniz.</p>
+            <ul>
+                <li>⚠️ <strong>Önemli:</strong> Aldığınız SIM kartı önce telefonunuza takın ve <strong>PIN kodunu kaldırın.</strong></li>
+                <li>Hattın internete açık olduğundan emin olun.</li>
+                <li>Daha sonra kartı TekGPS cihazına takın.</li>
+            </ul>
+
+            <h3><div class="step-number">2</div> Kablo Bağlantısı</h3>
+            <p>Cihazın sadece 2 kablosu vardır:</p>
+            <ul>
+                <li>🔴 <strong>KIRMIZI (+):</strong> Araçta sürekli elektrik olan bir noktaya bağlanır. (Örn: Tavan lambası veya Korna sigortası).</li>
+                <li>⚫ <strong>SİYAH (-):</strong> Aracın metal gövdesindeki herhangi bir vidaya bağlanır (Şase).</li>
+            </ul>
+
+            <h3><div class="step-number">3</div> Montaj Konumu</h3>
+            <p>Cihazı sigorta kutusunun arkasına veya plastik panellerin altına gizleyebilirsiniz. Cihazın üstünü metal ile kapatmamaya özen gösterin.</p>
+
+            <h3><div class="step-number">4</div> İzlemeye Başla</h3>
+            <p>Kurulum tamam! Bu sitedeki sorgulama ekranına cihazınızın numarasını girerek aracınızı anında haritada görebilirsiniz.</p>
         </div>
     </section>
 
     <section id="about-section" class="page-section">
         <div class="info-box">
             <h2>Biz Kimiz?</h2>
-            <p>TekGPS, 2025 yılında İzmir'de kurulmuş yerli bir teknoloji girişimidir.</p>
-            <h3>Neden Aidat Yok?</h3>
-            <p>Klasik sistemlerin aksine, sunucu maliyetlerini optimize ederek kullanıcılarımızdan aylık ücret talep etmiyoruz.</p>
+            <p>TekGPS, 2025 yılında İzmir'de kurulmuş, araç güvenliğini en sade ve ekonomik hale getirmeyi amaçlayan bir teknoloji girişimidir.</p>
+            
+            <h3>Neden "Tek Fiyat" ve Aidat Yok?</h3>
+            <p>TekGPS'in en büyük farkı budur. Biz size sadece <strong>cihazı satıyoruz.</strong> Cihazın içinde bizim SIM kartımız yoktur. </p>
+            <p>Siz dilediğiniz operatörden (Turkcell, Vodafone vb.) kendi bütçenize uygun bir hat alıp cihaza takarsınız. Böylece bize her ay kira veya sunucu ücreti ödemezsiniz. <strong>Cihazı bir kere satın alır, ömür boyu kullanırsınız.</strong></p>
+            
+            <h3>Güvenlik</h3>
+            <p>Konum verileriniz şifreli olarak doğrudan cihazdan ekranınıza gelir. Gizliliğiniz ve güvenliğiniz bizim için her şeyden önemlidir.</p>
+            
             <br>
-            <p style="text-align: center; opacity: 0.6;">&copy; 2025 TekGPS - Tüm Hakları Saklıdır.</p>
+            <div style="text-align: center; opacity: 0.6; border-top: 1px solid var(--input-border); padding-top: 20px;">
+                &copy; 2025 TekGPS Sistemleri - İzmir<br>Tüm Hakları Saklıdır.
+            </div>
         </div>
     </section>
 
@@ -315,23 +431,20 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // --- TEMA DEĞİŞTİRME FONKSİYONU ---
+        // --- TEMA DEĞİŞTİRME ---
         function temaDegistir() {
             var body = document.body;
             var btn = document.getElementById("temaBtn");
-            
-            // "light-mode" sınıfını ekle/çıkar
             body.classList.toggle("light-mode");
 
-            // Buton üzerindeki yazıyı ve ikonu değiştir
             if (body.classList.contains("light-mode")) {
-                btn.innerHTML = "🌑 Koyu Mod";
+                btn.innerHTML = "🌑 KOYU MOD";
             } else {
-                btn.innerHTML = "☀️ Açık Mod";
+                btn.innerHTML = "☀️ AÇIK MOD";
             }
         }
 
-        // --- MENÜ GEÇİŞ SİSTEMİ ---
+        // --- MENÜ GEÇİŞ ---
         function sayfaDegistir(sayfaId) {
             document.getElementById('home-section').style.display = 'none';
             document.getElementById('tracking-section').style.display = 'none';
@@ -349,7 +462,7 @@
             }
         }
 
-        // --- FIREBASE VE HARİTA ---
+        // --- FIREBASE BAĞLANTISI ---
         const firebaseConfig = {
           apiKey: "AIzaSyDKIGjt_USZ7Xc1gw8vEEt7fZbVfzE0-FI",
           authDomain: "arac-takip-sistemi-536e0.firebaseapp.com",
@@ -385,7 +498,7 @@
             }
 
             mesajKutusu.innerHTML = "📡 " + seriNo + " uydudan aranıyor...";
-            mesajKutusu.style.color = "var(--accent-color)"; // Tema rengine göre mavi
+            mesajKutusu.style.color = "var(--accent-color)";
 
             var aracYolu = db.ref('araclar/' + seriNo);
             aracYolu.on('value', (snapshot) => {
@@ -404,7 +517,7 @@
 
                     map.setView([enlem, boylam], 15);
                     mesajKutusu.innerHTML = "✅ Sinyal Alındı! Canlı izleniyor.";
-                    mesajKutusu.style.color = "#00ff00"; // Yeşil her zaman yeşildir
+                    mesajKutusu.style.color = "#00ff00";
                 } else {
                     mesajKutusu.innerHTML = "❌ Cihaz bulunamadı veya kapalı!";
                     mesajKutusu.style.color = "#ff4d4d";
