@@ -10,9 +10,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     
     <style>
-        /* --- RENK TANIMLAMALARI (CSS VARIABLES) --- */
+        /* --- RENK TANIMLAMALARI --- */
         :root {
-            /* Varsayılan: SİYAH TEMA */
             --bg-color: #050505;
             --text-color: #ffffff;
             --nav-bg: rgba(0, 0, 0, 0.95);
@@ -25,7 +24,6 @@
             --tip-box-bg: rgba(0, 242, 254, 0.05);
         }
 
-        /* BEYAZ TEMA */
         .light-mode {
             --bg-color: #f4f6f9;           
             --text-color: #2c3e50;         
@@ -50,7 +48,7 @@
             transition: all 0.4s ease;
         }
 
-        /* --- ÜST MENÜ (NAVBAR) --- */
+        /* --- NAVİGASYON --- */
         nav {
             display: flex;
             justify-content: space-between;
@@ -65,327 +63,81 @@
             box-shadow: 0 0 30px var(--shadow-color);
         }
 
-        .nav-left, .nav-right {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex: 1;
-        }
-        
+        .nav-left, .nav-right { display: flex; align-items: center; gap: 20px; flex: 1; }
         .nav-right { justify-content: flex-end; }
-
         .nav-item {
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 13px;
-            letter-spacing: 1px;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            color: var(--text-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 600;
-            padding: 8px 12px;
-            border-radius: 8px;
+            cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 13px;
+            letter-spacing: 1px; transition: all 0.3s; text-transform: uppercase;
+            color: var(--text-color); font-weight: 600; padding: 8px 12px; border-radius: 8px;
         }
+        .nav-item:hover { color: var(--accent-color); background: rgba(255,255,255,0.05); }
 
-        .nav-item:hover {
-            color: var(--accent-color);
-            background: rgba(255,255,255,0.05);
-        }
-
-        /* Tema Butonu */
         .theme-btn {
-            background: transparent;
-            border: 2px solid var(--accent-color);
-            color: var(--text-color);
-            padding: 6px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: bold;
-            font-family: 'Orbitron', sans-serif;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            background: transparent; border: 2px solid var(--accent-color); color: var(--text-color);
+            padding: 6px 15px; border-radius: 20px; cursor: pointer; font-size: 12px;
+            font-weight: bold; font-family: 'Orbitron', sans-serif; transition: 0.3s;
         }
-        .theme-btn:hover {
-            background: var(--accent-color);
-            color: #fff;
-            box-shadow: 0 0 15px var(--accent-color);
-        }
+        .theme-btn:hover { background: var(--accent-color); color: #fff; box-shadow: 0 0 15px var(--accent-color); }
 
-        /* ORTA LOGO */
         .nav-center {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text-color);
-            text-align: center;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 2px;
-            user-select: none;
+            font-size: 28px; font-weight: 800; color: var(--text-color); text-align: center;
+            cursor: pointer; font-family: 'Orbitron', sans-serif; letter-spacing: 2px;
         }
         .nav-center span { color: var(--highlight-color); }
 
-        /* --- SAYFA YAPISI --- */
+        /* --- SAYFALAR --- */
         .page-section {
-            display: none;
-            padding: 40px 20px;
-            min-height: 80vh;
-            animation: fadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            text-align: center;
+            display: none; padding: 40px 20px; min-height: 80vh; animation: fadeIn 0.6s ease; text-align: center;
         }
-
         .active-section { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- ANA SAYFA --- */
-        #home-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 85vh;
-            width: 100%;
-        }
-
-        .neon-logo-img {
-            max-width: 250px;
-            border-radius: 20px;
-            box-shadow: 0 0 50px var(--shadow-color);
-            margin-bottom: 30px;
-            transition: transform 0.3s;
-        }
-        .neon-logo-img:hover { transform: scale(1.03); }
-
-        .slogan {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--accent-color);
-            font-size: 1.2em;
-            letter-spacing: 3px;
-            margin-top: -10px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-            opacity: 0.9;
-        }
-
-        /* KAYAN YAZI */
+        /* ANA SAYFA */
+        #home-section { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 85vh; }
+        .neon-logo-img { max-width: 250px; border-radius: 20px; box-shadow: 0 0 50px var(--shadow-color); margin-bottom: 30px; }
+        .slogan { font-family: 'Orbitron'; color: var(--accent-color); font-size: 1.2em; letter-spacing: 3px; margin-bottom: 30px; }
+        
         .marquee-home-container {
-            width: 90%;
-            max-width: 700px;
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 10px;
-            border: 1px solid var(--accent-color);
-            margin-bottom: 40px;
-            box-shadow: 0 0 15px var(--shadow-color);
+            width: 90%; max-width: 700px; background: rgba(255,255,255,0.05); padding: 15px;
+            border-radius: 10px; border: 1px solid var(--accent-color); margin-bottom: 40px;
         }
-        .marquee-text {
-            color: var(--text-color);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 15px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
+        .marquee-text { color: var(--text-color); font-family: 'Orbitron'; font-size: 15px; font-weight: 600; }
 
         .big-btn {
-            background: linear-gradient(135deg, var(--highlight-color), #d63031);
-            color: white;
-            padding: 18px 50px;
-            font-size: 18px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: bold;
+            background: linear-gradient(135deg, var(--highlight-color), #d63031); color: white;
+            padding: 18px 50px; font-size: 18px; border: none; border-radius: 50px; cursor: pointer;
+            font-family: 'Orbitron'; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s; font-weight: bold;
         }
-        .big-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(255, 0, 85, 0.4);
-        }
+        .big-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(255, 0, 85, 0.4); }
 
-        /* --- TAKİP EKRANI --- */
-        .kontrol-kutusu {
-            background: var(--box-bg);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid var(--input-border);
-            max-width: 550px;
-            margin: 0 auto 30px auto;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.2);
-            transition: background 0.4s;
-        }
+        /* DİĞER SAYFALAR */
+        .kontrol-kutusu { background: var(--box-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--input-border); max-width: 550px; margin: 0 auto 30px auto; }
+        input[type="text"] { width: 80%; padding: 15px; background: var(--input-bg); border: 2px solid var(--input-border); color: var(--text-color); border-radius: 12px; font-family: 'Orbitron'; text-align: center; font-size: 18px; }
+        .search-btn { background: var(--accent-color); color: #fff; font-weight: bold; border: none; padding: 15px 30px; border-radius: 12px; cursor: pointer; margin-top: 20px; width: 85%; font-family: 'Orbitron'; }
+        #harita { height: 550px; width: 95%; max-width: 1200px; margin: 0 auto; border-radius: 15px; border: 4px solid var(--box-bg); }
+        .info-box { background: var(--box-bg); padding: 60px; border-radius: 20px; max-width: 900px; margin: 0 auto; text-align: left; border-left: 6px solid var(--accent-color); color: var(--text-color); }
+        .info-box h2 { color: var(--accent-color); font-family: 'Orbitron'; border-bottom: 1px solid var(--input-border); padding-bottom: 15px; }
+        .sim-info-box { background: var(--tip-box-bg); border: 2px dashed var(--accent-color); padding: 25px; border-radius: 15px; margin-bottom: 40px; }
 
-        input[type="text"] {
-            width: 80%;
-            padding: 15px;
-            background: var(--input-bg);
-            border: 2px solid var(--input-border);
-            color: var(--text-color);
-            border-radius: 12px;
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            outline: none;
-            font-size: 18px;
-            transition: 0.3s;
-            letter-spacing: 2px;
-        }
-        input:focus { border-color: var(--accent-color); box-shadow: 0 0 20px var(--shadow-color); }
-
-        .search-btn {
-            background: var(--accent-color);
-            color: #fff;
-            font-weight: bold;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 12px;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.3s;
-            font-size: 16px;
-            width: 85%;
-            font-family: 'Orbitron';
-            text-transform: uppercase;
-        }
-        .search-btn:hover { opacity: 0.9; box-shadow: 0 0 25px var(--shadow-color); transform: scale(1.02); }
-
-        #harita {
-            height: 550px;
-            width: 95%;
-            max-width: 1200px;
-            margin: 0 auto;
-            border-radius: 15px;
-            border: 4px solid var(--box-bg);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
-            z-index: 1;
-        }
-
-        /* --- BİLGİ KUTULARI --- */
-        .info-box {
-            background: var(--box-bg);
-            padding: 60px;
-            border-radius: 20px;
-            max-width: 900px;
-            margin: 0 auto;
-            line-height: 1.8;
-            border-left: 6px solid var(--accent-color);
-            text-align: left;
-            color: var(--text-color);
-            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
-            transition: background 0.4s;
-        }
-        .info-box h2 { 
-            color: var(--accent-color); 
-            font-family: 'Orbitron', sans-serif; 
-            font-size: 32px; 
-            margin-bottom: 25px;
-            border-bottom: 1px solid var(--input-border);
-            padding-bottom: 15px;
-        }
-        .info-box h3 { 
-            color: var(--highlight-color); 
-            margin-top: 40px; 
-            font-size: 22px;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 700;
-        }
-        .info-box p, .info-box li { font-size: 17px; opacity: 0.9; margin-bottom: 10px; }
-        
-        .sim-info-box {
-            background: var(--tip-box-bg);
-            border: 2px dashed var(--accent-color);
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 40px;
-        }
-        .sim-title {
-            color: var(--accent-color);
-            font-weight: bold;
-            font-size: 1.2em;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-family: 'Orbitron', sans-serif;
-        }
-
-        .step-number {
-            background: var(--highlight-color);
-            color: #fff;
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-family: 'Orbitron';
-            font-size: 18px;
-        }
-
-        /* --- SUNUM KATMANI (OVERLAY) --- */
+        /* --- SUNUM KATMANI (OVERLAY - TAM EKRAN KAPLAR) --- */
         #presentation-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #050505;
-            z-index: 9999;
-            display: none; /* Varsayılan gizli */
-            flex-direction: column;
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505;
+            z-index: 9999; display: none; flex-direction: column;
         }
-
         .slide {
-            flex: 1;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 40px;
-            opacity: 0;
-            transition: opacity 0.5s ease;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%);
-            color: white;
+            flex: 1; display: none; flex-direction: column; justify-content: center; align-items: center;
+            padding: 40px; opacity: 0; transition: opacity 0.5s ease; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); color: white;
         }
-
-        .slide.active-slide {
-            display: flex;
-            opacity: 1;
-        }
-
-        .slide h1 { font-size: 3.5em; color: #fff; text-shadow: 0 0 20px #00f2fe; margin-bottom: 20px; font-family: 'Orbitron'; }
-        .slide h2 { font-size: 2.5em; color: #ff0055; margin-bottom: 30px; font-family: 'Orbitron'; text-shadow: 0 0 15px #ff0055; }
+        .slide.active-slide { display: flex; opacity: 1; }
+        .slide h1 { font-size: 3.5em; color: #fff; text-shadow: 0 0 20px #00f2fe; margin-bottom: 20px; font-family: 'Orbitron'; text-align: center;}
+        .slide h2 { font-size: 2.5em; color: #ff0055; margin-bottom: 30px; font-family: 'Orbitron'; text-shadow: 0 0 15px #ff0055; text-align: center;}
         .slide p, .slide li { font-size: 1.4em; max-width: 900px; line-height: 1.6; text-align: center; color: #ddd; }
         .slide ul { list-style: none; padding: 0; }
         .slide li { margin-bottom: 15px; padding: 10px 20px; border-left: 4px solid #00f2fe; background: rgba(255,255,255,0.05); text-align: left; }
         
         .close-pres-btn {
-            position: absolute;
-            top: 20px;
-            right: 30px;
-            background: transparent;
-            border: 2px solid #ff0055;
-            color: #ff0055;
-            padding: 10px 20px;
-            font-family: 'Orbitron';
-            cursor: pointer;
-            border-radius: 30px;
-            z-index: 10000;
-            font-weight: bold;
+            position: absolute; top: 20px; right: 30px; background: transparent; border: 2px solid #ff0055;
+            color: #ff0055; padding: 10px 20px; font-family: 'Orbitron'; cursor: pointer; border-radius: 30px; z-index: 10000; font-weight: bold;
         }
         .close-pres-btn:hover { background: #ff0055; color: white; }
 
@@ -535,7 +287,7 @@
             <h3>Güvenlik</h3>
             <p>Konum verileriniz şifreli olarak doğrudan cihazdan ekranınıza gelir.</p>
             
-            <!-- SUNUM BUTONU BURADA -->
+            <!-- SUNUM BUTONU BURADA (Sadece bu kaldı) -->
             <div style="margin-top: 40px; text-align: center; border-top: 1px solid var(--input-border); padding-top: 30px;">
                 <p style="font-size: 0.9em; margin-bottom: 15px;">Bu proje hakkında daha fazla teknik detay için:</p>
                 <button class="big-btn" style="font-size: 16px; padding: 12px 30px; background: linear-gradient(90deg, #00f2fe, #007bff);" onclick="baslatSunum()">
@@ -550,7 +302,7 @@
         </div>
     </section>
 
-    <!-- --- SUNUM KATMANI (GİZLİ) --- -->
+    <!-- --- SUNUM KATMANI (GİZLİ ve DAHİLİ) --- -->
     <div id="presentation-overlay">
         <button class="close-pres-btn" onclick="kapatSunum()">KAPAT X</button>
         
@@ -558,12 +310,8 @@
         <div class="slide active-slide">
             <h1 style="font-size: 5em;">TEK<span style="color:#ff0055;">GPS</span></h1>
             <h2>IoT Tabanlı Yeni Nesil Araç Takip Sistemi</h2>
-            <div class="slogan">"Tek Ödeme. Ömür Boyu Özgürlük."</div>
-            <div style="position: absolute; bottom: 20px; right: 30px; text-align: right; font-size: 0.8em; opacity: 0.7;">
-                <strong>Hazırlayan:</strong> Avdi Arda Sancaklı<br>
-                <strong>Danışman:</strong> Dr. Öğr. Üyesi Mustafa Berkant Selek
-            </div>
-            <div class="pres-nav-hint">İlerlemek için Yön Tuşlarını Kullanın</div>
+            <p>"Tek Ödeme. Ömür Boyu Özgürlük."</p>
+            <div style="margin-top:50px; opacity:0.7;">Hazırlayan: Avdi Arda Sancaklı</div>
         </div>
 
         <!-- SLAYT 2 -->
