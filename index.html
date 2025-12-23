@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TekGPS - Profesyonel Takip</title>
     
-    <!-- Harita ve Fontlar -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
     
@@ -25,13 +24,13 @@
         }
 
         .light-mode {
-            --bg-color: #f4f6f9;           
-            --text-color: #2c3e50;         
+            --bg-color: #f4f6f9;            
+            --text-color: #2c3e50;          
             --nav-bg: #ffffff; 
-            --box-bg: #ffffff;             
-            --input-bg: #f8f9fa;              
-            --input-border: #dfe6e9;          
-            --accent-color: #2980b9;      
+            --box-bg: #ffffff;              
+            --input-bg: #f8f9fa;               
+            --input-border: #dfe6e9;           
+            --accent-color: #2980b9;       
             --highlight-color: #c0392b; 
             --shadow-color: rgba(0, 0, 0, 0.05);
             --tip-box-bg: #eef7ff; 
@@ -119,7 +118,70 @@
         .info-box h2 { color: var(--accent-color); font-family: 'Orbitron'; border-bottom: 1px solid var(--input-border); padding-bottom: 15px; }
         .sim-info-box { background: var(--tip-box-bg); border: 2px dashed var(--accent-color); padding: 25px; border-radius: 15px; margin-bottom: 40px; }
 
-        /* --- SUNUM KATMANI (OVERLAY - TAM EKRAN KAPLAR) --- */
+        /* --- BUTON GRUBU ve YENİ STİLLER --- */
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .pres-btn {
+            background: linear-gradient(90deg, #00f2fe, #007bff);
+            font-size: 16px;
+            padding: 12px 30px;
+        }
+        .poster-btn {
+            background: linear-gradient(90deg, #8e44ad, #ff0055);
+            font-size: 16px;
+            padding: 12px 30px;
+        }
+
+        /* --- POSTER MODAL (Açılır Pencere) --- */
+        #poster-overlay {
+            display: none;
+            position: fixed;
+            z-index: 10005;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            justify-content: center;
+            align-items: center;
+            animation: fadeIn 0.3s;
+        }
+        .poster-container {
+            position: relative;
+            max-width: 95%;
+            max-height: 95%;
+            text-align: center;
+        }
+        .poster-img {
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            max-height: 90vh;
+            border: 2px solid #fff;
+            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
+            border-radius: 5px;
+        }
+        .close-poster-btn {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            background: rgba(0,0,0,0.5);
+            padding: 5px 15px;
+            border-radius: 5px;
+        }
+        .close-poster-btn:hover { color: #ff0055; background: rgba(255,255,255,0.1); }
+
+        /* --- SUNUM KATMANI --- */
         #presentation-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505;
             z-index: 9999; display: none; flex-direction: column;
@@ -142,12 +204,7 @@
         .close-pres-btn:hover { background: #ff0055; color: white; }
 
         .pres-nav-hint {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            text-align: center;
-            color: rgba(255,255,255,0.3);
-            font-size: 0.9em;
+            position: absolute; bottom: 20px; width: 100%; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.9em;
         }
 
         /* Tablo (Rakip Analizi) */
@@ -186,7 +243,6 @@
 </head>
 <body>
 
-    <!-- ÜST MENÜ -->
     <nav>
         <div class="nav-left">
             <div class="nav-item" onclick="sayfaDegistir('setup')">
@@ -208,7 +264,6 @@
         </div>
     </nav>
 
-    <!-- 1. SAYFA: ANA SAYFA -->
     <section id="home-section" class="active-section" style="display: flex;">
         <img src="logo.jpg" alt="TekGPS Logo" class="neon-logo-img">
         
@@ -227,7 +282,6 @@
         </button>
     </section>
 
-    <!-- 2. SAYFA: TAKİP SİSTEMİ -->
     <section id="tracking-section" class="page-section">
         <h2 style="font-family: 'Orbitron'; color: var(--accent-color); margin-bottom: 20px;">CANLI KONUM İZLEME</h2>
         
@@ -242,7 +296,6 @@
         <div id="harita"></div>
     </section>
 
-    <!-- 3. SAYFA: KURULUM REHBERİ -->
     <section id="setup-section" class="page-section">
         <div class="info-box">
             <h2>🔧 Pratik Kurulum Rehberi</h2>
@@ -274,7 +327,6 @@
         </div>
     </section>
 
-    <!-- 4. SAYFA: HAKKIMIZDA -->
     <section id="about-section" class="page-section">
         <div class="info-box">
             <h2>Biz Kimiz?</h2>
@@ -287,12 +339,18 @@
             <h3>Güvenlik</h3>
             <p>Konum verileriniz şifreli olarak doğrudan cihazdan ekranınıza gelir.</p>
             
-            <!-- SUNUM BUTONU BURADA (Sadece bu kaldı) -->
             <div style="margin-top: 40px; text-align: center; border-top: 1px solid var(--input-border); padding-top: 30px;">
-                <p style="font-size: 0.9em; margin-bottom: 15px;">Bu proje hakkında daha fazla teknik detay için:</p>
-                <button class="big-btn" style="font-size: 16px; padding: 12px 30px; background: linear-gradient(90deg, #00f2fe, #007bff);" onclick="baslatSunum()">
-                    🖥️ ÜRÜN / PROJE SUNUMU
-                </button>
+                <p style="font-size: 0.9em; margin-bottom: 20px;">Bu proje hakkında daha fazla teknik detay için:</p>
+                
+                <div class="button-group">
+                    <button class="big-btn pres-btn" onclick="baslatSunum()">
+                        🖥️ ÜRÜN SUNUMU
+                    </button>
+
+                    <button class="big-btn poster-btn" onclick="posterGoster()">
+                        📄 PROJE POSTERİ
+                    </button>
+                </div>
             </div>
 
             <br>
@@ -302,11 +360,9 @@
         </div>
     </section>
 
-    <!-- --- SUNUM KATMANI (GİZLİ ve DAHİLİ) --- -->
     <div id="presentation-overlay">
         <button class="close-pres-btn" onclick="kapatSunum()">KAPAT X</button>
         
-        <!-- SLAYT 1 -->
         <div class="slide active-slide">
             <h1 style="font-size: 5em;">TEK<span style="color:#ff0055;">GPS</span></h1>
             <h2>IoT Tabanlı Yeni Nesil Araç Takip Sistemi</h2>
@@ -314,7 +370,6 @@
             <div style="margin-top:50px; opacity:0.7;">Hazırlayan: Avdi Arda Sancaklı</div>
         </div>
 
-        <!-- SLAYT 2 -->
         <div class="slide">
             <h2>PROJENİN AMACI</h2>
             <ul>
@@ -324,7 +379,6 @@
             </ul>
         </div>
 
-        <!-- SLAYT 3 -->
         <div class="slide">
             <h2>DONANIM MİMARİSİ</h2>
             <p>Sistemin kalbinde üç ana bileşen bulunmaktadır:</p>
@@ -335,7 +389,6 @@
             </div>
         </div>
 
-        <!-- SLAYT 4 -->
         <div class="slide">
             <h2>FIREBASE TEKNOLOJİSİ</h2>
             <p>Google tarafından sunulan, sunucusuz (serverless) bir bulut altyapısıdır.</p>
@@ -346,7 +399,6 @@
             </ul>
         </div>
 
-        <!-- SLAYT 5 -->
         <div class="slide">
             <h2>WEB ARAYÜZÜ</h2>
             <h1 style="font-size: 3em;">tekgps.com.tr</h1>
@@ -357,7 +409,6 @@
             </ul>
         </div>
 
-        <!-- SLAYT 6 -->
         <div class="slide">
             <h2>KOLAY KURULUM</h2>
             <div class="pres-step-container">
@@ -367,7 +418,6 @@
             </div>
         </div>
 
-        <!-- SLAYT 7 -->
         <div class="slide">
             <h2>NEDEN BİZ?</h2>
             <table class="pres-table">
@@ -380,7 +430,6 @@
             </table>
         </div>
 
-        <!-- SLAYT 8 -->
         <div class="slide">
             <h2>AKADEMİK KAYNAKÇA</h2>
             <ul style="font-size: 0.8em; width: 90%;">
@@ -392,7 +441,6 @@
             </ul>
         </div>
 
-        <!-- SLAYT 9 -->
         <div class="slide">
             <h1 style="font-size: 5em;">TEŞEKKÜRLER</h1>
             <p>Dinlediğiniz için teşekkür ederim.</p>
@@ -401,7 +449,13 @@
         </div>
     </div>
 
-    <!-- JAVASCRIPT KODLARI -->
+    <div id="poster-overlay" onclick="posterKapat(event)">
+        <div class="poster-container">
+            <span class="close-poster-btn" onclick="posterKapat(event)">&times; KAPAT</span>
+            <img src="poster.jpg" alt="TekGPS Akademik Poster" class="poster-img"> 
+        </div>
+    </div>
+
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
@@ -433,6 +487,19 @@
             }
         }
 
+        // --- POSTER FONKSİYONLARI ---
+        function posterGoster() {
+            document.getElementById('poster-overlay').style.display = 'flex';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function posterKapat(e) {
+            if (e.target.id === 'poster-overlay' || e.target.className === 'close-poster-btn') {
+                document.getElementById('poster-overlay').style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
         // --- SUNUM FONKSİYONLARI ---
         let currentSlide = 0;
         const slides = document.querySelectorAll('#presentation-overlay .slide');
@@ -440,10 +507,10 @@
 
         function baslatSunum() {
             document.getElementById('presentation-overlay').style.display = 'flex';
-            document.documentElement.requestFullscreen().catch((e) => {}); // Tam ekran yap
+            document.documentElement.requestFullscreen().catch((e) => {}); 
             currentSlide = 0;
             gosterSlayt(0);
-            document.body.style.overflow = 'hidden'; // Scrollu kilitle
+            document.body.style.overflow = 'hidden'; 
         }
 
         function kapatSunum() {
@@ -451,7 +518,7 @@
             if (document.fullscreenElement) {
                 document.exitFullscreen().catch((e) => {});
             }
-            document.body.style.overflow = 'auto'; // Scrollu aç
+            document.body.style.overflow = 'auto'; 
         }
 
         function gosterSlayt(index) {
@@ -473,7 +540,7 @@
             }
         }
 
-        // Klavye Dinleme (Sadece Sunum Açıksa Çalışır)
+        // Klavye Dinleme
         document.addEventListener('keydown', function(event) {
             if (document.getElementById('presentation-overlay').style.display === 'flex') {
                 if (event.key === "ArrowRight" || event.key === " " || event.key === "Enter") {
@@ -483,18 +550,23 @@
                 } else if (event.key === "Escape") {
                     kapatSunum();
                 }
+            } else if (document.getElementById('poster-overlay').style.display === 'flex') {
+                if (event.key === "Escape") {
+                    // Escape tuşu posteri de kapatsın
+                    document.getElementById('poster-overlay').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
             }
         });
 
         // Mouse Tıklama (Sunumda İlerlemek İçin)
         document.getElementById('presentation-overlay').addEventListener('click', function(e) {
-            // Eğer kapat butonuna tıklanmadıysa ilerle
             if (e.target.className !== 'close-pres-btn') {
                 ileriSlayt();
             }
         });
 
-        // --- FIREBASE VE HARİTA (SENİN AYARLARIN) ---
+        // --- FIREBASE VE HARİTA ---
         const firebaseConfig = {
           apiKey: "AIzaSyDKIGjt_USZ7Xc1gw8vEEt7fZbVfzE0-FI",
           authDomain: "arac-takip-sistemi-536e0.firebaseapp.com",
