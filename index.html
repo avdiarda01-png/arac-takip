@@ -2,632 +2,218 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TekGPS - Profesyonel Takip</title>
-    
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Gül Bahçesi Sohbeti</title>
     <style>
-        /* --- RENK TANIMLAMALARI --- */
+        /* --- GÜL TEMASI CSS AYARLARI --- */
+        body { 
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0; 
+            /* Gül temalı arka plan görseli */
+            background: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=1376&auto=format&fit=crop') no-repeat center center fixed; 
+            background-size: cover; 
+            display: flex; 
+            justify-content: center; 
+            height: 100vh; 
+            overflow: hidden; 
+        }
+
         :root {
-            --bg-color: #050505;
-            --text-color: #ffffff;
-            --nav-bg: rgba(0, 0, 0, 0.95);
-            --box-bg: rgba(20, 20, 20, 0.95);
-            --input-bg: #000;
-            --input-border: #333;
-            --accent-color: #00f2fe; /* Neon Mavi */
-            --highlight-color: #ff0055; /* Neon Kırmızı */
-            --shadow-color: rgba(0, 242, 254, 0.2);
-            --tip-box-bg: rgba(0, 242, 254, 0.05);
+            --rose-primary: #d81b60; 
+            --rose-light: #fce4ec;   
+            --bg-overlay: rgba(255, 255, 255, 0.85); 
         }
-
-        .light-mode {
-            --bg-color: #f4f6f9;            
-            --text-color: #2c3e50;           
-            --nav-bg: #ffffff; 
-            --box-bg: #ffffff;               
-            --input-bg: #f8f9fa;                
-            --input-border: #dfe6e9;            
-            --accent-color: #2980b9;       
-            --highlight-color: #c0392b; 
-            --shadow-color: rgba(0, 0, 0, 0.05);
-            --tip-box-bg: #eef7ff; 
-        }
-
-        /* --- GENEL TASARIM --- */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Roboto', sans-serif;
-            overflow-x: hidden;
-            transition: all 0.4s ease;
-        }
-
-        /* --- NAVİGASYON --- */
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 40px;
-            background: var(--nav-bg);
-            border-bottom: 2px solid var(--accent-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 30px var(--shadow-color);
-        }
-
-        .nav-left, .nav-right { display: flex; align-items: center; gap: 20px; flex: 1; }
-        .nav-right { justify-content: flex-end; }
-        .nav-item {
-            cursor: pointer; font-family: 'Orbitron', sans-serif; font-size: 13px;
-            letter-spacing: 1px; transition: all 0.3s; text-transform: uppercase;
-            color: var(--text-color); font-weight: 600; padding: 8px 12px; border-radius: 8px;
-        }
-        .nav-item:hover { color: var(--accent-color); background: rgba(255,255,255,0.05); }
-
-        .theme-btn {
-            background: transparent; border: 2px solid var(--accent-color); color: var(--text-color);
-            padding: 6px 15px; border-radius: 20px; cursor: pointer; font-size: 12px;
-            font-weight: bold; font-family: 'Orbitron', sans-serif; transition: 0.3s;
-        }
-        .theme-btn:hover { background: var(--accent-color); color: #fff; box-shadow: 0 0 15px var(--accent-color); }
-
-        .nav-center {
-            font-size: 28px; font-weight: 800; color: var(--text-color); text-align: center;
-            cursor: pointer; font-family: 'Orbitron', sans-serif; letter-spacing: 2px;
-        }
-        .nav-center span { color: var(--highlight-color); }
-
-        /* --- SAYFALAR --- */
-        .page-section {
-            display: none; padding: 40px 20px; min-height: 80vh; animation: fadeIn 0.6s ease; text-align: center;
-        }
-        .active-section { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* ANA SAYFA */
-        #home-section { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 85vh; }
-        .neon-logo-img { max-width: 250px; border-radius: 20px; box-shadow: 0 0 50px var(--shadow-color); margin-bottom: 30px; }
-        .slogan { font-family: 'Orbitron'; color: var(--accent-color); font-size: 1.2em; letter-spacing: 3px; margin-bottom: 30px; }
         
-        .marquee-home-container {
-            width: 90%; max-width: 700px; background: rgba(255,255,255,0.05); padding: 15px;
-            border-radius: 10px; border: 1px solid var(--accent-color); margin-bottom: 40px;
-        }
-        .marquee-text { color: var(--text-color); font-family: 'Orbitron'; font-size: 15px; font-weight: 600; }
-
-        .big-btn {
-            background: linear-gradient(135deg, var(--highlight-color), #d63031); color: white;
-            padding: 18px 50px; font-size: 18px; border: none; border-radius: 50px; cursor: pointer;
-            font-family: 'Orbitron'; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s; font-weight: bold;
-        }
-        .big-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(255, 0, 85, 0.4); }
-
-        /* DİĞER SAYFALAR */
-        .kontrol-kutusu { background: var(--box-bg); padding: 40px; border-radius: 20px; border: 1px solid var(--input-border); max-width: 550px; margin: 0 auto 30px auto; }
-        input[type="text"] { width: 80%; padding: 15px; background: var(--input-bg); border: 2px solid var(--input-border); color: var(--text-color); border-radius: 12px; font-family: 'Orbitron'; text-align: center; font-size: 18px; }
-        .search-btn { background: var(--accent-color); color: #fff; font-weight: bold; border: none; padding: 15px 30px; border-radius: 12px; cursor: pointer; margin-top: 20px; width: 85%; font-family: 'Orbitron'; }
-        #harita { height: 550px; width: 95%; max-width: 1200px; margin: 0 auto; border-radius: 15px; border: 4px solid var(--box-bg); }
-        .info-box { background: var(--box-bg); padding: 60px; border-radius: 20px; max-width: 900px; margin: 0 auto; text-align: left; border-left: 6px solid var(--accent-color); color: var(--text-color); }
-        .info-box h2 { color: var(--accent-color); font-family: 'Orbitron'; border-bottom: 1px solid var(--input-border); padding-bottom: 15px; }
-        .sim-info-box { background: var(--tip-box-bg); border: 2px dashed var(--accent-color); padding: 25px; border-radius: 15px; margin-bottom: 40px; }
-
-        /* --- BUTON GRUBU ve YENİ STİLLER --- */
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        .pres-btn {
-            background: linear-gradient(90deg, #00f2fe, #007bff);
-            font-size: 16px;
-            padding: 12px 30px;
-        }
-        .poster-btn {
-            background: linear-gradient(90deg, #8e44ad, #ff0055);
-            font-size: 16px;
-            padding: 12px 30px;
-        }
-
-        /* --- POSTER MODAL (Açılır Pencere) --- */
-        #poster-overlay {
-            display: none;
-            position: fixed;
-            z-index: 10005;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.95);
-            justify-content: center;
-            align-items: center;
-            animation: fadeIn 0.3s;
-        }
-        .poster-container {
-            position: relative;
-            max-width: 95%;
-            max-height: 95%;
-            text-align: center;
-        }
-        .poster-img {
-            width: auto;
-            height: auto;
-            max-width: 100%;
-            max-height: 90vh;
-            border: 2px solid #fff;
-            box-shadow: 0 0 30px rgba(255, 255, 255, 0.2);
-            border-radius: 5px;
-        }
-        .close-poster-btn {
-            position: absolute;
-            top: -40px;
-            right: 0;
+        #login-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85); 
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center; z-index: 100;
             color: #fff;
-            font-size: 30px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            background: rgba(0,0,0,0.5);
-            padding: 5px 15px;
-            border-radius: 5px;
         }
-        .close-poster-btn:hover { color: #ff0055; background: rgba(255,255,255,0.1); }
-
-        /* --- SUNUM KATMANI --- */
-        #presentation-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #050505;
-            z-index: 9999; display: none; flex-direction: column;
-        }
-        .slide {
-            flex: 1; display: none; flex-direction: column; justify-content: center; align-items: center;
-            padding: 40px; opacity: 0; transition: opacity 0.5s ease; background: radial-gradient(circle at center, #1a1a1a 0%, #000000 100%); color: white;
-        }
-        .slide.active-slide { display: flex; opacity: 1; }
-        .slide h1 { font-size: 3.5em; color: #fff; text-shadow: 0 0 20px #00f2fe; margin-bottom: 20px; font-family: 'Orbitron'; text-align: center;}
-        .slide h2 { font-size: 2.5em; color: #ff0055; margin-bottom: 30px; font-family: 'Orbitron'; text-shadow: 0 0 15px #ff0055; text-align: center;}
-        .slide p, .slide li { font-size: 1.4em; max-width: 900px; line-height: 1.6; text-align: center; color: #ddd; }
-        .slide ul { list-style: none; padding: 0; }
-        .slide li { margin-bottom: 15px; padding: 10px 20px; border-left: 4px solid #00f2fe; background: rgba(255,255,255,0.05); text-align: left; }
+        #login-screen h2 { color: var(--rose-light); }
         
-        .close-pres-btn {
-            position: absolute; top: 20px; right: 30px; background: transparent; border: 2px solid #ff0055;
-            color: #ff0055; padding: 10px 20px; font-family: 'Orbitron'; cursor: pointer; border-radius: 30px; z-index: 10000; font-weight: bold;
+        input, button { 
+            padding: 12px; margin: 8px; border-radius: 25px; 
+            border: 1px solid #ddd; font-size: 16px; outline: none;
         }
-        .close-pres-btn:hover { background: #ff0055; color: white; }
-
-        .pres-nav-hint {
-            position: absolute; bottom: 20px; width: 100%; text-align: center; color: rgba(255,255,255,0.3); font-size: 0.9em;
+        input { width: 80%; max-width: 300px; text-align: center; }
+        button { 
+            background: var(--rose-primary); 
+            color: white; cursor: pointer; border: none; font-weight: bold; padding-left: 25px; padding-right: 25px;
+            transition: background 0.3s;
         }
-
-        /* Tablo (Rakip Analizi) */
-        .pres-table { width: 80%; border-collapse: collapse; margin-top: 20px; font-size: 1.2em; color: white;}
-        .pres-table th, .pres-table td { border: 1px solid #555; padding: 15px; text-align: center; }
-        .pres-table th { background-color: rgba(0, 242, 254, 0.2); color: #00f2fe; font-family: 'Orbitron'; }
-        .check { color: #00ff00; font-weight: bold; }
-        .cross { color: #ff0055; font-weight: bold; }
-
-        /* Hardware Grid */
-        .hardware-grid { display: flex; gap: 30px; margin-top: 30px; }
-        .hardware-item { background: rgba(255,255,255,0.1); padding: 20px; border-radius: 15px; border: 1px solid #00f2fe; width: 250px; text-align: center; }
-        .hardware-item h3 { color: #00f2fe; font-family: 'Orbitron'; margin-bottom: 10px; }
-
-        /* Kurulum Adımları (Sunum İçin) */
-        .pres-step-container { display: flex; gap: 20px; width: 90%; margin-top: 30px; justify-content: center;}
-        .pres-step { width: 200px; background: rgba(255,255,255,0.05); padding: 15px; border-radius: 10px; border-top: 3px solid #ff0055; text-align: center; }
-
-        /* MOBİL UYUM */
-        @media (max-width: 768px) {
-            nav { flex-direction: column; gap: 15px; padding: 15px; }
-            .nav-left, .nav-right { width: 100%; justify-content: center; }
-            .nav-center { margin: 10px 0; font-size: 24px; }
-            .info-box { padding: 30px; }
-            .big-btn { width: 100%; padding: 15px; font-size: 16px; }
-            #harita { height: 400px; }
-            .marquee-home-container { width: 95%; } 
-            .sim-title { font-size: 1em; flex-direction: column; align-items: flex-start;}
-            /* Sunum Mobilde */
-            .slide h1 { font-size: 2em; }
-            .slide p { font-size: 1em; }
-            .hardware-grid, .pres-step-container { flex-direction: column; }
-            .pres-table { font-size: 0.8em; }
+        button:hover { background: #ad1457; } 
+        
+        #chat-container { 
+            display: none; 
+            width: 100%; max-width: 600px; 
+            background: var(--bg-overlay); 
+            backdrop-filter: blur(5px); 
+            flex-direction: column; height: 100%; 
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
         }
+        
+        header { 
+            background: var(--rose-primary); 
+            color: white; padding: 15px 20px; 
+            display: flex; justify-content: space-between; align-items: center; 
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-weight: 500;
+        }
+        #online-count { 
+            font-size: 13px; background: rgba(255,255,255,0.2); 
+            padding: 5px 12px; border-radius: 15px; 
+        }
+        
+        #messages { 
+            flex: 1; overflow-y: auto; padding: 20px; 
+            display: flex; flex-direction: column; gap: 10px; 
+            scrollbar-width: thin; scrollbar-color: var(--rose-primary) transparent;
+        }
+        
+        .msg { 
+            padding: 10px 16px; border-radius: 18px; 
+            max-width: 75%; word-wrap: break-word; position: relative;
+            font-size: 15px; line-height: 1.4;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .msg.my-msg { 
+            align-self: flex-end; 
+            background: var(--rose-primary); 
+            color: white; 
+            border-bottom-right-radius: 4px; 
+        }
+        
+        .msg.other-msg { 
+            align-self: flex-start; 
+            background: #f1f0f0; 
+            color: #333; 
+            border-bottom-left-radius: 4px;
+        }
+        
+        #input-area { 
+            padding: 15px; border-top: 1px solid rgba(0,0,0,0.05); 
+            display: flex; background: rgba(255,255,255,0.6);
+        }
+        #msg-input { 
+            flex: 1; border: 1px solid #ddd; text-align: left; margin: 0 10px 0 0;
+            background: white;
+        }
+        #input-area button { margin: 0; }
     </style>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
 
-    <nav>
-        <div class="nav-left">
-            <div class="nav-item" onclick="sayfaDegistir('setup')">
-                🔧 KURULUM REHBERİ
-            </div>
-        </div>
-
-        <div class="nav-center" onclick="sayfaDegistir('home')">
-            TEK<span>GPS</span>
-        </div>
-
-        <div class="nav-right">
-            <button class="theme-btn" onclick="temaDegistir()" id="temaBtn">
-                ☀️ AÇIK MOD
-            </button>
-            <div class="nav-item" onclick="sayfaDegistir('about')">
-                ℹ️ HAKKIMIZDA
-            </div>
-        </div>
-    </nav>
-
-    <section id="home-section" class="active-section" style="display: flex;">
-        <img src="logo.jpg" alt="TekGPS Logo" class="neon-logo-img">
-        
-        <h1 style="font-family: 'Orbitron'; font-size: 2.5em; margin-bottom: 5px; text-shadow: 0 0 30px var(--accent-color);">ARACINIZ GÜVENDE</h1>
-        
-        <p class="slogan">Tek Ödeme. Ömür Boyu Özgürlük.</p>
-        
-        <div class="marquee-home-container">
-            <marquee behavior="scroll" direction="left" scrollamount="8" class="marquee-text">
-                🎄 Mutlu Yıllar! TekGPS Ailesi Olarak Yeni Yılda Size ve Sevdiklerinize Güvenli, Huzurlu ve Keyifli Sürüşler Dileriz. Yolunuz Açık Olsun! ✨
-            </marquee>
-        </div>
-
-        <button class="big-btn" onclick="sayfaDegistir('tracking')">
-            🚀 SİSTEME GİRİŞ / SORGULAMA
-        </button>
-    </section>
-
-    <section id="tracking-section" class="page-section">
-        <h2 style="font-family: 'Orbitron'; color: var(--accent-color); margin-bottom: 20px;">CANLI KONUM İZLEME</h2>
-        
-        <div class="kontrol-kutusu">
-            <p style="opacity: 0.8; margin-bottom: 20px;">Lütfen Cihaz Seri Numarasını Giriniz</p>
-            <input type="text" id="seriNo" placeholder="Örn: 1001">
-            <br>
-            <button class="search-btn" onclick="cihaziBul()">🛰️ UYDU BAĞLANTISI KUR</button>
-            <div id="durumMesaji" style="margin-top: 25px; font-weight: bold; font-size: 1.2em;"></div>
-        </div>
-
-        <div id="harita"></div>
-    </section>
-
-    <section id="setup-section" class="page-section">
-        <div class="info-box">
-            <h2>🔧 Pratik Kurulum Rehberi</h2>
-            
-            <div class="sim-info-box">
-                <div class="sim-title">💡 EKONOMİK İPUCU: Hangi Hattı Almalıyım?</div>
-                <p>Yeni ve pahalı bir faturalı hat almanıza gerek yok! Operatörünüze gidip <strong>"Mevcut paketime bağlı Data Hattı (Multi SIM)"</strong> çıkartmak istediğinizi söyleyin.</p>
-                <ul style="margin-top: 10px;">
-                    <li><strong>✅ Avantajı:</strong> Kendi telefonunuzdaki internet paketini kullanır.</li>
-                    <li><strong>💰 Maliyeti:</strong> Yeni hat ücreti ödemezsiniz. Faturanıza sadece ortalama <strong>40-60 TL</strong> civarı bir "Hizmet Bedeli" eklenir.</li>
-                </ul>
-            </div>
-
-            <p>SIM kartınız hazırsa, aşağıdaki adımları takip ederek montajı yapabilirsiniz:</p>
-            <h3><div class="step-number">1</div> SIM Kart Hazırlığı</h3>
-            <ul>
-                <li>⚠️ <strong>Önemli:</strong> Aldığınız SIM kartı önce telefonunuza takın ve <strong>PIN kodunu kaldırın.</strong></li>
-                <li>Hattın internete bağlandığını test edin.</li>
-            </ul>
-            <h3><div class="step-number">2</div> Kablo Bağlantısı</h3>
-            <ul>
-                <li>🔴 <strong>KIRMIZI (+):</strong> Araçta sürekli elektrik olan bir noktaya bağlanır.</li>
-                <li>⚫ <strong>SİYAH (-):</strong> Aracın metal gövdesindeki herhangi bir vidaya bağlanır (Şase).</li>
-            </ul>
-            <h3><div class="step-number">3</div> Montaj Konumu</h3>
-            <p>Cihazı plastik panellerin altına gizleyebilirsiniz. Cihazın üstünü tamamen metal bir yüzeyle kapatmamaya özen gösterin.</p>
-            <h3><div class="step-number">4</div> İzlemeye Başla</h3>
-            <p>Kurulum tamam! Cihaz ışıkları yandıktan sonra seri numaranızla takibe başlayabilirsiniz.</p>
-        </div>
-    </section>
-
-    <section id="about-section" class="page-section">
-        <div class="info-box">
-            <h2>Biz Kimiz?</h2>
-            <p>TekGPS, 2025 yılında İzmir'de kurulmuş, araç güvenliğini en sade ve ekonomik hale getirmeyi amaçlayan bir teknoloji girişimidir.</p>
-            
-            <h3>Neden "Tek Fiyat" ve Aidat Yok?</h3>
-            <p>TekGPS'in en büyük farkı budur. Biz size sadece <strong>cihazı satıyoruz.</strong> Cihazın içinde bizim SIM kartımız yoktur. </p>
-            <p>Siz dilediğiniz operatörden (Turkcell, Vodafone vb.) kendi bütçenize uygun bir hat alıp cihaza takarsınız. Böylece bize her ay kira veya sunucu ücreti ödemezsiniz. <strong>Cihazı bir kere satın alır, ömür boyu kullanırsınız.</strong></p>
-            
-            <h3>Güvenlik</h3>
-            <p>Konum verileriniz şifreli olarak doğrudan cihazdan ekranınıza gelir.</p>
-            
-            <div style="margin-top: 40px; text-align: center; border-top: 1px solid var(--input-border); padding-top: 30px;">
-                <p style="font-size: 0.9em; margin-bottom: 20px;">Bu proje hakkında daha fazla teknik detay için:</p>
-                
-                <div class="button-group">
-                    <button class="big-btn pres-btn" onclick="baslatSunum()">
-                        🖥️ ÜRÜN SUNUMU
-                    </button>
-
-                    <button class="big-btn poster-btn" onclick="posterGoster()">
-                        📄 PROJE POSTERİ
-                    </button>
-                </div>
-            </div>
-
-            <br>
-            <div style="text-align: center; opacity: 0.6; padding-top: 20px;">
-                &copy; 2025 TekGPS Sistemleri - İzmir<br>Tüm Hakları Saklıdır.
-            </div>
-        </div>
-    </section>
-
-    <div id="presentation-overlay">
-        <button class="close-pres-btn" onclick="kapatSunum()">KAPAT X</button>
-        
-        <div class="slide active-slide">
-            <h1 style="font-size: 5em;">TEK<span style="color:#ff0055;">GPS</span></h1>
-            <h2>IoT Tabanlı Yeni Nesil Araç Takip Sistemi</h2>
-            <p>"Tek Ödeme. Ömür Boyu Özgürlük."</p>
-            <div style="margin-top:50px; opacity:0.7;">Hazırlayan: Arda S.</div>
-        </div>
-
-        <div class="slide">
-            <h2>PROJENİN AMACI</h2>
-            <ul>
-                <li>❌ <strong>Sorun:</strong> Mevcut sistemlerdeki yüksek abonelik ücretleri.</li>
-                <li>✅ <strong>Çözüm:</strong> Bireysel kullanıcılar için "Tak-Çalıştır" sistemi.</li>
-                <li>🚀 <strong>Hedef:</strong> Sözleşmesiz, ekonomik ve özgür bir güvenlik ağı.</li>
-            </ul>
-        </div>
-
-        <div class="slide">
-            <h2>DONANIM MİMARİSİ</h2>
-            <p>Sistemin kalbinde üç ana bileşen bulunmaktadır:</p>
-            <div class="hardware-grid">
-                <div class="hardware-item"><h3>NEO-6M GPS</h3><p>Uydudan anlık enlem/boylam verisi alır.</p></div>
-                <div class="hardware-item"><h3>SIM800L GSM</h3><p>Veriyi GPRS üzerinden buluta aktarır.</p></div>
-                <div class="hardware-item"><h3>ESP8266</h3><p>Sistemin beyni ve Wi-Fi/GPRS yöneticisi.</p></div>
-            </div>
-        </div>
-
-        <div class="slide">
-            <h2>FIREBASE TEKNOLOJİSİ</h2>
-            <p>Google tarafından sunulan, sunucusuz (serverless) bir bulut altyapısıdır.</p>
-            <ul>
-                <li>🔥 <strong>Realtime Database:</strong> Veriler JSON ağaçlarında tutulur.</li>
-                <li>⚡ <strong>Hız:</strong> Veri gecikmesi (latency) milisaniyeler seviyesindedir.</li>
-                <li>🛡️ <strong>Güvenlik:</strong> Google'ın sunucu güvenliği altındadır.</li>
-            </ul>
-        </div>
-
-        <div class="slide">
-            <h2>WEB ARAYÜZÜ</h2>
-            <h1 style="font-size: 3em;">tekgps.com.tr</h1>
-            <ul>
-                <li>💻 <strong>Seri No İle Takip:</strong> Şifre derdi yok.</li>
-                <li>🗺️ <strong>Leaflet Harita:</strong> Hızlı ve detaylı harita motoru.</li>
-                <li>🌗 <strong>Dinamik Tema:</strong> Koyu/Açık mod seçenekleri.</li>
-            </ul>
-        </div>
-
-        <div class="slide">
-            <h2>KOLAY KURULUM</h2>
-            <div class="pres-step-container">
-                <div class="pres-step"><span class="step-num">1</span><h3>SIM KART</h3><p>PIN kodu kaldırılmış kart takılır.</p></div>
-                <div class="pres-step"><span class="step-num">2</span><h3>BAĞLANTI</h3><p>Kırmızı (+) ve Siyah (-) bağlanır.</p></div>
-                <div class="pres-step"><span class="step-num">3</span><h3>TAKİP</h3><p>Seri numarasından izlenir.</p></div>
-            </div>
-        </div>
-
-        <div class="slide">
-            <h2>NEDEN BİZ?</h2>
-            <table class="pres-table">
-                <thead><tr><th>Özellik</th><th>Rakip Firmalar</th><th>TekGPS</th></tr></thead>
-                <tbody>
-                    <tr><td>Aylık Ücret</td><td class="cross">Var</td><td class="check">YOK</td></tr>
-                    <tr><td>Taahhüt</td><td class="cross">Zorunlu</td><td class="check">YOK</td></tr>
-                    <tr><td>SIM Kart</td><td class="cross">Zorunlu Satış</td><td class="check">Kendi Hattın</td></tr>
-                </tbody>
-            </table>
-        </div>
-
-        <div class="slide">
-            <h2>AKADEMİK KAYNAKÇA</h2>
-            <ul style="font-size: 0.8em; width: 90%;">
-                <li>1. Zhang, J., & Zhang, L. (2019). "Design and Implementation of Vehicle GPS Tracking System."</li>
-                <li>2. Al-Kuwari, A. M., et al. (2021). "Smart Tracking System for Vehicles Using GPS and GSM."</li>
-                <li>3. Google Developers. (2024). "Firebase Realtime Database Documentation."</li>
-                <li>4. u-blox AG. (2020). "NEO-6 Series GPS Modules Data Sheet."</li>
-                <li>5. SimCom. (2018). "SIM800L Hardware Design V1.00."</li>
-            </ul>
-        </div>
-
-        <div class="slide">
-            <h1 style="font-size: 5em;">TEŞEKKÜRLER</h1>
-            <p>Dinlediğiniz için teşekkür ederim.</p>
-            <p style="color: #00f2fe;">Sorularınız?</p>
-            <div style="margin-top: 30px; font-size: 0.8em; opacity: 0.7;">Arda S.</div>
-        </div>
+    <div id="login-screen">
+        <h2>🌹 Giriş Yap 🌹</h2>
+        <input type="password" id="password-input" placeholder="Şifre...">
+        <button onclick="checkPassword()">Sohbete Başla</button>
     </div>
 
-    <div id="poster-overlay" onclick="posterKapat(event)">
-        <div class="poster-container">
-            <span class="close-poster-btn" onclick="posterKapat(event)">&times; KAPAT</span>
-            <img src="poster.jpg" alt="TekGPS Akademik Poster" class="poster-img"> 
+    <div id="chat-container">
+        <header>
+            <span>🌹 Özel Oda</span>
+            <span id="online-count">Çevrimiçi: 0</span>
+        </header>
+        <div id="messages"></div>
+        <div id="input-area">
+            <input type="text" id="msg-input" placeholder="Bir şeyler yaz...">
+            <button onclick="sendMessage()">Gönder 🌹</button>
         </div>
     </div>
-
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // --- TEMA DEĞİŞTİRME ---
-        function temaDegistir() {
-            var body = document.body;
-            var btn = document.getElementById("temaBtn");
-            body.classList.toggle("light-mode");
-            btn.innerHTML = body.classList.contains("light-mode") ? "🌑 KOYU MOD" : "☀️ AÇIK MOD";
-        }
-
-        // --- MENÜ GEÇİŞ ---
-        function sayfaDegistir(sayfaId) {
-            document.getElementById('home-section').style.display = 'none';
-            document.getElementById('tracking-section').style.display = 'none';
-            document.getElementById('setup-section').style.display = 'none';
-            document.getElementById('about-section').style.display = 'none';
-
-            if(sayfaId === 'home') {
-                document.getElementById(sayfaId + '-section').style.display = 'flex';
-            } else {
-                document.getElementById(sayfaId + '-section').style.display = 'block';
-            }
-
-            if(sayfaId === 'tracking') {
-                setTimeout(function(){ map.invalidateSize(); }, 200);
-            }
-        }
-
-        // --- POSTER FONKSİYONLARI ---
-        function posterGoster() {
-            document.getElementById('poster-overlay').style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
-
-        function posterKapat(e) {
-            if (e.target.id === 'poster-overlay' || e.target.className === 'close-poster-btn') {
-                document.getElementById('poster-overlay').style.display = 'none';
-                document.body.style.overflow = 'auto';
-            }
-        }
-
-        // --- SUNUM FONKSİYONLARI ---
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('#presentation-overlay .slide');
-        const totalSlides = slides.length;
-
-        function baslatSunum() {
-            document.getElementById('presentation-overlay').style.display = 'flex';
-            document.documentElement.requestFullscreen().catch((e) => {}); 
-            currentSlide = 0;
-            gosterSlayt(0);
-            document.body.style.overflow = 'hidden'; 
-        }
-
-        function kapatSunum() {
-            document.getElementById('presentation-overlay').style.display = 'none';
-            if (document.fullscreenElement) {
-                document.exitFullscreen().catch((e) => {});
-            }
-            document.body.style.overflow = 'auto'; 
-        }
-
-        function gosterSlayt(index) {
-            slides.forEach(slide => slide.classList.remove('active-slide'));
-            slides[index].classList.add('active-slide');
-        }
-
-        function ileriSlayt() {
-            if (currentSlide < totalSlides - 1) {
-                currentSlide++;
-                gosterSlayt(currentSlide);
-            }
-        }
-
-        function geriSlayt() {
-            if (currentSlide > 0) {
-                currentSlide--;
-                gosterSlayt(currentSlide);
-            }
-        }
-
-        // Klavye Dinleme
-        document.addEventListener('keydown', function(event) {
-            if (document.getElementById('presentation-overlay').style.display === 'flex') {
-                if (event.key === "ArrowRight" || event.key === " " || event.key === "Enter") {
-                    ileriSlayt();
-                } else if (event.key === "ArrowLeft") {
-                    geriSlayt();
-                } else if (event.key === "Escape") {
-                    kapatSunum();
-                }
-            } else if (document.getElementById('poster-overlay').style.display === 'flex') {
-                if (event.key === "Escape") {
-                    // Escape tuşu posteri de kapatsın
-                    document.getElementById('poster-overlay').style.display = 'none';
-                    document.body.style.overflow = 'auto';
-                }
-            }
-        });
-
-        // Mouse Tıklama (Sunumda İlerlemek İçin)
-        document.getElementById('presentation-overlay').addEventListener('click', function(e) {
-            if (e.target.className !== 'close-pres-btn') {
-                ileriSlayt();
-            }
-        });
-
-        // --- FIREBASE VE HARİTA ---
+        // --- SENİN FIREBASE BİLGİLERİN ---
         const firebaseConfig = {
-          apiKey: "AIzaSyDKIGjt_USZ7Xc1gw8vEEt7fZbVfzE0-FI",
-          authDomain: "arac-takip-sistemi-536e0.firebaseapp.com",
-          databaseURL: "https://arac-takip-sistemi-536e0-default-rtdb.firebaseio.com",
-          projectId: "arac-takip-sistemi-536e0",
-          storageBucket: "arac-takip-sistemi-536e0.firebasestorage.app",
-          messagingSenderId: "363603708186",
-          appId: "1:363603708186:web:d7aad0022a33eb4c5b04a3"
+            apiKey: "AIzaSyCR-GAacpFPdXEEcMlK76usjwUBiw8UEIk",
+            authDomain: "yazi-9b365.firebaseapp.com",
+            databaseURL: "https://yazi-9b365-default-rtdb.firebaseio.com",
+            projectId: "yazi-9b365",
+            storageBucket: "yazi-9b365.firebasestorage.app",
+            messagingSenderId: "907130543316",
+            appId: "1:907130543316:web:4aad9b5101d0644b5d2f41"
         };
-
-        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfig); } 
-        else { firebase.app(); }
         
+        // --- ŞİFRE AYARI ---
+        const SITE_PASSWORD = "XAda"; 
+
+        // Firebase Başlatma
+        firebase.initializeApp(firebaseConfig);
         const db = firebase.database();
-        var mevcutMarker = null;
+        
+        let myID = localStorage.getItem("myID") || Math.random().toString(36).substr(2, 9);
+        localStorage.setItem("myID", myID);
 
-        var map = L.map('harita').setView([39.0, 35.0], 6);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        function checkPassword() {
+            const input = document.getElementById("password-input").value;
+            if(input === SITE_PASSWORD) {
+                document.getElementById("login-screen").style.display = "none";
+                document.getElementById("chat-container").style.display = "flex";
+                setupPresence();
+                scrollToBottom();
+            } else {
+                alert("Yanlış şifre!");
+            }
+        }
 
-        function cihaziBul() {
-            var seriNo = document.getElementById("seriNo").value;
-            var mesajKutusu = document.getElementById("durumMesaji");
+        function sendMessage() {
+            const input = document.getElementById("msg-input");
+            const text = input.value.trim();
+            if(text === "") return;
 
-            if(seriNo === "") {
-                mesajKutusu.innerHTML = "⚠️ Lütfen seri numarası girin!";
-                mesajKutusu.style.color = "#ff4d4d";
-                return;
+            db.ref("messages").push({
+                text: text,
+                senderID: myID,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+            input.value = "";
+            input.focus();
+        }
+
+        db.ref("messages").on("child_added", (snapshot) => {
+            const data = snapshot.val();
+            const msgDiv = document.createElement("div");
+            msgDiv.innerText = data.text;
+            msgDiv.classList.add("msg");
+            
+            if (data.senderID === myID) {
+                msgDiv.classList.add("my-msg");
+            } else {
+                msgDiv.classList.add("other-msg");
             }
 
-            mesajKutusu.innerHTML = "📡 " + seriNo + " uydudan aranıyor...";
-            mesajKutusu.style.color = "var(--accent-color)";
+            document.getElementById("messages").appendChild(msgDiv);
+            scrollToBottom();
+        });
 
-            var aracYolu = db.ref('araclar/' + seriNo);
-            aracYolu.on('value', (snapshot) => {
-                const veri = snapshot.val();
-
-                if (veri) {
-                    var enlem = veri.enlem;
-                    var boylam = veri.boylam;
-                    var hiz = veri.hiz || 0;
-
-                    if (mevcutMarker) { map.removeLayer(mevcutMarker); }
-
-                    mevcutMarker = L.marker([enlem, boylam]).addTo(map)
-                        .bindPopup("<b>Cihaz: " + seriNo + "</b><br>Hız: " + hiz + " km/s<br>Durum: Aktif")
-                        .openPopup();
-
-                    map.setView([enlem, boylam], 15);
-                    mesajKutusu.innerHTML = "✅ Sinyal Alındı! Canlı izleniyor.";
-                    mesajKutusu.style.color = "#00ff00";
-                } else {
-                    mesajKutusu.innerHTML = "❌ Cihaz bulunamadı veya kapalı!";
-                    mesajKutusu.style.color = "#ff4d4d";
+        function setupPresence() {
+            const connectedRef = db.ref(".info/connected");
+            const onlineRef = db.ref("online_users");
+            connectedRef.on("value", (snap) => {
+                if (snap.val() === true) {
+                    const con = onlineRef.push();
+                    con.onDisconnect().remove();
+                    con.set(true);
                 }
             });
+            onlineRef.on("value", (snap) => {
+                document.getElementById("online-count").innerText = "Çevrimiçi: " + snap.numChildren();
+            });
         }
+
+        function scrollToBottom() {
+            const el = document.getElementById("messages");
+            el.scrollTop = el.scrollHeight;
+        }
+
+        document.getElementById("msg-input").addEventListener("keypress", function(e) {
+            if (e.key === "Enter") sendMessage();
+        });
     </script>
 </body>
 </html>
-
-
-
