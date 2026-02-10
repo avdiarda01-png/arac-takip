@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Özel İsimli Sohbet</title>
+    <title>Sesli Sohbet</title>
     <style>
         /* --- GÜL TEMASI --- */
         body { 
@@ -20,7 +20,6 @@
             --bg-overlay: rgba(255, 255, 255, 0.85); 
         }
         
-        /* GİRİŞ EKRANI */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85); 
@@ -43,7 +42,6 @@
         }
         button:hover { background: #ad1457; } 
         
-        /* SOHBET KUTUSU */
         #chat-container { 
             display: none; width: 100%; max-width: 600px; 
             background: var(--bg-overlay); backdrop-filter: blur(5px); 
@@ -64,7 +62,6 @@
             background: rgba(255,255,255,0.9); color: #333;
         }
 
-        /* MESAJ ALANI */
         #messages { 
             flex: 1; overflow-y: auto; padding: 20px; 
             display: flex; flex-direction: column; gap: 15px; 
@@ -85,7 +82,6 @@
             word-wrap: break-word; position: relative;
             font-size: 15px; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.1);
         }
-        
         .my-msg .msg-bubble { background: var(--rose-primary); color: white; border-bottom-right-radius: 4px; }
         .other-msg .msg-bubble { background: #f1f0f0; color: #333; border-bottom-left-radius: 4px; }
         
@@ -101,6 +97,8 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 </head>
 <body>
+    
+    <audio id="notification-sound" src="https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3" preload="auto"></audio>
 
     <div id="login-screen">
         <h2>🌹 Giriş Yap 🌹</h2>
@@ -114,9 +112,7 @@
             <span id="room-title">Sohbet</span>
             <input type="text" id="username-input" placeholder="İsminiz..." maxlength="12">
         </header>
-        
         <div id="messages"></div>
-        
         <div id="input-area">
             <input type="text" id="msg-input" placeholder="Mesaj yaz...">
             <button onclick="sendMessage()">Gönder 🌹</button>
@@ -124,7 +120,6 @@
     </div>
 
     <script>
-        // --- SENİN BİLGİLERİN ---
         const firebaseConfig = {
             apiKey: "AIzaSyCR-GAacpFPdXEEcMlK76usjwUBiw8UEIk",
             authDomain: "yazi-9b365.firebaseapp.com",
@@ -141,8 +136,8 @@
         let myID = localStorage.getItem("myID") || Math.random().toString(36).substr(2, 9);
         localStorage.setItem("myID", myID);
         
-        // Siteyi açtığımız zamanı kaydedelim (Eski mesajlara bildirim gitmesin diye)
         const loginTime = Date.now();
+        const notificationSound = document.getElementById("notification-sound");
 
         if(localStorage.getItem("chatName")) {
             document.getElementById("username-input").value = localStorage.getItem("chatName");
@@ -150,7 +145,6 @@
 
         let currentRoomID = ""; 
 
-        // --- GİRİŞ ---
         function checkPassword() {
             const input = document.getElementById("password-input").value.trim();
             
@@ -171,27 +165,39 @@
             document.getElementById("chat-container").style.display = "flex";
             document.getElementById("room-title").innerText = "🌹 " + roomTitle;
             
-            // Odaya girince bildirim izni iste
             requestNotificationPermission();
             
+            // iOS'ta sesin çalışması için boş bir ses çalıyoruz (Kilit açma mantığı)
+            notificationSound.play().catch(function(error) {
+                console.log("Ses kilidi açık değil henüz.");
+            });
+
             loadMessages();
         }
 
-        // --- BİLDİRİM İZNİ İSTE ---
         function requestNotificationPermission() {
             if ("Notification" in window) {
                 Notification.requestPermission();
             }
         }
 
-        // --- BİLDİRİM GÖNDER ---
+        function playSound() {
+            // Sesi başa sar ve oynat
+            notificationSound.currentTime = 0;
+            notificationSound.play().catch(e => console.log("Ses oynatılamadı:", e));
+        }
+
         function sendBrowserNotification(sender, text) {
-            // Eğer sayfa görünür değilse veya kullanıcı başka sekmedeyse
+            // Görsel bildirim
             if (document.hidden && Notification.permission === "granted") {
-                new Notification("Yeni Mesaj: " + sender, {
+                new Notification("🌹 Yeni Mesaj: " + sender, {
                     body: text,
-                    icon: "https://cdn-icons-png.flaticon.com/512/2936/2936956.png" // Gül ikonu
+                    icon: "https://cdn-icons-png.flaticon.com/512/2936/2936956.png"
                 });
+            }
+            // SESLİ BİLDİRİM (Her durumda çalışsın diye buraya ekledik)
+            if (document.hidden) {
+                playSound();
             }
         }
 
@@ -215,8 +221,7 @@
                 } else {
                     container.classList.add("other-msg");
                     
-                    // --- BİLDİRİM KONTROLÜ ---
-                    // Mesaj benden değilse VE siteye giriş yaptıktan sonra atılmışsa
+                    // Bildirim ve Ses Kontrolü
                     if (data.timestamp > loginTime) {
                         sendBrowserNotification(data.senderName || "Biri", data.text);
                     }
@@ -224,7 +229,6 @@
 
                 container.appendChild(nameSpan);
                 container.appendChild(bubble);
-                
                 document.getElementById("messages").appendChild(container);
                 scrollToBottom();
             });
