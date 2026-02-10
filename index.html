@@ -2,23 +2,28 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Özel Sohbet</title>
     
     <style>
-        /* --- GÜL TEMASI --- */
+        /* --- CSS AYARLARI --- */
         body { 
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
-            margin: 0; 
+            margin: 0; padding: 0;
             background: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=1376&auto=format&fit=crop') no-repeat center center fixed; 
             background-size: cover; 
-            display: flex; justify-content: center; height: 100vh; overflow: hidden; 
+            /* Mobilde ekranın tam oturması için kritik ayar: */
+            height: 100dvh; 
+            width: 100vw;
+            display: flex; justify-content: center; 
+            overflow: hidden; 
         }
 
         :root {
             --rose-primary: #d81b60; 
             --rose-light: #fce4ec;   
-            --bg-overlay: rgba(255, 255, 255, 0.85); 
+            --bg-overlay: rgba(255, 255, 255, 0.90); 
+            --seen-color: #34b7f1; /* Mavi tik rengi */
         }
         
         /* GİRİŞ EKRANI */
@@ -30,7 +35,6 @@
             color: #fff;
         }
         #login-screen h2 { color: var(--rose-light); margin-bottom: 5px;}
-        #login-screen p { color: #ccc; font-size: 14px; margin-bottom: 20px; }
         
         input, button { 
             padding: 12px; margin: 8px; border-radius: 25px; 
@@ -42,23 +46,24 @@
             color: white; cursor: pointer; border: none; font-weight: bold; padding-left: 25px; padding-right: 25px;
             transition: background 0.3s;
         }
-        button:hover { background: #ad1457; } 
 
-        /* SOHBET KUTUSU */
+        /* SOHBET KUTUSU (Mobil Uyumlu) */
         #chat-container { 
-            display: none; width: 100%; max-width: 600px; 
-            background: var(--bg-overlay); backdrop-filter: blur(5px); 
-            flex-direction: column; height: 100%; 
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            display: none; 
+            width: 100%; max-width: 600px; 
+            background: var(--bg-overlay); 
+            flex-direction: column; 
+            height: 100%; /* Body'nin 100dvh'sine uyar */
             position: relative;
         }
         
-        /* HEADER ALANI */
+        /* HEADER (SABİT ÜST) */
         header { 
             background: var(--rose-primary); color: white; padding: 10px 15px; 
             display: flex; justify-content: space-between; align-items: center; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); font-weight: 500;
-            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-weight: 500;
+            flex-shrink: 0; /* Asla küçülmesin */
+            height: 50px;
         }
         
         .header-left { display: flex; align-items: center; }
@@ -70,56 +75,67 @@
         #online-btn {
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255,255,255,0.4);
-            color: white; padding: 5px 10px; font-size: 12px;
-            border-radius: 12px; cursor: pointer;
-            display: flex; align-items: center; gap: 5px;
-            margin: 0;
+            color: white; padding: 5px 10px; font-size: 11px;
+            border-radius: 12px; cursor: pointer; white-space: nowrap;
         }
-        #online-btn:hover { background: rgba(255, 255, 255, 0.3); }
 
         /* İsim Kutusu */
         #username-input {
-            width: 90px; padding: 5px; font-size: 13px; 
+            width: 80px; padding: 5px; font-size: 12px; 
             border: none; border-radius: 15px; text-align: center;
             background: rgba(255,255,255,0.9); color: #333;
             margin: 0;
         }
 
-        /* ONLİNE LİSTESİ POPUP */
+        /* ONLINE LİSTESİ */
         #online-list-popup {
-            display: none;
-            position: absolute;
-            top: 60px; right: 10px;
-            background: white;
-            border-radius: 10px;
+            display: none; position: absolute; top: 60px; right: 10px;
+            background: white; border-radius: 10px; width: 150px;
+            z-index: 50; padding: 10px; border: 1px solid #eee;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            width: 150px;
-            z-index: 50;
-            padding: 10px;
-            border: 1px solid #eee;
         }
-        #online-list-popup h4 { margin: 0 0 10px 0; font-size: 14px; color: var(--rose-primary); border-bottom: 1px solid #eee; padding-bottom: 5px; }
         #user-list { list-style: none; padding: 0; margin: 0; max-height: 200px; overflow-y: auto; }
         #user-list li { font-size: 13px; padding: 5px; border-bottom: 1px solid #f9f9f9; display: flex; align-items: center; gap: 5px; }
         #user-list li::before { content: "🟢"; font-size: 8px; }
 
         /* MESAJ ALANI */
         #messages { 
-            flex: 1; overflow-y: auto; padding: 20px; 
-            display: flex; flex-direction: column; gap: 15px; 
-            scrollbar-width: thin; scrollbar-color: var(--rose-primary) transparent;
+            flex: 1; /* Kalan tüm boşluğu kapla */
+            overflow-y: auto; /* Kendi içinde kaydır */
+            padding: 15px; 
+            display: flex; flex-direction: column; gap: 10px; 
+            padding-bottom: 20px;
         }
-        .msg-container { display: flex; flex-direction: column; max-width: 75%; }
+        
+        .msg-container { display: flex; flex-direction: column; max-width: 80%; }
         .msg-container.my-msg { align-self: flex-end; align-items: flex-end; }
         .msg-container.other-msg { align-self: flex-start; align-items: flex-start; }
-        .sender-name { font-size: 11px; color: #666; margin-bottom: 2px; margin-left: 8px; margin-right: 8px; font-weight: bold; }
-        .msg-bubble { padding: 10px 16px; border-radius: 18px; word-wrap: break-word; font-size: 15px; line-height: 1.4; box-shadow: 0 1px 2px rgba(0,0,0,0.1); }
-        .my-msg .msg-bubble { background: var(--rose-primary); color: white; border-bottom-right-radius: 4px; }
-        .other-msg .msg-bubble { background: #f1f0f0; color: #333; border-bottom-left-radius: 4px; }
         
-        #input-area { padding: 15px; border-top: 1px solid rgba(0,0,0,0.05); display: flex; background: rgba(255,255,255,0.6); }
-        #msg-input { flex: 1; border: 1px solid #ddd; text-align: left; margin: 0 10px 0 0; background: white; }
-        #input-area button { margin: 0; }
+        .sender-name { font-size: 10px; color: #666; margin: 0 5px 2px 5px; font-weight: bold; }
+        
+        .msg-bubble { 
+            padding: 8px 12px; border-radius: 15px; 
+            word-wrap: break-word; font-size: 15px; line-height: 1.3; 
+            box-shadow: 0 1px 1px rgba(0,0,0,0.1); position: relative;
+        }
+        .my-msg .msg-bubble { background: var(--rose-primary); color: white; border-bottom-right-radius: 2px; }
+        .other-msg .msg-bubble { background: #fff; color: #333; border-bottom-left-radius: 2px; }
+
+        /* TİK İŞARETİ (GÖRÜLDÜ) */
+        .tick-status {
+            font-size: 10px; margin-left: 5px; vertical-align: bottom; color: rgba(255,255,255,0.7);
+        }
+        .seen-blue { color: #81d4fa; font-weight: bold; } /* Görüldü rengi */
+
+        /* INPUT ALANI (SABİT ALT) */
+        #input-area { 
+            padding: 10px; border-top: 1px solid rgba(0,0,0,0.05); 
+            display: flex; background: #fff;
+            flex-shrink: 0; /* Küçülmesin */
+            padding-bottom: max(10px, env(safe-area-inset-bottom)); /* iPhone alt çizgisi için */
+        }
+        #msg-input { flex: 1; border: 1px solid #ddd; text-align: left; margin: 0 10px 0 0; background: #f9f9f9; }
+        #input-area button { margin: 0; padding: 10px 20px; }
     </style>
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -131,7 +147,6 @@
 
     <div id="login-screen">
         <h2>🌹 Giriş Yap 🌹</h2>
-        <p>Lütfen oda şifresini giriniz.</p>
         <input type="password" id="password-input" placeholder="Şifre...">
         <button onclick="checkPassword()">Giriş</button>
     </div>
@@ -143,27 +158,26 @@
             </div>
             
             <div class="header-right">
-                <div id="online-btn" onclick="toggleUserList()">
-                    🟢 0
-                </div>
-                <input type="text" id="username-input" placeholder="İsminiz..." maxlength="12" onblur="updateMyPresenceName()">
+                <div id="online-btn" onclick="toggleUserList()">🟢 0</div>
+                <input type="text" id="username-input" placeholder="İsminiz..." maxlength="10" onblur="updateMyPresenceName()">
             </div>
         </header>
 
         <div id="online-list-popup">
-            <h4>Çevrimiçi Kişiler</h4>
+            <h4 style="margin:5px 0; color:#d81b60; font-size:12px;">Çevrimiçi Kişiler</h4>
             <ul id="user-list"></ul>
         </div>
 
         <div id="messages"></div>
+        
         <div id="input-area">
             <input type="text" id="msg-input" placeholder="Mesaj yaz...">
-            <button onclick="sendMessage()">Gönder 🌹</button>
+            <button onclick="sendMessage()">Gönder</button>
         </div>
     </div>
 
     <script>
-        // --- FIREBASE AYARLARI ---
+        // --- AYARLAR ---
         const firebaseConfig = {
             apiKey: "AIzaSyCR-GAacpFPdXEEcMlK76usjwUBiw8UEIk",
             authDomain: "yazi-9b365.firebaseapp.com",
@@ -206,7 +220,7 @@
             currentRoomID = roomID;
             document.getElementById("login-screen").style.display = "none";
             document.getElementById("chat-container").style.display = "flex";
-            document.getElementById("room-title").innerText = "🌹 " + roomTitle;
+            document.getElementById("room-title").innerText = roomTitle;
             
             requestNotificationPermission();
             notificationSound.play().catch(e => {}); 
@@ -215,7 +229,74 @@
             setupPresence(); 
         }
 
-        // --- PRESENCE (KİM ONLINE?) SİSTEMİ ---
+        // --- GÖRÜLDÜ, BİLDİRİM VE MESAJLAR ---
+        function loadMessages() {
+            // 1. YENİ MESAJ GELDİĞİNDE
+            db.ref("rooms/" + currentRoomID + "/messages").on("child_added", (snapshot) => {
+                const data = snapshot.val();
+                const msgKey = snapshot.key; // Mesajın ID'si
+                
+                const container = document.createElement("div");
+                container.classList.add("msg-container");
+                container.setAttribute("id", "msg-" + msgKey); // ID veriyoruz ki sonra bulalım
+                
+                const nameSpan = document.createElement("span");
+                nameSpan.classList.add("sender-name");
+                nameSpan.innerText = data.senderName || "Gizli";
+
+                const bubble = document.createElement("div");
+                bubble.classList.add("msg-bubble");
+                
+                // Mesaj metni + Tik alanı
+                let tickHtml = "";
+                if (data.senderID === myID) {
+                    // Benim mesajımsa tik koy
+                    const tickClass = data.seen ? "seen-blue" : ""; 
+                    const tickIcon = data.seen ? "✓✓" : "✓";
+                    tickHtml = `<span class="tick-status ${tickClass}" id="tick-${msgKey}">${tickIcon}</span>`;
+                }
+                
+                bubble.innerHTML = `${data.text} ${tickHtml}`;
+
+                if (data.senderID === myID) {
+                    container.classList.add("my-msg");
+                } else {
+                    container.classList.add("other-msg");
+                    
+                    // --- GÖRÜLDÜ İŞARETLEME ---
+                    // Eğer mesaj başkasınınsa ve henüz "görüldü" değilse, gördüm diye işaretle
+                    if (!data.seen) {
+                        db.ref("rooms/" + currentRoomID + "/messages/" + msgKey).update({ seen: true });
+                    }
+
+                    if (data.timestamp > loginTime) {
+                        sendBrowserNotification(data.senderName || "Biri", data.text);
+                    }
+                }
+
+                container.appendChild(nameSpan);
+                container.appendChild(bubble);
+                document.getElementById("messages").appendChild(container);
+                scrollToBottom();
+            });
+
+            // 2. MESAJ DEĞİŞTİĞİNDE (Biri mesajı görünce tetiklenir)
+            db.ref("rooms/" + currentRoomID + "/messages").on("child_changed", (snapshot) => {
+                const data = snapshot.val();
+                const msgKey = snapshot.key;
+                
+                // Eğer mesaj benimse ve "seen" olduysa tiki güncelle
+                if (data.senderID === myID && data.seen) {
+                    const tickEl = document.getElementById("tick-" + msgKey);
+                    if (tickEl) {
+                        tickEl.innerHTML = "✓✓"; // Çift tik yap
+                        tickEl.classList.add("seen-blue"); // Mavi yap
+                    }
+                }
+            });
+        }
+
+        // --- DİĞER FONKSİYONLAR ---
         function setupPresence() {
             const connectedRef = db.ref(".info/connected");
             const onlineRef = db.ref("rooms/" + currentRoomID + "/online_users");
@@ -230,15 +311,14 @@
 
             onlineRef.on("value", (snap) => {
                 const count = snap.numChildren();
-                document.getElementById("online-btn").innerText = "🟢 " + count + " Çevrimiçi";
+                document.getElementById("online-btn").innerText = "🟢 " + count;
                 
                 const listEl = document.getElementById("user-list");
                 listEl.innerHTML = ""; 
-                
                 snap.forEach((childSnap) => {
                     const user = childSnap.val();
                     const li = document.createElement("li");
-                    li.innerText = user.name || "Gizli Üye"; 
+                    li.innerText = user.name || "Gizli"; 
                     listEl.appendChild(li);
                 });
             });
@@ -247,21 +327,14 @@
         function updateMyPresenceName() {
             if (!myPresenceRef) return;
             let name = document.getElementById("username-input").value.trim();
-            if (name === "") name = "Gizli Üye";
+            if (name === "") name = "Gizli";
             localStorage.setItem("chatName", name);
-            myPresenceRef.set({
-                name: name,
-                last_seen: firebase.database.ServerValue.TIMESTAMP
-            });
+            myPresenceRef.set({ name: name, last_seen: firebase.database.ServerValue.TIMESTAMP });
         }
 
         function toggleUserList() {
             const popup = document.getElementById("online-list-popup");
-            if (popup.style.display === "block") {
-                popup.style.display = "none";
-            } else {
-                popup.style.display = "block";
-            }
+            popup.style.display = (popup.style.display === "block") ? "none" : "block";
         }
         
         document.addEventListener('click', function(event) {
@@ -272,66 +345,29 @@
             }
         });
 
-        // --- BİLDİRİMLER ---
         function requestNotificationPermission() {
             if ("Notification" in window) Notification.requestPermission();
         }
 
         function playSound() {
             notificationSound.currentTime = 0;
-            notificationSound.play().catch(e => console.log(e));
+            notificationSound.play().catch(e => {});
         }
 
         function sendBrowserNotification(sender, text) {
             if (document.hidden) {
                 playSound(); 
                 if (Notification.permission === "granted") {
-                    new Notification("🌹 Yeni Mesaj: " + sender, {
-                        body: text,
-                        icon: "https://cdn-icons-png.flaticon.com/512/2936/2936956.png"
-                    });
+                    new Notification("🌹 " + sender, { body: text, icon: "https://cdn-icons-png.flaticon.com/512/2936/2936956.png" });
                 }
             }
         }
 
-        // --- MESAJLARI YÜKLE ---
-        function loadMessages() {
-            db.ref("rooms/" + currentRoomID + "/messages").on("child_added", (snapshot) => {
-                const data = snapshot.val();
-                
-                const container = document.createElement("div");
-                container.classList.add("msg-container");
-                
-                const nameSpan = document.createElement("span");
-                nameSpan.classList.add("sender-name");
-                nameSpan.innerText = data.senderName || "Gizli";
-
-                const bubble = document.createElement("div");
-                bubble.classList.add("msg-bubble");
-                bubble.innerText = data.text;
-
-                if (data.senderID === myID) {
-                    container.classList.add("my-msg");
-                } else {
-                    container.classList.add("other-msg");
-                    if (data.timestamp > loginTime) {
-                        sendBrowserNotification(data.senderName || "Biri", data.text);
-                    }
-                }
-
-                container.appendChild(nameSpan);
-                container.appendChild(bubble);
-                document.getElementById("messages").appendChild(container);
-                scrollToBottom();
-            });
-        }
-
-        // --- MESAJ GÖNDER ---
         function sendMessage() {
             const input = document.getElementById("msg-input");
             const text = input.value.trim();
             let userName = document.getElementById("username-input").value.trim();
-            if(userName === "") userName = "Gizli Üye";
+            if(userName === "") userName = "Gizli";
 
             updateMyPresenceName(); 
 
@@ -341,6 +377,7 @@
                 text: text,
                 senderName: userName, 
                 senderID: myID,
+                seen: false, // Başlangıçta görülmedi
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             });
             input.value = "";
