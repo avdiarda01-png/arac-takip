@@ -12,9 +12,7 @@
             margin: 0; padding: 0;
             background: url('https://images.unsplash.com/photo-1518621736915-f3b1c41bfd00?q=80&w=1376&auto=format&fit=crop') no-repeat center center fixed; 
             background-size: cover; 
-            /* Mobilde ekranın tam oturması için kritik ayar: */
-            height: 100dvh; 
-            width: 100vw;
+            height: 100dvh; width: 100vw;
             display: flex; justify-content: center; 
             overflow: hidden; 
         }
@@ -22,11 +20,10 @@
         :root {
             --rose-primary: #d81b60; 
             --rose-light: #fce4ec;   
-            --bg-overlay: rgba(255, 255, 255, 0.90); 
-            --seen-color: #34b7f1; /* Mavi tik rengi */
+            --bg-overlay: rgba(255, 255, 255, 0.92); 
+            --seen-color: #34b7f1;
         }
         
-        /* GİRİŞ EKRANI */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.85); 
@@ -42,49 +39,45 @@
         }
         input { width: 80%; max-width: 300px; text-align: center; }
         button { 
-            background: var(--rose-primary); 
-            color: white; cursor: pointer; border: none; font-weight: bold; padding-left: 25px; padding-right: 25px;
-            transition: background 0.3s;
+            background: var(--rose-primary); color: white; cursor: pointer; border: none; font-weight: bold; 
+            padding-left: 25px; padding-right: 25px; transition: background 0.3s;
         }
 
-        /* SOHBET KUTUSU (Mobil Uyumlu) */
         #chat-container { 
-            display: none; 
-            width: 100%; max-width: 600px; 
-            background: var(--bg-overlay); 
-            flex-direction: column; 
-            height: 100%; /* Body'nin 100dvh'sine uyar */
-            position: relative;
+            display: none; width: 100%; max-width: 600px; 
+            background: var(--bg-overlay); flex-direction: column; 
+            height: 100%; position: relative;
         }
         
-        /* HEADER (SABİT ÜST) */
+        /* HEADER (ÜST KISIM) */
         header { 
-            background: var(--rose-primary); color: white; padding: 10px 15px; 
+            background: var(--rose-primary); color: white; padding: 0 10px; 
             display: flex; justify-content: space-between; align-items: center; 
             box-shadow: 0 2px 5px rgba(0,0,0,0.1); font-weight: 500;
-            flex-shrink: 0; /* Asla küçülmesin */
-            height: 50px;
+            flex-shrink: 0; height: 55px;
         }
         
         .header-left { display: flex; align-items: center; }
-        #room-title { font-weight: bold; font-size: 16px; }
+        #room-title { font-weight: bold; font-size: 16px; margin-left: 5px; }
 
-        .header-right { display: flex; align-items: center; gap: 8px; }
+        .header-right { display: flex; align-items: center; gap: 5px; }
 
-        /* Online Butonu */
-        #online-btn {
+        /* BUTONLAR */
+        .icon-btn {
             background: rgba(255, 255, 255, 0.2);
             border: 1px solid rgba(255,255,255,0.4);
-            color: white; padding: 5px 10px; font-size: 11px;
+            color: white; padding: 6px 8px; font-size: 12px;
             border-radius: 12px; cursor: pointer; white-space: nowrap;
+            display: flex; align-items: center; justify-content: center;
         }
+        
+        /* Sessize Alma Butonu */
+        #mute-btn { font-size: 14px; width: 30px; }
 
-        /* İsim Kutusu */
         #username-input {
-            width: 80px; padding: 5px; font-size: 12px; 
+            width: 70px; padding: 6px; font-size: 12px; 
             border: none; border-radius: 15px; text-align: center;
-            background: rgba(255,255,255,0.9); color: #333;
-            margin: 0;
+            background: rgba(255,255,255,0.9); color: #333; margin: 0;
         }
 
         /* ONLINE LİSTESİ */
@@ -100,19 +93,13 @@
 
         /* MESAJ ALANI */
         #messages { 
-            flex: 1; /* Kalan tüm boşluğu kapla */
-            overflow-y: auto; /* Kendi içinde kaydır */
-            padding: 15px; 
-            display: flex; flex-direction: column; gap: 10px; 
-            padding-bottom: 20px;
+            flex: 1; overflow-y: auto; padding: 15px; 
+            display: flex; flex-direction: column; gap: 10px; padding-bottom: 20px;
         }
-        
         .msg-container { display: flex; flex-direction: column; max-width: 80%; }
         .msg-container.my-msg { align-self: flex-end; align-items: flex-end; }
         .msg-container.other-msg { align-self: flex-start; align-items: flex-start; }
-        
         .sender-name { font-size: 10px; color: #666; margin: 0 5px 2px 5px; font-weight: bold; }
-        
         .msg-bubble { 
             padding: 8px 12px; border-radius: 15px; 
             word-wrap: break-word; font-size: 15px; line-height: 1.3; 
@@ -121,18 +108,13 @@
         .my-msg .msg-bubble { background: var(--rose-primary); color: white; border-bottom-right-radius: 2px; }
         .other-msg .msg-bubble { background: #fff; color: #333; border-bottom-left-radius: 2px; }
 
-        /* TİK İŞARETİ (GÖRÜLDÜ) */
-        .tick-status {
-            font-size: 10px; margin-left: 5px; vertical-align: bottom; color: rgba(255,255,255,0.7);
-        }
-        .seen-blue { color: #81d4fa; font-weight: bold; } /* Görüldü rengi */
+        .tick-status { font-size: 10px; margin-left: 5px; vertical-align: bottom; color: rgba(255,255,255,0.7); }
+        .seen-blue { color: #81d4fa; font-weight: bold; }
 
-        /* INPUT ALANI (SABİT ALT) */
         #input-area { 
             padding: 10px; border-top: 1px solid rgba(0,0,0,0.05); 
-            display: flex; background: #fff;
-            flex-shrink: 0; /* Küçülmesin */
-            padding-bottom: max(10px, env(safe-area-inset-bottom)); /* iPhone alt çizgisi için */
+            display: flex; background: #fff; flex-shrink: 0; 
+            padding-bottom: max(10px, env(safe-area-inset-bottom));
         }
         #msg-input { flex: 1; border: 1px solid #ddd; text-align: left; margin: 0 10px 0 0; background: #f9f9f9; }
         #input-area button { margin: 0; padding: 10px 20px; }
@@ -158,8 +140,11 @@
             </div>
             
             <div class="header-right">
-                <div id="online-btn" onclick="toggleUserList()">🟢 0</div>
-                <input type="text" id="username-input" placeholder="İsminiz..." maxlength="10" onblur="updateMyPresenceName()">
+                <div id="mute-btn" class="icon-btn" onclick="toggleMute()">🔊</div>
+                
+                <div id="online-btn" class="icon-btn" onclick="toggleUserList()">🟢 0</div>
+                
+                <input type="text" id="username-input" placeholder="İsim..." maxlength="10" onblur="updateMyPresenceName()">
             </div>
         </header>
 
@@ -177,7 +162,6 @@
     </div>
 
     <script>
-        // --- AYARLAR ---
         const firebaseConfig = {
             apiKey: "AIzaSyCR-GAacpFPdXEEcMlK76usjwUBiw8UEIk",
             authDomain: "yazi-9b365.firebaseapp.com",
@@ -197,6 +181,26 @@
         const loginTime = Date.now();
         const notificationSound = document.getElementById("notification-sound");
 
+        // --- SES AYARLARI ---
+        let isMuted = localStorage.getItem("isMuted") === "true"; // Kayıtlı ayarı çek
+        
+        function updateMuteIcon() {
+            const btn = document.getElementById("mute-btn");
+            if (isMuted) {
+                btn.innerText = "🔇";
+                btn.style.opacity = "0.7";
+            } else {
+                btn.innerText = "🔊";
+                btn.style.opacity = "1";
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            localStorage.setItem("isMuted", isMuted); // Ayarı kaydet
+            updateMuteIcon();
+        }
+
         if(localStorage.getItem("chatName")) {
             document.getElementById("username-input").value = localStorage.getItem("chatName");
         }
@@ -204,16 +208,11 @@
         let currentRoomID = ""; 
         let myPresenceRef = null; 
 
-        // --- GİRİŞ ---
         function checkPassword() {
             const input = document.getElementById("password-input").value.trim();
-            if (input === "XAda") {
-                enterRoom("XAda_Room", "XAda Odası");
-            } else if (input === "Nesliş") {
-                enterRoom("Neslis_Room", "Nesliş Odası");
-            } else {
-                alert("Hatalı şifre!");
-            }
+            if (input === "XAda") enterRoom("XAda_Room", "XAda Odası");
+            else if (input === "Nesliş") enterRoom("Neslis_Room", "Nesliş Odası");
+            else alert("Hatalı şifre!");
         }
 
         function enterRoom(roomID, roomTitle) {
@@ -222,23 +221,24 @@
             document.getElementById("chat-container").style.display = "flex";
             document.getElementById("room-title").innerText = roomTitle;
             
+            updateMuteIcon(); // İkonu ayarla
             requestNotificationPermission();
-            notificationSound.play().catch(e => {}); 
+            
+            // Sessiz bir ses oynatarak kilidi aç (Mute değilse)
+            if (!isMuted) notificationSound.play().catch(e => {}); 
 
             loadMessages();
             setupPresence(); 
         }
 
-        // --- GÖRÜLDÜ, BİLDİRİM VE MESAJLAR ---
         function loadMessages() {
-            // 1. YENİ MESAJ GELDİĞİNDE
             db.ref("rooms/" + currentRoomID + "/messages").on("child_added", (snapshot) => {
                 const data = snapshot.val();
-                const msgKey = snapshot.key; // Mesajın ID'si
+                const msgKey = snapshot.key;
                 
                 const container = document.createElement("div");
                 container.classList.add("msg-container");
-                container.setAttribute("id", "msg-" + msgKey); // ID veriyoruz ki sonra bulalım
+                container.setAttribute("id", "msg-" + msgKey);
                 
                 const nameSpan = document.createElement("span");
                 nameSpan.classList.add("sender-name");
@@ -247,60 +247,42 @@
                 const bubble = document.createElement("div");
                 bubble.classList.add("msg-bubble");
                 
-                // Mesaj metni + Tik alanı
                 let tickHtml = "";
                 if (data.senderID === myID) {
-                    // Benim mesajımsa tik koy
                     const tickClass = data.seen ? "seen-blue" : ""; 
                     const tickIcon = data.seen ? "✓✓" : "✓";
                     tickHtml = `<span class="tick-status ${tickClass}" id="tick-${msgKey}">${tickIcon}</span>`;
-                }
-                
-                bubble.innerHTML = `${data.text} ${tickHtml}`;
-
-                if (data.senderID === myID) {
                     container.classList.add("my-msg");
                 } else {
                     container.classList.add("other-msg");
-                    
-                    // --- GÖRÜLDÜ İŞARETLEME ---
-                    // Eğer mesaj başkasınınsa ve henüz "görüldü" değilse, gördüm diye işaretle
-                    if (!data.seen) {
-                        db.ref("rooms/" + currentRoomID + "/messages/" + msgKey).update({ seen: true });
-                    }
+                    if (!data.seen) db.ref("rooms/" + currentRoomID + "/messages/" + msgKey).update({ seen: true });
 
+                    // BİLDİRİM VE SES KISMI
                     if (data.timestamp > loginTime) {
                         sendBrowserNotification(data.senderName || "Biri", data.text);
                     }
                 }
-
+                
+                bubble.innerHTML = `${data.text} ${tickHtml}`;
                 container.appendChild(nameSpan);
                 container.appendChild(bubble);
                 document.getElementById("messages").appendChild(container);
                 scrollToBottom();
             });
 
-            // 2. MESAJ DEĞİŞTİĞİNDE (Biri mesajı görünce tetiklenir)
             db.ref("rooms/" + currentRoomID + "/messages").on("child_changed", (snapshot) => {
                 const data = snapshot.val();
                 const msgKey = snapshot.key;
-                
-                // Eğer mesaj benimse ve "seen" olduysa tiki güncelle
                 if (data.senderID === myID && data.seen) {
                     const tickEl = document.getElementById("tick-" + msgKey);
-                    if (tickEl) {
-                        tickEl.innerHTML = "✓✓"; // Çift tik yap
-                        tickEl.classList.add("seen-blue"); // Mavi yap
-                    }
+                    if (tickEl) { tickEl.innerHTML = "✓✓"; tickEl.classList.add("seen-blue"); }
                 }
             });
         }
 
-        // --- DİĞER FONKSİYONLAR ---
         function setupPresence() {
             const connectedRef = db.ref(".info/connected");
             const onlineRef = db.ref("rooms/" + currentRoomID + "/online_users");
-            
             connectedRef.on("value", (snap) => {
                 if (snap.val() === true) {
                     myPresenceRef = onlineRef.child(myID);
@@ -308,11 +290,9 @@
                     updateMyPresenceName();
                 }
             });
-
             onlineRef.on("value", (snap) => {
                 const count = snap.numChildren();
                 document.getElementById("online-btn").innerText = "🟢 " + count;
-                
                 const listEl = document.getElementById("user-list");
                 listEl.innerHTML = ""; 
                 snap.forEach((childSnap) => {
@@ -350,13 +330,16 @@
         }
 
         function playSound() {
+            // EĞER SES KAPALIYSA (MUTE) ÇALMA
+            if (isMuted) return; 
+            
             notificationSound.currentTime = 0;
             notificationSound.play().catch(e => {});
         }
 
         function sendBrowserNotification(sender, text) {
             if (document.hidden) {
-                playSound(); 
+                playSound(); // Ses burada kontrol ediliyor
                 if (Notification.permission === "granted") {
                     new Notification("🌹 " + sender, { body: text, icon: "https://cdn-icons-png.flaticon.com/512/2936/2936956.png" });
                 }
@@ -368,20 +351,13 @@
             const text = input.value.trim();
             let userName = document.getElementById("username-input").value.trim();
             if(userName === "") userName = "Gizli";
-
             updateMyPresenceName(); 
-
             if(text === "") return;
-
             db.ref("rooms/" + currentRoomID + "/messages").push({
-                text: text,
-                senderName: userName, 
-                senderID: myID,
-                seen: false, // Başlangıçta görülmedi
+                text: text, senderName: userName, senderID: myID, seen: false, 
                 timestamp: firebase.database.ServerValue.TIMESTAMP
             });
-            input.value = "";
-            input.focus();
+            input.value = ""; input.focus();
         }
 
         function scrollToBottom() {
@@ -389,12 +365,8 @@
             el.scrollTop = el.scrollHeight;
         }
 
-        document.getElementById("msg-input").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") sendMessage();
-        });
-        document.getElementById("password-input").addEventListener("keypress", function(e) {
-            if (e.key === "Enter") checkPassword();
-        });
+        document.getElementById("msg-input").addEventListener("keypress", function(e) { if (e.key === "Enter") sendMessage(); });
+        document.getElementById("password-input").addEventListener("keypress", function(e) { if (e.key === "Enter") checkPassword(); });
     </script>
 </body>
 </html>
