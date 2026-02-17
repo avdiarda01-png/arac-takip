@@ -25,7 +25,7 @@
         .nav-links a { color: #e0e0e0; text-decoration: none; font-size: 14px; font-weight: 500; text-transform: uppercase; transition: color 0.3s ease; }
         .nav-links a:hover { color: #ffffff; }
 
-        /* Giriş (Hero) Alanı - Afişe Göre Güncellendi */
+        /* Giriş (Hero) Alanı */
         .hero {
             height: 80vh; background-color: #004080; 
             background-image: linear-gradient(to bottom, #003366, #004080);
@@ -47,11 +47,9 @@
         .section-container { padding: 90px 5%; display: flex; flex-direction: column; align-items: center; }
         .bolum-baslik { color: #003366; font-size: 2.5rem; font-weight: bold; margin-bottom: 50px; text-transform: uppercase; border-bottom: 3px solid #003366; padding-bottom: 10px; text-align: center; }
 
-        /* ---------------- YENİ ETKİNLİK ALANI (AFİŞ İÇİN) ---------------- */
+        /* Etkinlik ve Afiş Alanı */
         #etkinlik-alani { background-color: #ffffff; }
-        .etkinlik-icerik {
-            display: flex; gap: 50px; align-items: center; max-width: 1000px; flex-wrap: wrap; justify-content: center;
-        }
+        .etkinlik-icerik { display: flex; gap: 50px; align-items: center; max-width: 1000px; flex-wrap: wrap; justify-content: center; }
         .etkinlik-afis { flex: 1; min-width: 300px; text-align: center; }
         .etkinlik-afis img { width: 100%; max-width: 400px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
         .etkinlik-detay { flex: 1; min-width: 300px; text-align: left; }
@@ -59,7 +57,7 @@
         .etkinlik-liste { list-style: none; padding: 0; font-size: 1.2rem; color: #444; line-height: 2.2; margin-bottom: 30px;}
         .etkinlik-liste li strong { color: #003366; }
 
-        /* ---------------- PROJELER ALANI ---------------- */
+        /* Projeler Alanı */
         #projeler-alani { background-color: #f4f6f9; min-height: 100vh; }
         .projeler-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; width: 100%; max-width: 1400px; }
         
@@ -79,11 +77,10 @@
         }
         .proje-btn:hover { background-color: #002244; }
 
-        /* ---------------- SPONSORLAR ALANI ---------------- */
+        /* Sponsorlar Alanı */
         #sponsorlar-alani { background-color: #ffffff; text-align: center;}
         .sponsor-baslik { color: #000; font-size: 3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
         .sponsor-metin { font-size: 1.2rem; color: #555; font-style: italic; margin-bottom: 40px; }
-
         .sponsor-liste { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; max-width: 1000px; }
         .sponsor-kart {
             background-color: #f9f9f9; padding: 30px 40px; border-radius: 12px; border: 1px solid #eee;
@@ -92,14 +89,9 @@
         }
         .sponsor-kart:hover { transform: translateY(-5px); }
         .sponsor-kart img { height: 80px; width: auto; object-fit: contain; }
+        .ornek-etiket { position: absolute; top: -10px; right: -10px; background-color: #d32f2f; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 12px; border-radius: 20px; }
 
-        .ornek-etiket {
-            position: absolute; top: -10px; right: -10px; background-color: #d32f2f; color: white;
-            font-size: 0.75rem; font-weight: bold; padding: 5px 12px; border-radius: 20px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2); letter-spacing: 1px;
-        }
-
-        /* ---------------- İLETİŞİM ALANI ---------------- */
+        /* İletişim Alanı */
         #iletisim-alani { background-color: #f4f6f9; text-align: center; }
         .iletisim-baslik { color: #003366; font-size: 2.5rem; font-weight: bold; margin-bottom: 40px; }
         .instagram-btn {
@@ -108,7 +100,6 @@
             color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold;
             box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.3s ease;
         }
-        .instagram-btn:hover { transform: scale(1.05); }
         .instagram-btn svg { width: 24px; height: 24px; margin-right: 12px; fill: currentColor; }
 
     </style>
@@ -117,7 +108,7 @@
 
     <nav class="navbar">
         <a href="#" class="logo-container">
-            <img src="logo.jpg" alt="Ege EHT Logo" class="logo-img">
+            <img src="logo.jpg" alt="EHT Logo" class="logo-img">
             <div class="logo-text">EGE ÜNİVERSİTESİ<span>Elektronik Haberleşme Teknolojisi</span></div>
         </a>
         <ul class="nav-links">
@@ -133,7 +124,7 @@
         <div class="hero-content">
             <h1>PROJE GÜNLERİ</h1>
             <h2>04-08 MAYIS | Ege MYO</h2>
-            <p>Öğrencilerimiz tarafından geliştirilen donanım, gömülü sistem ve yazılım projelerinin sergilendiği resmi akademik etkinliğimiz.</p>
+            <p>Donanım, gömülü sistem ve yazılım projelerinin sergilendiği resmi akademik etkinliğimiz.</p>
             <a href="#etkinlik-alani" class="btn-projeler">ETKİNLİK DETAYLARI</a>
         </div>
     </section>
@@ -147,10 +138,10 @@
             <div class="etkinlik-detay">
                 <h3>04-08 Mayıs Tarihlerinde Neler Var?</h3>
                 <ul class="etkinlik-liste">
-                    <li>🏆 <strong>Proje Yarışması:</strong> Yılın en yenilikçi donanım ve yazılım projeleri kıyasıya yarışıyor.</li>
-                    <li>📊 <strong>Poster Sunumları:</strong> Projelerin teorik altyapıları ve devre şemalarının akademik sunumu.</li>
-                    <li>🎤 <strong>Seminer ve Konferans:</strong> Sektör profesyonelleri ile buluşma ve teknoloji sohbetleri.</li>
-                    <li>🎁 <strong>Sürpriz Ödüller:</strong> Dereceye giren öğrencilerimize özel ödüller.</li>
+                    <li>🏆 <strong>Proje Yarışması:</strong> Yılın en yenilikçi projeleri.</li>
+                    <li>📊 <strong>Poster Sunumları:</strong> Akademik sunumlar.</li>
+                    <li>🎤 <strong>Seminerler:</strong> Sektör buluşmaları.</li>
+                    <li>🎁 <strong>Ödüller:</strong> Dereceye giren öğrencilerimize özel.</li>
                 </ul>
                 <a href="#projeler-alani" class="btn-projeler" style="font-size: 1rem; padding: 12px 30px;">PROJELERİ GÖRÜNTÜLE</a>
             </div>
@@ -158,35 +149,28 @@
     </section>
 
     <section id="projeler-alani" class="section-container">
-        <h2 class="bolum-baslik">50 Öğrenci Projesi</h2>
-        
+        <h2 class="bolum-baslik">Öğrenci Projeleri</h2>
         <div class="projeler-grid" id="proje-kapsayici">
-            
             <div class="proje-kart">
                 <img src="tekgpslogo.jpg" alt="TekGPS Logosu" class="proje-logo">
                 <h3 class="proje-baslik">TekGPS: Çoklu Araç Takip Cihazı</h3>
                 <a href="proje-detay.html" class="proje-btn">Detayları İncele</a>
             </div>
-
             </div>
     </section>
 
     <section id="sponsorlar-alani" class="section-container">
         <h2 class="sponsor-baslik">Sponsorlar</h2>
-        <p class="sponsor-metin">Etkinliğimize destek veren değerli kurumlar</p>
-        
+        <p class="sponsor-metin">Değerli kurumlar</p>
         <div class="sponsor-liste">
-            
             <div class="sponsor-kart">
                 <span class="ornek-etiket">ÖRNEKTİR</span>
                 <img src="tubitak.jpg" alt="TÜBİTAK">
             </div>
-
             <div class="sponsor-kart">
                 <span class="ornek-etiket">ÖRNEKTİR</span>
                 <img src="aselsan.jpg" alt="ASELSAN">
             </div>
-
         </div>
     </section>
 
@@ -205,12 +189,11 @@
                 <div class="proje-kart">
                     <img src="https://via.placeholder.com/150?text=Logo+${i}" alt="Proje ${i}" class="proje-logo">
                     <h3 class="proje-baslik">Öğrenci Projesi ${i}</h3>
-                    <a href="proje-detay.html" class="proje-btn">Detayları İncele</a>
+                    <a href="javascript:void(0);" onclick="alert('Bu proje yakında eklenecek.');" class="proje-btn">Detayları İncele</a>
                 </div>
             `;
             projeKapsayici.innerHTML += yeniKart;
         }
     </script>
-
 </body>
 </html>
