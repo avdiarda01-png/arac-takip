@@ -10,105 +10,87 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f4f6f9; color: #333; }
 
-        /* Kurumsal Üst Menü ve Logo */
+        /* Kurumsal Üst Menü - Esnek Yapı */
         .navbar {
-            display: flex; justify-content: space-between; align-items: center;
-            background-color: #003366; padding: 10px 50px; position: fixed; 
-            width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #003366;
+            padding: 10px 20px; /* Padding daraltıldı */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            flex-wrap: wrap; /* Sığmazsa alt satıra geçer */
         }
-        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-        .logo-img { height: 60px; border-radius: 50%; background-color: white; padding: 2px; }
-        .logo-text { color: #ffffff; font-size: 20px; font-weight: bold; letter-spacing: 1px; display: flex; flex-direction: column; }
-        .logo-text span { font-size: 12px; font-weight: normal; color: #b3d4ff; }
+        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+        .logo-img { height: 50px; border-radius: 50%; background-color: white; padding: 2px; }
+        .logo-text { color: #ffffff; font-size: 16px; font-weight: bold; letter-spacing: 1px; display: flex; flex-direction: column; }
+        .logo-text span { font-size: 10px; font-weight: normal; color: #b3d4ff; }
 
-        .nav-links { list-style: none; display: flex; gap: 20px; }
-        .nav-links a { color: #e0e0e0; text-decoration: none; font-size: 14px; font-weight: 500; text-transform: uppercase; transition: color 0.3s ease; }
+        .nav-links { 
+            list-style: none; 
+            display: flex; 
+            gap: 15px; 
+            flex-wrap: wrap; /* Menü elemanları sığmazsa yan yana dizilmeye devam eder veya alta geçer */
+        }
+        .nav-links a { color: #e0e0e0; text-decoration: none; font-size: 13px; font-weight: 500; text-transform: uppercase; transition: color 0.3s ease; white-space: nowrap; }
         .nav-links a:hover { color: #ffffff; }
 
         /* Giriş (Hero) Alanı */
         .hero {
-            height: 80vh; background-color: #004080; 
+            height: 70vh; background-color: #004080; 
             background-image: linear-gradient(to bottom, #003366, #004080);
-            display: flex; justify-content: center; align-items: center; text-align: center; color: white; padding-top: 60px; 
+            display: flex; justify-content: center; align-items: center; text-align: center; color: white; padding-top: 80px; 
         }
         .hero-content { max-width: 800px; padding: 0 20px; }
-        .hero-content h1 { font-size: 4rem; margin-bottom: 10px; font-weight: 700; letter-spacing: 2px; }
-        .hero-content h2 { font-size: 1.8rem; font-weight: 400; margin-bottom: 30px; color: #b3d4ff; }
-        .hero-content p { font-size: 1.1rem; margin-bottom: 40px; line-height: 1.6; color: #e6f0ff; }
+        .hero-content h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; }
+        .hero-content h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 30px; color: #b3d4ff; }
 
         .btn-projeler {
-            display: inline-block; padding: 18px 50px; font-size: 1.2rem;
+            display: inline-block; padding: 15px 40px; font-size: 1rem;
             background-color: #ffffff; color: #003366; text-decoration: none; border-radius: 4px; 
-            font-weight: bold; text-transform: uppercase; letter-spacing: 1px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;
+            font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;
         }
-        .btn-projeler:hover { background-color: #f0f0f0; transform: translateY(-2px); box-shadow: 0 6px 12px rgba(0,0,0,0.15); }
         
-        .section-container { padding: 90px 5%; display: flex; flex-direction: column; align-items: center; }
-        .bolum-baslik { color: #003366; font-size: 2.5rem; font-weight: bold; margin-bottom: 50px; text-transform: uppercase; border-bottom: 3px solid #003366; padding-bottom: 10px; text-align: center; }
+        .section-container { padding: 80px 5%; display: flex; flex-direction: column; align-items: center; }
+        .bolum-baslik { color: #003366; font-size: 2rem; font-weight: bold; margin-bottom: 40px; text-transform: uppercase; border-bottom: 3px solid #003366; padding-bottom: 10px; text-align: center; }
 
         /* Etkinlik ve Afiş Alanı */
         #etkinlik-alani { background-color: #ffffff; }
-        .etkinlik-icerik { display: flex; gap: 50px; align-items: center; max-width: 1000px; flex-wrap: wrap; justify-content: center; }
-        .etkinlik-afis { flex: 1; min-width: 300px; text-align: center; }
-        .etkinlik-afis img { width: 100%; max-width: 400px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .etkinlik-detay { flex: 1; min-width: 300px; text-align: left; }
-        .etkinlik-detay h3 { color: #003366; font-size: 2rem; margin-bottom: 20px; }
-        .etkinlik-liste { list-style: none; padding: 0; font-size: 1.2rem; color: #444; line-height: 2.2; margin-bottom: 30px;}
-        .etkinlik-liste li strong { color: #003366; }
+        .etkinlik-icerik { display: flex; gap: 30px; align-items: center; max-width: 1000px; flex-wrap: wrap; justify-content: center; }
+        .etkinlik-afis img { width: 100%; max-width: 350px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
+        .etkinlik-detay { flex: 1; min-width: 300px; }
+        .etkinlik-liste { list-style: none; padding: 0; font-size: 1.1rem; color: #444; line-height: 2; margin-bottom: 20px;}
 
         /* Projeler Alanı */
-        #projeler-alani { background-color: #f4f6f9; min-height: 100vh; }
-        .projeler-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; width: 100%; max-width: 1400px; }
-        
-        .proje-kart {
-            background: #ffffff; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-            transition: transform 0.3s ease, box-shadow 0.3s ease; display: flex; flex-direction: column; 
-            align-items: center; border: 1px solid #eaeaea; padding: 30px 20px; text-align: center;
-        }
-        .proje-kart:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
-        
-        .proje-logo { width: 120px; height: 120px; object-fit: contain; margin-bottom: 20px; background-color: #f9f9f9; border-radius: 10px; padding: 10px; border: 1px solid #eee; }
-        .proje-baslik { font-size: 1.3rem; color: #003366; margin-bottom: 25px; font-weight: 700; flex-grow: 1; }
-        
-        .proje-btn {
-            display: inline-block; padding: 12px 30px; width: 100%; background-color: #003366; 
-            color: white; text-decoration: none; border-radius: 4px; font-weight: bold; transition: background 0.3s;
-        }
-        .proje-btn:hover { background-color: #002244; }
+        #projeler-alani { background-color: #f4f6f9; }
+        .projeler-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
+        .proje-kart { background: #ffffff; border-radius: 8px; border: 1px solid #eaeaea; padding: 25px 15px; text-align: center; transition: transform 0.3s; }
+        .proje-kart:hover { transform: translateY(-5px); }
+        .proje-logo { width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px; background-color: #f9f9f9; padding: 5px; }
+        .proje-baslik { font-size: 1.2rem; color: #003366; margin-bottom: 20px; font-weight: 700; height: 50px; overflow: hidden; }
+        .proje-btn { display: block; padding: 10px; background-color: #003366; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
 
-        /* Sponsorlar Alanı */
-        #sponsorlar-alani { background-color: #ffffff; text-align: center;}
-        .sponsor-baslik { color: #000; font-size: 3rem; font-weight: 900; text-transform: uppercase; margin-bottom: 10px; }
-        .sponsor-metin { font-size: 1.2rem; color: #555; font-style: italic; margin-bottom: 40px; }
-        .sponsor-liste { display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; max-width: 1000px; }
-        .sponsor-kart {
-            background-color: #f9f9f9; padding: 30px 40px; border-radius: 12px; border: 1px solid #eee;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05); position: relative; 
-            display: flex; justify-content: center; align-items: center; transition: transform 0.3s ease;
-        }
-        .sponsor-kart:hover { transform: translateY(-5px); }
-        .sponsor-kart img { height: 80px; width: auto; object-fit: contain; }
-        .ornek-etiket { position: absolute; top: -10px; right: -10px; background-color: #d32f2f; color: white; font-size: 0.75rem; font-weight: bold; padding: 5px 12px; border-radius: 20px; }
+        /* Sponsorlar */
+        .sponsor-liste { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .sponsor-kart { background-color: #f9f9f9; padding: 20px; border-radius: 10px; position: relative; border: 1px solid #eee; }
+        .sponsor-kart img { height: 60px; }
+        .ornek-etiket { position: absolute; top: -8px; right: -8px; background-color: #d32f2f; color: white; font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; }
 
-        /* İletişim Alanı */
-        #iletisim-alani { background-color: #f4f6f9; text-align: center; }
-        .iletisim-baslik { color: #003366; font-size: 2.5rem; font-weight: bold; margin-bottom: 40px; }
-        .instagram-btn {
-            display: inline-flex; align-items: center; padding: 15px 30px;
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            color: white; text-decoration: none; border-radius: 10px; font-size: 1.2rem; font-weight: bold;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+        /* Mobil Ayarı */
+        @media (max-width: 600px) {
+            .navbar { justify-content: center; gap: 10px; }
+            .nav-links { justify-content: center; }
         }
-        .instagram-btn svg { width: 24px; height: 24px; margin-right: 12px; fill: currentColor; }
-
     </style>
 </head>
 <body>
 
     <nav class="navbar">
         <a href="#" class="logo-container">
-            <img src="logo.jpg" alt="EHT Logo" class="logo-img">
+            <img src="logo.jpg" alt="Logo">
             <div class="logo-text">EGE ÜNİVERSİTESİ<span>Elektronik Haberleşme Teknolojisi</span></div>
         </a>
         <ul class="nav-links">
@@ -124,75 +106,54 @@
         <div class="hero-content">
             <h1>PROJE GÜNLERİ</h1>
             <h2>04-08 MAYIS | Ege MYO</h2>
-            <p>Donanım, gömülü sistem ve yazılım projelerinin sergilendiği resmi akademik etkinliğimiz.</p>
-            <a href="#etkinlik-alani" class="btn-projeler">ETKİNLİK DETAYLARI</a>
+            <p>Akademik projelerimizin sergilendiği resmi platform.</p>
+            <a href="#etkinlik-alani" class="btn-projeler">DETAYLAR</a>
         </div>
     </section>
 
     <section id="etkinlik-alani" class="section-container">
         <h2 class="bolum-baslik">Etkinlik Hakkında</h2>
         <div class="etkinlik-icerik">
-            <div class="etkinlik-afis">
-                <img src="afis.jpg" alt="Ege MYO Proje Günleri Afişi">
-            </div>
+            <div class="etkinlik-afis"><img src="afis.jpg" alt="Afis"></div>
             <div class="etkinlik-detay">
-                <h3>04-08 Mayıs Tarihlerinde Neler Var?</h3>
                 <ul class="etkinlik-liste">
-                    <li>🏆 <strong>Proje Yarışması:</strong> Yılın en yenilikçi projeleri.</li>
-                    <li>📊 <strong>Poster Sunumları:</strong> Akademik sunumlar.</li>
-                    <li>🎤 <strong>Seminerler:</strong> Sektör buluşmaları.</li>
-                    <li>🎁 <strong>Ödüller:</strong> Dereceye giren öğrencilerimize özel.</li>
+                    <li>🏆 <strong>Yarışmalar</strong></li>
+                    <li>📊 <strong>Sunumlar</strong></li>
+                    <li>🎤 <strong>Seminerler</strong></li>
                 </ul>
-                <a href="#projeler-alani" class="btn-projeler" style="font-size: 1rem; padding: 12px 30px;">PROJELERİ GÖRÜNTÜLE</a>
+                <a href="#projeler-alani" class="btn-projeler">PROJELERİ GÖR</a>
             </div>
         </div>
     </section>
 
     <section id="projeler-alani" class="section-container">
-        <h2 class="bolum-baslik">Öğrenci Projeleri</h2>
+        <h2 class="bolum-baslik">Projeler</h2>
         <div class="projeler-grid" id="proje-kapsayici">
             <div class="proje-kart">
-                <img src="tekgpslogo.jpg" alt="TekGPS Logosu" class="proje-logo">
-                <h3 class="proje-baslik">TekGPS: Çoklu Araç Takip Cihazı</h3>
-                <a href="proje-detay.html" class="proje-btn">Detayları İncele</a>
-            </div>
-            </div>
-    </section>
-
-    <section id="sponsorlar-alani" class="section-container">
-        <h2 class="sponsor-baslik">Sponsorlar</h2>
-        <p class="sponsor-metin">Değerli kurumlar</p>
-        <div class="sponsor-liste">
-            <div class="sponsor-kart">
-                <span class="ornek-etiket">ÖRNEKTİR</span>
-                <img src="tubitak.jpg" alt="TÜBİTAK">
-            </div>
-            <div class="sponsor-kart">
-                <span class="ornek-etiket">ÖRNEKTİR</span>
-                <img src="aselsan.jpg" alt="ASELSAN">
+                <img src="tekgpslogo.jpg" alt="TekGPS" class="proje-logo">
+                <h3 class="proje-baslik">TekGPS: Araç Takip</h3>
+                <a href="proje-detay.html" class="proje-btn">İncele</a>
             </div>
         </div>
     </section>
 
-    <section id="iletisim-alani" class="section-container" style="min-height: 40vh;">
-        <h2 class="iletisim-baslik">İletişim</h2>
-        <a href="https://www.instagram.com/ege.eht?igsh=b2x5OWUybmo3Z2Vs" target="_blank" class="instagram-btn">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            Instagram'da Bizi Takip Edin
-        </a>
+    <section id="sponsorlar-alani" class="section-container">
+        <h2 class="bolum-baslik">Sponsorlar</h2>
+        <div class="sponsor-liste">
+            <div class="sponsor-kart"><span class="ornek-etiket">ÖRNEKTİR</span><img src="tubitak.jpg" alt="T"></div>
+            <div class="sponsor-kart"><span class="ornek-etiket">ÖRNEKTİR</span><img src="aselsan.jpg" alt="A"></div>
+        </div>
     </section>
 
     <script>
-        const projeKapsayici = document.getElementById('proje-kapsayici');
+        const container = document.getElementById('proje-kapsayici');
         for(let i = 2; i <= 50; i++) {
-            const yeniKart = `
+            container.innerHTML += `
                 <div class="proje-kart">
-                    <img src="https://via.placeholder.com/150?text=Logo+${i}" alt="Proje ${i}" class="proje-logo">
+                    <img src="https://via.placeholder.com/100?text=Logo" class="proje-logo">
                     <h3 class="proje-baslik">Öğrenci Projesi ${i}</h3>
-                    <a href="javascript:void(0);" onclick="alert('Bu proje yakında eklenecek.');" class="proje-btn">Detayları İncele</a>
-                </div>
-            `;
-            projeKapsayici.innerHTML += yeniKart;
+                    <a href="javascript:void(0);" onclick="alert('Bu proje yakında eklenecek.');" class="proje-btn">İncele</a>
+                </div>`;
         }
     </script>
 </body>
