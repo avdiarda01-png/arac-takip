@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proje Detayları | Ege EHT</title>
+    <style>
+        /* Genel Ayarlar */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; }
+
+        /* Kurumsal Üst Menü */
+        .navbar {
+            display: flex; justify-content: space-between; align-items: center;
+            background-color: #003366; padding: 10px 50px; position: fixed; 
+            width: 100%; top: 0; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .logo-container { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+        .logo-img { height: 60px; border-radius: 50%; background-color: white; padding: 2px; }
+        .logo-text { color: #ffffff; font-size: 20px; font-weight: bold; letter-spacing: 1px; display: flex; flex-direction: column; }
+        .logo-text span { font-size: 12px; font-weight: normal; color: #b3d4ff; }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { color: #e0e0e0; text-decoration: none; font-size: 14px; font-weight: 500; text-transform: uppercase; transition: color 0.3s ease; }
+        .nav-links a:hover { color: #ffffff; }
+
+        /* Detay Sayfası Konteyneri */
+        .detay-container {
+            max-width: 900px;
+            margin: 120px auto 50px auto; 
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+
+        /* Kimlik Bilgileri Alanı */
+        .proje-kimlik {
+            border-bottom: 2px solid #eee;
+            padding-bottom: 25px;
+            margin-bottom: 30px;
+        }
+
+        .kimlik-satir {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: #444;
+            display: flex;
+        }
+
+        .kimlik-baslik {
+            font-weight: bold;
+            color: #003366;
+            width: 150px; 
+            flex-shrink: 0;
+        }
+
+        /* Proje Özeti Alanı */
+        .ozet-kutusu h2 {
+            color: #003366;
+            margin-bottom: 15px;
+            font-size: 1.8rem;
+        }
+        
+        .ozet-metni {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+            margin-bottom: 40px;
+        }
+
+        /* Butonlar Alanı */
+        .butonlar-kutusu {
+            display: flex; gap: 20px; flex-wrap: wrap; 
+        }
+        
+        .buyuk-buton {
+            flex: 1; 
+            min-width: 250px;
+            padding: 20px;
+            text-align: center;
+            text-decoration: none;
+            color: white;
+            font-size: 1.2rem; font-weight: bold;
+            border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .sunum-btn { background-color: #d32f2f; } 
+        .poster-btn { background-color: #1976d2; } 
+
+        .buyuk-buton:hover { transform: translateY(-3px); box-shadow: 0 8px 15px rgba(0,0,0,0.2); }
+        .buton-ikon { margin-right: 12px; font-size: 1.5rem; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="navbar">
+        <a href="index.html" class="logo-container">
+            <img src="logo.jpg" alt="Ege EHT Logo" class="logo-img">
+            <div class="logo-text">EGE ÜNİVERSİTESİ<span>Elektronik Haberleşme Teknolojisi</span></div>
+        </a>
+        <ul class="nav-links">
+            <li><a href="index.html">Ana Sayfaya Dön</a></li> 
+        </ul>
+    </nav>
+
+    <div class="detay-container">
+        
+        <div class="proje-kimlik">
+            <div class="kimlik-satir">
+                <div class="kimlik-baslik">Proje İsmi:</div>
+                <div>TekGPS Çoklu Araç Takip Cihazı</div>
+            </div>
+            <div class="kimlik-satir">
+                <div class="kimlik-baslik">Yapan Kişi:</div>
+                <div>Avdi Arda Sancaklı</div> </div>
+            <div class="kimlik-satir">
+                <div class="kimlik-baslik">Danışmanı:</div>
+                <div>Dr. Öğr. Üyesi Mustafa Berkant Selek</div>
+            </div>
+        </div>
+
+        <div class="ozet-kutusu">
+            <h2>Proje Özeti</h2>
+            <p class="ozet-metni">
+                Bu proje, hareket halindeki araçların konum verilerini anlık olarak merkezi bir sisteme iletmek amacıyla geliştirilmiştir. Cihazın donanım altyapısında Esp8266 kullanılmış olup, coğrafi koordinat verilerini hassas bir şekilde okuyabilmek için NEO-6M GPS modülü entegre edilmiştir. Alınan bu verilerin internet ortamına aktarılması ise SIM800L GSM modülü üzerinden sağlanmaktadır. Sistem, cihazın topladığı bu verileri tekgps.com.tr alan adında barınan web sunucusuna iletir ve kullanıcıların araç filolarını eş zamanlı olarak harita üzerinden takip edebilmelerine olanak tanır.
+            </p>
+        </div>
+
+        <div class="butonlar-kutusu">
+            <a href="tekgpssunum.pptx" target="_blank" class="buyuk-buton sunum-btn">
+                <span class="buton-ikon">📊</span> PROJE SUNUMU
+            </a>
+            
+            <a href="tekgpsposter.jpg" target="_blank" class="buyuk-buton poster-btn">
+                <span class="buton-ikon">🖼️</span> PROJE POSTERİ
+            </a>
+        </div>
+
+    </div>
+
+</body>
+</html>
