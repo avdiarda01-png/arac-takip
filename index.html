@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ege Üniversitesi - Akıllı Otopark</title>
+    <title>Ege Üniversitesi - Yapay Zeka Otopark</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap');
 
@@ -19,13 +19,14 @@
             min-height: 100vh;
             padding: 2rem;
             background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #0d1117 70%);
+            overflow-x: hidden;
         }
 
         h1 {
             font-family: 'Orbitron', sans-serif;
             color: #58a6ff;
             text-shadow: 0 0 15px rgba(88, 166, 255, 0.5);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             text-align: center;
             font-size: 2.5rem;
         }
@@ -37,7 +38,7 @@
             letter-spacing: 2px;
         }
 
-        /* Yönlendirme Paneli (Süslü Kısım) */
+        /* Yönlendirme Paneli */
         .status-panel {
             background: rgba(22, 27, 34, 0.8);
             border: 2px solid #30363d;
@@ -63,20 +64,73 @@
             box-shadow: 0 0 25px rgba(248, 81, 73, 0.4);
         }
 
-        /* Otopark Kareleri */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 25px;
-            max-width: 800px;
+        /* OTOPARK ANA DÜZENİ */
+        .otopark-layout {
+            display: flex;
+            flex-direction: column;
+            width: 900px;
+            max-width: 100%;
+            position: relative;
+            gap: 10px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
             width: 100%;
         }
 
+        /* Ortadaki Animasyonlu Yol */
+        .road-container {
+            height: 100px;
+            width: 100%;
+            position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 2px dashed #30363d;
+            border-bottom: 2px dashed #30363d;
+            display: flex;
+            align-items: center;
+        }
+
+        /* SVG Işık Şeritleri */
+        svg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+
+        .route-path {
+            fill: none;
+            stroke: #3fb950;
+            stroke-width: 8;
+            stroke-dasharray: 15, 15;
+            stroke-linecap: round;
+            opacity: 0; /* Başlangıçta görünmez */
+            transition: opacity 0.4s ease;
+            filter: drop-shadow(0 0 8px #3fb950);
+            /* Işığın akma animasyonu */
+            animation: moveLight 1s linear infinite;
+        }
+
+        @keyframes moveLight {
+            from { stroke-dashoffset: 30; }
+            to { stroke-dashoffset: 0; }
+        }
+
+        .route-path.active {
+            opacity: 1; /* Sadece hedef seçilince görünür */
+        }
+
+        /* Kareler (Park Yerleri) */
         .spot {
             background: #161b22;
             border: 3px solid #30363d;
             border-radius: 12px;
-            height: 150px;
+            width: 260px;
+            height: 140px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -85,32 +139,31 @@
             font-weight: bold;
             transition: all 0.4s ease;
             position: relative;
-            overflow: hidden;
         }
 
         .spot span.num {
             font-size: 3rem;
             font-family: 'Orbitron', sans-serif;
-            opacity: 0.3;
+            opacity: 0.2;
             position: absolute;
             top: 5px;
             left: 10px;
         }
 
-        /* Boş ve Dolu Efektleri */
         .spot.bos {
             border-color: #3fb950;
             background: rgba(63, 185, 80, 0.1);
             color: #3fb950;
-            box-shadow: inset 0 0 20px rgba(63, 185, 80, 0.2), 0 0 15px rgba(63, 185, 80, 0.4);
+            box-shadow: inset 0 0 20px rgba(63, 185, 80, 0.2), 0 0 15px rgba(63, 185, 80, 0.3);
         }
 
         .spot.dolu {
             border-color: #f85149;
             background: rgba(248, 81, 73, 0.1);
             color: #f85149;
-            box-shadow: inset 0 0 20px rgba(248, 81, 73, 0.2), 0 0 15px rgba(248, 81, 73, 0.4);
+            box-shadow: inset 0 0 20px rgba(248, 81, 73, 0.2), 0 0 15px rgba(248, 81, 73, 0.3);
         }
+
     </style>
 </head>
 <body>
@@ -122,23 +175,38 @@
         Sistem Bağlantısı Bekleniyor...
     </div>
 
-    <div class="grid-container">
-        <div id="spot-5" class="spot"><span class="num">5</span><div class="txt">Yükleniyor</div></div>
-        <div id="spot-3" class="spot"><span class="num">3</span><div class="txt">Yükleniyor</div></div>
-        <div id="spot-1" class="spot"><span class="num">1</span><div class="txt">Yükleniyor</div></div>
-        
-        <div id="spot-6" class="spot"><span class="num">6</span><div class="txt">Yükleniyor</div></div>
-        <div id="spot-4" class="spot"><span class="num">4</span><div class="txt">Yükleniyor</div></div>
-        <div id="spot-2" class="spot"><span class="num">2</span><div class="txt">Yükleniyor</div></div>
+    <div class="otopark-layout">
+        <div class="row">
+            <div id="spot-5" class="spot"><span class="num">5</span><div class="txt">Yükleniyor</div></div>
+            <div id="spot-3" class="spot"><span class="num">3</span><div class="txt">Yükleniyor</div></div>
+            <div id="spot-1" class="spot"><span class="num">1</span><div class="txt">Yükleniyor</div></div>
+        </div>
+
+        <div class="road-container">
+            <svg viewBox="0 0 900 100">
+                <text x="860" y="55" fill="#ffaa00" font-family="Orbitron" font-weight="bold" font-size="22" text-anchor="middle" alignment-baseline="middle" filter="drop-shadow(0 0 5px #ffaa00)">GİRİŞ</text>
+                
+                <path id="path-1" class="route-path" d="M 810,50 L 790,50 Q 770,50 770,30 L 770,0" />
+                <path id="path-2" class="route-path" d="M 810,50 L 790,50 Q 770,50 770,70 L 770,100" />
+                <path id="path-3" class="route-path" d="M 810,50 L 470,50 Q 450,50 450,30 L 450,0" />
+                <path id="path-4" class="route-path" d="M 810,50 L 470,50 Q 450,50 450,70 L 450,100" />
+                <path id="path-5" class="route-path" d="M 810,50 L 150,50 Q 130,50 130,30 L 130,0" />
+                <path id="path-6" class="route-path" d="M 810,50 L 150,50 Q 130,50 130,70 L 130,100" />
+            </svg>
+        </div>
+
+        <div class="row">
+            <div id="spot-6" class="spot"><span class="num">6</span><div class="txt">Yükleniyor</div></div>
+            <div id="spot-4" class="spot"><span class="num">4</span><div class="txt">Yükleniyor</div></div>
+            <div id="spot-2" class="spot"><span class="num">2</span><div class="txt">Yükleniyor</div></div>
+        </div>
     </div>
 
     <script>
-        // Senin Firebase Veritabanı URL'in
         const FIREBASE_URL = "https://otopark-33791-default-rtdb.firebaseio.com/otopark_sistemi.json";
         
         async function sistemiGuncelle() {
             try {
-                // Firebase'den REST API ile veriyi çek (En hafif ve hızlı yöntem)
                 const response = await fetch(FIREBASE_URL);
                 const data = await response.json();
                 
@@ -146,16 +214,16 @@
                     const panel = document.getElementById("yonlendirme");
                     const hedef = data.hedef_led;
 
-                    // Yönlendirme Yazısını Güncelle
+                    // 1. Ana Yönlendirme Paneli
                     if(hedef > 0) {
                         panel.className = "status-panel active";
-                        panel.innerHTML = `🚀 Lütfen <span>${hedef}. BOŞ PARK YERİNE</span> İlerleyiniz`;
+                        panel.innerHTML = `🚀 Lütfen <span style="color:white; text-decoration:underline;">${hedef}. BOŞ PARK YERİNE</span> İlerleyiniz`;
                     } else {
                         panel.className = "status-panel full";
                         panel.innerHTML = `⛔ OTOPARK TAMAMEN DOLU`;
                     }
 
-                    // 6 Adet Kutunun Rengini ve Yazısını Güncelle
+                    // 2. Kutuların Renkleri
                     if(data.spotlar) {
                         for(let i = 1; i <= 6; i++) {
                             const spotDiv = document.getElementById(`spot-${i}`);
@@ -170,15 +238,28 @@
                             }
                         }
                     }
+
+                    // 3. HAREKETLİ IŞIK ŞERİTLERİ
+                    // Önce tüm ışıkları kapat
+                    document.querySelectorAll('.route-path').forEach(path => {
+                        path.classList.remove('active');
+                    });
+                    
+                    // Sadece hedef park yeri varsa onun yolunu aç
+                    if(hedef > 0) {
+                        const aktifYol = document.getElementById(`path-${hedef}`);
+                        if(aktifYol) {
+                            aktifYol.classList.add('active');
+                        }
+                    }
                 }
             } catch(error) {
-                console.error("Firebase'den veri çekilemedi:", error);
+                console.error("Firebase Hatası:", error);
             }
         }
 
-        // Sayfa açılır açılmaz veriyi çek ve sonra her 1 saniyede bir güncelle
         sistemiGuncelle();
-        setInterval(sistemiGuncelle, 1000); 
+        setInterval(sistemiGuncelle, 1000); // Her saniye canli güncelle
     </script>
 </body>
 </html>
