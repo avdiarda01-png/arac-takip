@@ -3,158 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ege Üniversitesi | EHT Proje Günleri</title>
+    <title>Ege Üniversitesi - Akıllı Otopark</title>
     <style>
-        /* Genel Ayarlar ve Yumuşak Kaydırma */
-        html { scroll-behavior: smooth; }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; }
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Rajdhani:wght@500;700&display=swap');
 
-        /* Kurumsal Üst Menü - Esnek Yapı */
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background-color: #003366;
-            padding: 10px 20px; /* Padding daraltıldı */
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-            flex-wrap: wrap; /* Sığmazsa alt satıra geçer */
-        }
-        .logo-container { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
-        .logo-img { height: 50px; border-radius: 50%; background-color: white; padding: 2px; }
-        .logo-text { color: #ffffff; font-size: 16px; font-weight: bold; letter-spacing: 1px; display: flex; flex-direction: column; }
-        .logo-text span { font-size: 10px; font-weight: normal; color: #b3d4ff; }
-
-        .nav-links { 
-            list-style: none; 
-            display: flex; 
-            gap: 15px; 
-            flex-wrap: wrap; /* Menü elemanları sığmazsa yan yana dizilmeye devam eder veya alta geçer */
-        }
-        .nav-links a { color: #e0e0e0; text-decoration: none; font-size: 13px; font-weight: 500; text-transform: uppercase; transition: color 0.3s ease; white-space: nowrap; }
-        .nav-links a:hover { color: #ffffff; }
-
-        /* Giriş (Hero) Alanı */
-        .hero {
-            height: 70vh; background-color: #004080; 
-            background-image: linear-gradient(to bottom, #003366, #004080);
-            display: flex; justify-content: center; align-items: center; text-align: center; color: white; padding-top: 80px; 
-        }
-        .hero-content { max-width: 800px; padding: 0 20px; }
-        .hero-content h1 { font-size: 3rem; margin-bottom: 10px; font-weight: 700; }
-        .hero-content h2 { font-size: 1.5rem; font-weight: 400; margin-bottom: 30px; color: #b3d4ff; }
-
-        .btn-projeler {
-            display: inline-block; padding: 15px 40px; font-size: 1rem;
-            background-color: #ffffff; color: #003366; text-decoration: none; border-radius: 4px; 
-            font-weight: bold; text-transform: uppercase; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: all 0.3s ease;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         
-        .section-container { padding: 80px 5%; display: flex; flex-direction: column; align-items: center; }
-        .bolum-baslik { color: #003366; font-size: 2rem; font-weight: bold; margin-bottom: 40px; text-transform: uppercase; border-bottom: 3px solid #003366; padding-bottom: 10px; text-align: center; }
+        body {
+            background-color: #0d1117;
+            color: #c9d1d9;
+            font-family: 'Rajdhani', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+            background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #0d1117 70%);
+        }
 
-        /* Etkinlik ve Afiş Alanı */
-        #etkinlik-alani { background-color: #ffffff; }
-        .etkinlik-icerik { display: flex; gap: 30px; align-items: center; max-width: 1000px; flex-wrap: wrap; justify-content: center; }
-        .etkinlik-afis img { width: 100%; max-width: 350px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); }
-        .etkinlik-detay { flex: 1; min-width: 300px; }
-        .etkinlik-liste { list-style: none; padding: 0; font-size: 1.1rem; color: #444; line-height: 2; margin-bottom: 20px;}
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            color: #58a6ff;
+            text-shadow: 0 0 15px rgba(88, 166, 255, 0.5);
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
 
-        /* Projeler Alanı */
-        #projeler-alani { background-color: #f4f6f9; }
-        .projeler-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; width: 100%; max-width: 1200px; }
-        .proje-kart { background: #ffffff; border-radius: 8px; border: 1px solid #eaeaea; padding: 25px 15px; text-align: center; transition: transform 0.3s; }
-        .proje-kart:hover { transform: translateY(-5px); }
-        .proje-logo { width: 100px; height: 100px; object-fit: contain; margin-bottom: 15px; background-color: #f9f9f9; padding: 5px; }
-        .proje-baslik { font-size: 1.2rem; color: #003366; margin-bottom: 20px; font-weight: 700; height: 50px; overflow: hidden; }
-        .proje-btn { display: block; padding: 10px; background-color: #003366; color: white; text-decoration: none; border-radius: 4px; font-weight: bold; }
+        .subtitle {
+            font-size: 1.2rem;
+            color: #8b949e;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
 
-        /* Sponsorlar */
-        .sponsor-liste { display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
-        .sponsor-kart { background-color: #f9f9f9; padding: 20px; border-radius: 10px; position: relative; border: 1px solid #eee; }
-        .sponsor-kart img { height: 60px; }
-        .ornek-etiket { position: absolute; top: -8px; right: -8px; background-color: #d32f2f; color: white; font-size: 0.6rem; padding: 3px 8px; border-radius: 10px; }
+        /* Yönlendirme Paneli (Süslü Kısım) */
+        .status-panel {
+            background: rgba(22, 27, 34, 0.8);
+            border: 2px solid #30363d;
+            border-radius: 15px;
+            padding: 1.5rem 3rem;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
 
-        /* Mobil Ayarı */
-        @media (max-width: 600px) {
-            .navbar { justify-content: center; gap: 10px; }
-            .nav-links { justify-content: center; }
+        .status-panel.active {
+            border-color: #3fb950;
+            color: #3fb950;
+            box-shadow: 0 0 25px rgba(63, 185, 80, 0.4);
+        }
+
+        .status-panel.full {
+            border-color: #f85149;
+            color: #f85149;
+            box-shadow: 0 0 25px rgba(248, 81, 73, 0.4);
+        }
+
+        /* Otopark Kareleri */
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .spot {
+            background: #161b22;
+            border: 3px solid #30363d;
+            border-radius: 12px;
+            height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .spot span.num {
+            font-size: 3rem;
+            font-family: 'Orbitron', sans-serif;
+            opacity: 0.3;
+            position: absolute;
+            top: 5px;
+            left: 10px;
+        }
+
+        /* Boş ve Dolu Efektleri */
+        .spot.bos {
+            border-color: #3fb950;
+            background: rgba(63, 185, 80, 0.1);
+            color: #3fb950;
+            box-shadow: inset 0 0 20px rgba(63, 185, 80, 0.2), 0 0 15px rgba(63, 185, 80, 0.4);
+        }
+
+        .spot.dolu {
+            border-color: #f85149;
+            background: rgba(248, 81, 73, 0.1);
+            color: #f85149;
+            box-shadow: inset 0 0 20px rgba(248, 81, 73, 0.2), 0 0 15px rgba(248, 81, 73, 0.4);
         }
     </style>
 </head>
 <body>
 
-    <nav class="navbar">
-        <a href="#" class="logo-container">
-            <img src="logo.jpg" alt="Logo">
-            <div class="logo-text">EGE ÜNİVERSİTESİ<span>Elektronik Haberleşme Teknolojisi</span></div>
-        </a>
-        <ul class="nav-links">
-            <li><a href="#">Ana Sayfa</a></li>
-            <li><a href="#etkinlik-alani">Etkinlik</a></li>
-            <li><a href="#projeler-alani">Projeler</a></li>
-            <li><a href="#sponsorlar-alani">Sponsorlar</a></li>
-            <li><a href="#iletisim-alani">İletişim</a></li>
-        </ul>
-    </nav>
+    <h1>EGE ÜNİVERSİTESİ</h1>
+    <div class="subtitle">YAPAY ZEKA DESTEKLİ OTOPARK YÖNLENDİRME SİSTEMİ</div>
 
-    <section class="hero">
-        <div class="hero-content">
-            <h1>PROJE GÜNLERİ</h1>
-            <h2>04-08 MAYIS | Ege MYO</h2>
-            <p>Akademik projelerimizin sergilendiği resmi platform.</p>
-            <a href="#etkinlik-alani" class="btn-projeler">DETAYLAR</a>
-        </div>
-    </section>
+    <div id="yonlendirme" class="status-panel">
+        Sistem Bağlantısı Bekleniyor...
+    </div>
 
-    <section id="etkinlik-alani" class="section-container">
-        <h2 class="bolum-baslik">Etkinlik Hakkında</h2>
-        <div class="etkinlik-icerik">
-            <div class="etkinlik-afis"><img src="afis.jpg" alt="Afis"></div>
-            <div class="etkinlik-detay">
-                <ul class="etkinlik-liste">
-                    <li>🏆 <strong>Yarışmalar</strong></li>
-                    <li>📊 <strong>Sunumlar</strong></li>
-                    <li>🎤 <strong>Seminerler</strong></li>
-                </ul>
-                <a href="#projeler-alani" class="btn-projeler">PROJELERİ GÖR</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="projeler-alani" class="section-container">
-        <h2 class="bolum-baslik">Projeler</h2>
-        <div class="projeler-grid" id="proje-kapsayici">
-            <div class="proje-kart">
-                <img src="tekgpslogo.jpg" alt="TekGPS" class="proje-logo">
-                <h3 class="proje-baslik">TekGPS: Araç Takip</h3>
-                <a href="proje-detay.html" class="proje-btn">İncele</a>
-            </div>
-        </div>
-    </section>
-
-    <section id="sponsorlar-alani" class="section-container">
-        <h2 class="bolum-baslik">Sponsorlar</h2>
-        <div class="sponsor-liste">
-            <div class="sponsor-kart"><span class="ornek-etiket">ÖRNEKTİR</span><img src="tubitak.jpg" alt="T"></div>
-            <div class="sponsor-kart"><span class="ornek-etiket">ÖRNEKTİR</span><img src="aselsan.jpg" alt="A"></div>
-        </div>
-    </section>
+    <div class="grid-container">
+        <div id="spot-5" class="spot"><span class="num">5</span><div class="txt">Yükleniyor</div></div>
+        <div id="spot-3" class="spot"><span class="num">3</span><div class="txt">Yükleniyor</div></div>
+        <div id="spot-1" class="spot"><span class="num">1</span><div class="txt">Yükleniyor</div></div>
+        
+        <div id="spot-6" class="spot"><span class="num">6</span><div class="txt">Yükleniyor</div></div>
+        <div id="spot-4" class="spot"><span class="num">4</span><div class="txt">Yükleniyor</div></div>
+        <div id="spot-2" class="spot"><span class="num">2</span><div class="txt">Yükleniyor</div></div>
+    </div>
 
     <script>
-        const container = document.getElementById('proje-kapsayici');
-        for(let i = 2; i <= 50; i++) {
-            container.innerHTML += `
-                <div class="proje-kart">
-                    <img src="https://via.placeholder.com/100?text=Logo" class="proje-logo">
-                    <h3 class="proje-baslik">Öğrenci Projesi ${i}</h3>
-                    <a href="javascript:void(0);" onclick="alert('Bu proje yakında eklenecek.');" class="proje-btn">İncele</a>
-                </div>`;
+        // Senin Firebase Veritabanı URL'in
+        const FIREBASE_URL = "https://otopark-33791-default-rtdb.firebaseio.com/otopark_sistemi.json";
+        
+        async function sistemiGuncelle() {
+            try {
+                // Firebase'den REST API ile veriyi çek (En hafif ve hızlı yöntem)
+                const response = await fetch(FIREBASE_URL);
+                const data = await response.json();
+                
+                if(data) {
+                    const panel = document.getElementById("yonlendirme");
+                    const hedef = data.hedef_led;
+
+                    // Yönlendirme Yazısını Güncelle
+                    if(hedef > 0) {
+                        panel.className = "status-panel active";
+                        panel.innerHTML = `🚀 Lütfen <span>${hedef}. BOŞ PARK YERİNE</span> İlerleyiniz`;
+                    } else {
+                        panel.className = "status-panel full";
+                        panel.innerHTML = `⛔ OTOPARK TAMAMEN DOLU`;
+                    }
+
+                    // 6 Adet Kutunun Rengini ve Yazısını Güncelle
+                    if(data.spotlar) {
+                        for(let i = 1; i <= 6; i++) {
+                            const spotDiv = document.getElementById(`spot-${i}`);
+                            const txtDiv = spotDiv.querySelector('.txt');
+                            
+                            if(data.spotlar[i] === "BOS") {
+                                spotDiv.className = "spot bos";
+                                txtDiv.innerText = "BOŞ";
+                            } else {
+                                spotDiv.className = "spot dolu";
+                                txtDiv.innerText = "DOLU";
+                            }
+                        }
+                    }
+                }
+            } catch(error) {
+                console.error("Firebase'den veri çekilemedi:", error);
+            }
         }
+
+        // Sayfa açılır açılmaz veriyi çek ve sonra her 1 saniyede bir güncelle
+        sistemiGuncelle();
+        setInterval(sistemiGuncelle, 1000); 
     </script>
 </body>
 </html>
