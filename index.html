@@ -3,532 +3,194 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HabboNox Fan Site</title>
+    <title>HabboNox - Ana Sayfa</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --nav-bg: #4A148C; 
+            --nav-bg: rgba(74, 20, 140, 0.85); /* Hafif saydam mor */
             --sky-top: #5B86E5;
             --sky-bottom: #36D1DC;
             --dark-bg: #0B0C10; 
-            --card-bg: #1F2833;
+            --card-bg: rgba(31, 40, 51, 0.7); /* Saydam koyu lacivert */
             --text-main: #FFFFFF;
             --text-muted: #C5C6C7;
             --accent: #66FCF1;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--text-main); overflow-x: hidden; }
 
-        body {
-            background-color: var(--dark-bg);
-            color: var(--text-main);
-            overflow-x: hidden;
-            /* Yazı seçmeyi engellemek istersen alttaki satırı açabilirsin */
-            /* user-select: none; */
-        }
+        #galaxyCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
 
-        /* Galaksi Efekti İçin Canvas */
-        #galaxyCanvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
-            pointer-events: none; /* Tıklamaları engellememesi için */
-            z-index: 9999; /* Her şeyin üstünde görünmesi için */
-        }
+        .hero-bg { background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom)); height: 350px; position: relative; z-index: 1; }
+        .skyline { position: absolute; bottom: 0; width: 100%; height: 50px; background: var(--dark-bg); border-top: 2px solid rgba(255,255,255,0.05); }
 
-        /* Gökyüzü ve Şehir Silüeti Efekti */
-        .hero-bg {
-            background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
-            height: 350px;
-            position: relative;
-            z-index: 1;
-        }
-
-        .skyline {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            height: 50px;
-            background: var(--dark-bg);
-            border-top: 3px solid #1a1a24;
-        }
-
-        /* Navigasyon Barı */
-        .navbar-container {
-            position: absolute;
-            top: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            z-index: 10;
-        }
-
+        .navbar-container { position: absolute; top: 20px; width: 100%; display: flex; justify-content: center; z-index: 10; }
         nav {
             background-color: var(--nav-bg);
+            backdrop-filter: blur(10px); /* Buzlu cam efekti */
             padding: 15px 40px;
-            display: flex;
-            align-items: center;
-            border-radius: 15px;
-            width: 90%;
-            max-width: 1200px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: flex; align-items: center; border-radius: 15px; width: 90%; max-width: 1200px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.1);
             gap: 25px;
         }
 
+        /* YENİLENMİŞ KALİTELİ LOGO */
         .logo {
-            font-size: 28px;
-            font-weight: 900;
+            font-size: 34px;
+            font-family: 'Arial Black', Impact, sans-serif;
             color: #FFF;
-            text-shadow: 2px 2px 0px #000;
+            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
             margin-right: auto;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            transform: skew(-5deg);
         }
+        .logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent), 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
 
-        .logo span { color: var(--accent); }
-
-        nav a.nav-link {
-            color: var(--text-main);
-            text-decoration: none;
-            font-size: 14px;
-            font-weight: 600;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            transition: transform 0.3s ease;
-        }
-
+        nav a.nav-link { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.3s; }
         nav a.nav-link i { font-size: 20px; }
-        nav a.nav-link:hover { transform: translateY(-3px); color: var(--accent); }
+        nav a.nav-link:hover { transform: translateY(-3px); color: var(--accent); text-shadow: 0 0 10px var(--accent); }
 
-        .auth-buttons {
-            display: flex;
-            gap: 10px;
-        }
+        .btn { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-login { background: rgba(0,0,0,0.5); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-login:hover { background: var(--text-main); color: black; box-shadow: 0 0 15px white; }
 
-        .btn {
-            padding: 8px 15px;
-            border-radius: 8px;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
+        .container { width: 90%; max-width: 1200px; margin: -50px auto 0 auto; padding-bottom: 50px; position: relative; z-index: 5; }
+        .section-header { display: flex; align-items: center; gap: 10px; font-size: 22px; margin-bottom: 20px; margin-top: 40px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
-        .btn-login { background: rgba(0,0,0,0.3); color: white; }
-        .btn-login:hover { background: rgba(0,0,0,0.5); transform: scale(1.05); }
-        .btn-lang { background: var(--accent); color: #000; }
-        .btn-lang:hover { transform: scale(1.05); }
-
-        /* Ana İçerik */
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: -50px auto 0 auto; 
-            padding-bottom: 50px;
-            position: relative;
-            z-index: 5;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 20px;
-            margin-bottom: 20px;
-            margin-top: 40px;
-            color: var(--text-main);
-        }
-
-        /* Kazanılabilir Rozetler */
-        .badges-scroll {
-            display: flex;
-            gap: 15px;
-            overflow-x: auto;
-            padding: 10px 0;
-            scrollbar-width: thin;
-            scrollbar-color: var(--accent) var(--card-bg);
-        }
-
-        .badges-scroll::-webkit-scrollbar { height: 8px; }
-        .badges-scroll::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 4px; }
-
-        .badge-box {
-            background-color: #fff;
-            min-width: 80px;
-            height: 80px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            flex-shrink: 0;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-
-        .badge-box:hover { transform: scale(1.1); }
-
-        .badge-tag {
-            position: absolute;
-            top: -10px;
-            background: #4CAF50; 
-            color: white;
-            font-size: 10px;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-weight: bold;
-        }
-
-        /* Haberler Grid Layout */
-        .news-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .news-grid { grid-template-columns: 1fr; }
-        }
-
-        /* Haber Kartlarını Tıklanabilir Link Yaptık */
-        a.news-card {
+        /* GÖLGELENDİRİLMİŞ KARTLAR */
+        .glass-card {
             background-color: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
             border-radius: 12px;
-            overflow: hidden;
-            position: relative;
-            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            text-decoration: none;
-            color: inherit;
-            display: block;
         }
+        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(102, 252, 241, 0.2); border-color: rgba(102, 252, 241, 0.3); }
 
-        a.news-card:hover { 
-            transform: translateY(-5px); 
-            box-shadow: 0 10px 20px rgba(102, 252, 241, 0.2);
-        }
+        .badges-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 15px 5px; scrollbar-width: thin; scrollbar-color: var(--accent) transparent; }
+        .badge-box { background: linear-gradient(145deg, #ffffff, #e6e6e6); min-width: 80px; height: 80px; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.4); flex-shrink: 0; cursor: pointer; transition: 0.2s; }
+        .badge-box:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--accent); }
+        .badge-tag { position: absolute; top: -10px; background: #4CAF50; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
 
-        .news-featured {
-            height: 300px;
-            background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.8)), url('https://via.placeholder.com/800x400/2a2a2a/ffffff?text=Habbo+Gorseli') center/cover;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-end;
-            padding: 20px;
-        }
+        .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
 
-        .news-small-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        a.news-small-card {
-            height: 140px;
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.3s ease;
-        }
+        a.news-link { text-decoration: none; color: inherit; display: block; }
+        .news-featured { height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1)), url('https://images.habbo.com/web_images/habbo-web-articles/lpromo_gen15_02.png') center/cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; }
+        .news-small-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .news-small-card { height: 140px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
         
-        a.news-small-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(102, 252, 241, 0.2);
-        }
-
-        /* Ekip Üyeleri */
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-        }
-
-        .team-card {
-            background: var(--card-bg);
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            border-top: 4px solid var(--accent);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .team-card:hover { transform: translateY(-8px); }
-
-        .avatar {
-            width: 70px;
-            height: 70px;
-            background-color: var(--nav-bg);
-            border-radius: 50%;
-            margin: 0 auto 15px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--accent);
-        }
-
-        .role { color: var(--text-muted); font-size: 13px; margin-top: 5px; }
-
     </style>
 </head>
 <body>
-
     <canvas id="galaxyCanvas"></canvas>
 
-    <div class="hero-bg">
-        <div class="skyline"></div>
-    </div>
+    <div class="hero-bg"><div class="skyline"></div></div>
 
     <div class="navbar-container">
         <nav>
             <div class="logo">Habbo<span>Nox</span></div>
-            
-            <a href="https://tekgps.com.tr" target="_blank" class="nav-link" id="navHome"><i class="fas fa-home"></i> Anasayfa</a>
-            <a href="#topluluk" target="_blank" class="nav-link" id="navCommunity"><i class="fas fa-users"></i> Topluluk</a>
-            <a href="#haberler" target="_blank" class="nav-link" id="navNews"><i class="fas fa-newspaper"></i> Haberler</a>
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Anasayfa</a>
+            <a href="ekip.html" class="nav-link"><i class="fas fa-users"></i> Ekip Üyeleri</a>
+            <a href="#haberler" class="nav-link"><i class="fas fa-newspaper"></i> Haberler</a>
             
             <div class="auth-buttons">
-                <a href="#login" target="_blank" class="btn btn-login" id="btnLogin">Giriş Yap</a>
-                <button class="btn btn-lang" onclick="toggleLanguage()" id="langBtn">TR / EN</button>
+                <a href="#login" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
             </div>
         </nav>
     </div>
 
     <div class="container">
-        
-        <div class="section-header">
-            <i class="fas fa-certificate" style="color: var(--accent);"></i>
-            <span id="titleBadges">Kazanılabilir Rozetler</span>
-        </div>
+        <div class="section-header"><i class="fas fa-certificate" style="color: var(--accent);"></i> Kazanılabilir Rozetler</div>
         <div class="badges-scroll">
-            <div class="badge-box"><span class="badge-tag" id="badgeEasy1">Kolay</span><i class="fas fa-ghost" style="color: #333; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag" id="badgeEasy2">Kolay</span><i class="fas fa-mask" style="color: #333; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag" id="badgeEasy3">Kolay</span><i class="fas fa-gem" style="color: #333; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag" id="badgeMed">Orta</span><i class="fas fa-fire" style="color: #ff5722; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag" id="badgeHard">Zor</span><i class="fas fa-crown" style="color: #ffc107; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag">Kolay</span><i class="fas fa-star" style="color: #333; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag">Kolay</span><i class="fas fa-heart" style="color: #333; font-size: 30px;"></i></div>
+            <div class="badge-box"><span class="badge-tag">Kolay</span><i class="fas fa-dragon" style="color: #d32f2f; font-size: 30px;"></i></div>
+            <div class="badge-box"><span class="badge-tag">Kolay</span><i class="fas fa-snowman" style="color: #0288d1; font-size: 30px;"></i></div>
+            <div class="badge-box"><span class="badge-tag">Orta</span><i class="fas fa-chess-knight" style="color: #333; font-size: 30px;"></i></div>
+            <div class="badge-box"><span class="badge-tag" style="background:#ff9800;">Zor</span><i class="fas fa-crown" style="color: #ffc107; font-size: 30px;"></i></div>
         </div>
 
-        <div class="section-header">
-            <i class="fas fa-newspaper" style="color: var(--accent);"></i>
-            <span id="titleNews">Son Haberler</span>
-        </div>
-        
+        <div class="section-header"><i class="fas fa-newspaper" style="color: var(--accent);"></i> Güncel Habbo Haberleri</div>
         <div class="news-grid">
             <div>
-                <a href="#ana-haber" target="_blank" class="news-card news-featured">
-                    <h2 id="mainNewsTitle">Nox Güncellemesi</h2>
-                    <p id="mainNewsDesc" style="color: var(--text-muted); margin-top: 10px;">Chat, Mağaza Yenilikleri ve VIP Baloncuk Satışı!</p>
+                <a href="#" class="glass-card news-link news-featured">
+                    <h2><i class="fas fa-bullhorn" style="color: var(--accent);"></i> 2026 Yeni Habbo Elçileri Belli Oldu!</h2>
+                    <p style="color: var(--text-muted); margin-top: 10px; font-size: 15px;">Topluluğumuza otellerde rehberlik edecek ve güvenliği sağlayacak yeni elçi kadrosu resmen açıklandı. Listede kimler var?</p>
                 </a>
                 
                 <div class="news-small-grid">
-                    <a href="#kucuk-haber-1" target="_blank" class="news-small-card">
-                        <span style="color: var(--accent); font-size: 12px;"><i class="fas fa-thumbtack"></i> Habbo Hotel</span>
-                        <h4 style="margin-top: 10px;" id="subNews1">Mart 2026: Neler Var?</h4>
+                    <a href="#" class="glass-card news-link news-small-card">
+                        <span style="color: var(--accent); font-size: 12px; font-weight:bold;"><i class="fas fa-gamepad"></i> RESMİ ETKİNLİK</span>
+                        <h4 style="margin-top: 5px;">Kış Olimpiyatları Rozet Avı Başladı!</h4>
+                        <p style="font-size: 12px; color:#aaa; margin-top:5px;">Dağ evindeki 5 gizli şifreyi bul, özel penguen rozetini kap.</p>
                     </a>
-                    <a href="#kucuk-haber-2" target="_blank" class="news-small-card">
-                        <span style="color: var(--accent); font-size: 12px;"><i class="fas fa-gift"></i> Etkinlik</span>
-                        <h4 style="margin-top: 10px;" id="subNews2">Nox Mega Çekiliş!</h4>
+                    <a href="#" class="glass-card news-link news-small-card">
+                        <span style="color: #ff5252; font-size: 12px; font-weight:bold;"><i class="fas fa-gem"></i> MAĞAZA GÜNCELLEMESİ</span>
+                        <h4 style="margin-top: 5px;">Nadir: Kırmızı Ejderha Makinesi</h4>
+                        <p style="font-size: 12px; color:#aaa; margin-top:5px;">Sadece 24 saatliğine mağazada. Kaçırma!</p>
                     </a>
                 </div>
             </div>
 
             <div>
-                <a href="#kisa-haberler" target="_blank" class="news-card" style="padding: 20px; height: 100%;">
-                    <h3 style="border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 15px;" id="shortNewsTitle"><i class="fas fa-bolt"></i> Kısa Haberler</h3>
+                <a href="#" class="glass-card news-link" style="padding: 20px; height: 100%;">
+                    <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;"><i class="fas fa-bolt" style="color:#ffeb3b;"></i> Kısa Haberler</h3>
                     
-                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin-bottom: 15px; transition: 0.3s;">
-                        <span style="background: #ffc107; color: #000; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold;">DÜN</span>
-                        <h4 style="margin: 10px 0;" id="shortNews1Title">Yanlışlıkla aktarılmış Koleksiyonluk Eşyalar</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);" id="shortNews1Desc">Bugün sizlere anasayfada yayınlanan koleksiyon haberini göstereceğim.</p>
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--accent);">
+                        <span style="background: #ffc107; color: #000; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold;">BUGÜN</span>
+                        <h4 style="margin: 10px 0; font-size: 15px;">Klasik HC Koltukları Yenilendi</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">Eski nostaljik Habbo Club koltukları HD çözünürlükle envanterlere eklendi.</p>
+                    </div>
+
+                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border-left: 3px solid #ff5252;">
+                        <span style="background: #e0e0e0; color: #000; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold;">DÜN</span>
+                        <h4 style="margin: 10px 0; font-size: 15px;">Sunucu Bakımı Tamamlandı</h4>
+                        <p style="font-size: 13px; color: var(--text-muted);">Wireddaki gecikme sorunları giderildi.</p>
                     </div>
                 </a>
             </div>
         </div>
-
-        <div class="section-header">
-            <i class="fas fa-users-cog" style="color: var(--accent);"></i>
-            <span id="titleTeam">Ekip Üyeleri</span>
-        </div>
-        
-        <div class="team-grid">
-            <div class="team-card" style="border-color: #ffc107;">
-                <div class="avatar" style="color: #ffc107; box-shadow: 0 0 15px rgba(255,193,7,0.3);"><i class="fas fa-crown"></i></div>
-                <h2 style="color: #ffc107;">XHem</h2>
-                <div class="role" id="roleAdmin">Kurucu & Admin</div>
-            </div>
-            
-            <div class="team-card">
-                <div class="avatar"><i class="fas fa-user-shield"></i></div>
-                <h2>KullanıcıAdı</h2>
-                <div class="role" id="roleMod">Moderatör</div>
-            </div>
-            
-            <div class="team-card">
-                <div class="avatar"><i class="fas fa-pen-nib"></i></div>
-                <h2>YazarAdı</h2>
-                <div class="role" id="roleWriter">Haber Editörü</div>
-            </div>
-        </div>
-
     </div>
 
     <script>
-        /* ---------------------------------------------------
-           GALAKSİ / YILDIZ FARE EFEKTİ SİSTEMİ
-        --------------------------------------------------- */
+        // Galaksi Efekti
         const canvas = document.getElementById('galaxyCanvas');
         const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
         let particlesArray = [];
-        // Nox temasına uygun galaksi renkleri (Açık Mavi, Mor, Turkuaz, Beyaz)
         const colors = ['#66FCF1', '#4A148C', '#36D1DC', '#FFFFFF'];
-
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
         const mouse = { x: null, y: null };
-
         window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x;
-            mouse.y = event.y;
-            // Fare hareket ettikçe 3 adet yıldız parçacığı oluşturur
-            for (let i = 0; i < 3; i++) {
-                particlesArray.push(new Particle());
-            }
+            mouse.x = event.x; mouse.y = event.y;
+            for (let i = 0; i < 3; i++) particlesArray.push(new Particle());
         });
-
         class Particle {
             constructor() {
-                this.x = mouse.x;
-                this.y = mouse.y;
-                // Yıldızların boyutu
+                this.x = mouse.x; this.y = mouse.y;
                 this.size = Math.random() * 3 + 1;
-                // Dağılma hızları
-                this.speedX = Math.random() * 3 - 1.5;
-                this.speedY = Math.random() * 3 - 1.5;
-                // Rastgele renk seçimi
+                this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5;
                 this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.life = 1; // Şeffaflık ömrü
+                this.life = 1;
             }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.size > 0.1) this.size -= 0.05; // Giderek küçülür
-                this.life -= 0.02; // Giderek silikleşir
-            }
+            update() { this.x += this.speedX; this.y += this.speedY; if (this.size > 0.1) this.size -= 0.05; this.life -= 0.02; }
             draw() {
-                ctx.fillStyle = this.color;
-                ctx.globalAlpha = Math.max(0, this.life);
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.shadowBlur = 10; // Parlama efekti
-                ctx.shadowColor = this.color;
-                ctx.fill();
+                ctx.fillStyle = this.color; ctx.globalAlpha = Math.max(0, this.life);
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill();
             }
         }
-
         function handleParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update();
-                particlesArray[i].draw();
-                // Ömrü biten yıldızı sil
-                if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) {
-                    particlesArray.splice(i, 1);
-                    i--;
-                }
+                particlesArray[i].update(); particlesArray[i].draw();
+                if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) { particlesArray.splice(i, 1); i--; }
             }
             requestAnimationFrame(handleParticles);
         }
         handleParticles();
-
-        /* ---------------------------------------------------
-           DİL ÇEVİRİ SİSTEMİ
-        --------------------------------------------------- */
-        let currentLang = 'tr';
-
-        const translations = {
-            tr: {
-                navHome: "<i class='fas fa-home'></i> Anasayfa",
-                navCommunity: "<i class='fas fa-users'></i> Topluluk",
-                navNews: "<i class='fas fa-newspaper'></i> Haberler",
-                btnLogin: "Giriş Yap",
-                titleBadges: "Kazanılabilir Rozetler",
-                badgeEasy1: "Kolay", badgeEasy2: "Kolay", badgeEasy3: "Kolay",
-                badgeMed: "Orta", badgeHard: "Zor",
-                titleNews: "Son Haberler",
-                mainNewsTitle: "Nox Güncellemesi",
-                mainNewsDesc: "Chat, Mağaza Yenilikleri ve VIP Baloncuk Satışı!",
-                subNews1: "Mart 2026: Neler Var?",
-                subNews2: "Nox Mega Çekiliş!",
-                shortNewsTitle: "<i class='fas fa-bolt'></i> Kısa Haberler",
-                shortNews1Title: "Yanlışlıkla aktarılmış Koleksiyonluk Eşyalar",
-                shortNews1Desc: "Bugün sizlere anasayfada yayınlanan koleksiyon haberini göstereceğim.",
-                titleTeam: "Ekip Üyeleri",
-                roleAdmin: "Kurucu & Admin",
-                roleMod: "Moderatör",
-                roleWriter: "Haber Editörü"
-            },
-            en: {
-                navHome: "<i class='fas fa-home'></i> Home",
-                navCommunity: "<i class='fas fa-users'></i> Community",
-                navNews: "<i class='fas fa-newspaper'></i> News",
-                btnLogin: "Login",
-                titleBadges: "Earnable Badges",
-                badgeEasy1: "Easy", badgeEasy2: "Easy", badgeEasy3: "Easy",
-                badgeMed: "Medium", badgeHard: "Hard",
-                titleNews: "Latest News",
-                mainNewsTitle: "Nox Update",
-                mainNewsDesc: "Chat, Store Updates and VIP Bubble Sales!",
-                subNews1: "March 2026: What's New?",
-                subNews2: "Nox Mega Giveaway!",
-                shortNewsTitle: "<i class='fas fa-bolt'></i> Short News",
-                shortNews1Title: "Accidentally Transferred Collectibles",
-                shortNews1Desc: "Today I will show you the collection news published on the homepage.",
-                titleTeam: "Team Members",
-                roleAdmin: "Founder & Admin",
-                roleMod: "Moderator",
-                roleWriter: "News Editor"
-            }
-        };
-
-        function toggleLanguage() {
-            currentLang = currentLang === 'tr' ? 'en' : 'tr';
-            for (const key in translations[currentLang]) {
-                const element = document.getElementById(key);
-                if (element) {
-                    if(key === 'navHome' || key === 'navCommunity' || key === 'navNews' || key === 'shortNewsTitle') {
-                         element.innerHTML = translations[currentLang][key];
-                    } else {
-                         element.innerText = translations[currentLang][key];
-                    }
-                }
-            }
-        }
     </script>
 </body>
 </html>
