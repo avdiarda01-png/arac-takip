@@ -3,18 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HabboNox - Ana Sayfa</title>
+    <title>HabboNox - Evrenin En Parlak Yıldızı</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --nav-bg: rgba(74, 20, 140, 0.85); 
-            --sky-top: #5B86E5;
-            --sky-bottom: #36D1DC;
-            --dark-bg: #0B0C10; 
-            --card-bg: rgba(31, 40, 51, 0.7); 
+            /* Görsellerdeki Yeni Renk Paleti */
+            --sky-top: #4e73df;
+            --sky-bottom: #224abe;
+            --dark-bg: #0B0E14; /* En alt arka plan */
+            --content-bg: #121621; /* İçerik arka planı */
+            --card-bg: #1A1F2E; /* Kart arka planı */
+            --nav-bg: #3b177d; /* Menü moru */
             --text-main: #FFFFFF;
-            --text-muted: #C5C6C7;
+            --text-muted: #A0AEC0;
             --accent: #66FCF1;
+            --badge-easy: #4CAF50;
+            --badge-med: #FF9800;
+            --badge-hard: #F44336;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
@@ -22,149 +27,278 @@
 
         #galaxyCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
 
-        .hero-bg { background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom)); height: 350px; position: relative; z-index: 1; }
-        .skyline { position: absolute; bottom: 0; width: 100%; height: 50px; background: var(--dark-bg); border-top: 2px solid rgba(255,255,255,0.05); }
+        /* GÖKYÜZÜ VE SİLÜET */
+        .hero-bg { background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom)); height: 400px; position: relative; z-index: 1; }
+        .skyline { 
+            position: absolute; bottom: 0; width: 100%; height: 160px; 
+            background: url('arkaplananasayfa.gif') repeat-x bottom center; 
+            background-size: contain; z-index: 2;
+        }
 
-        .navbar-container { position: absolute; top: 20px; width: 100%; display: flex; justify-content: center; z-index: 10; }
+        /* MENÜ TASARIMI */
+        .navbar-container { position: absolute; top: 25px; width: 100%; display: flex; justify-content: center; z-index: 10; }
         nav {
             background-color: var(--nav-bg);
-            backdrop-filter: blur(10px);
-            padding: 15px 40px;
-            display: flex; align-items: center; border-radius: 15px; width: 90%; max-width: 1200px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-            border: 1px solid rgba(255,255,255,0.1);
-            gap: 25px;
+            padding: 10px 30px;
+            display: flex; align-items: center; justify-content: space-between; 
+            border-radius: 20px; width: 95%; max-width: 1300px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 2px solid rgba(255,255,255,0.05);
         }
 
-        .logo { font-size: 34px; font-family: 'Arial Black', Impact, sans-serif; color: #FFF; text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; margin-right: auto; letter-spacing: 1px; transform: skew(-5deg); text-decoration: none;}
-        .logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent), 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
+        .logo img { height: 50px; filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.5)); transition: 0.3s; }
+        .logo img:hover { transform: scale(1.05) rotate(-3deg); }
 
-        nav a.nav-link { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.3s; }
-        nav a.nav-link i { font-size: 20px; }
-        nav a.nav-link:hover { transform: translateY(-3px); color: var(--accent); text-shadow: 0 0 10px var(--accent); }
-
-        .auth-buttons { display: flex; gap: 10px; align-items: center;}
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-link { color: var(--text-main); text-decoration: none; font-size: 11px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.3s; text-transform: uppercase; }
+        .nav-link img { height: 35px; transition: 0.3s; filter: drop-shadow(0px 2px 5px rgba(0,0,0,0.4)); }
+        .nav-link i { font-size: 28px; margin-bottom: 4px; color: #ddd; transition: 0.3s; }
+        .nav-link:hover { transform: translateY(-4px); color: var(--accent); }
+        .nav-link:hover img { transform: scale(1.15); filter: drop-shadow(0px 0px 8px rgba(255,255,255,0.8)); }
         
-        .btn { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
-        .btn-login { background: rgba(0,0,0,0.5); color: white; border: 1px solid rgba(255,255,255,0.2); }
-        .btn-login:hover { background: var(--text-main); color: black; box-shadow: 0 0 15px white; }
+        .auth-buttons { display: flex; gap: 10px; align-items: center; }
+        .btn { padding: 10px 20px; border-radius: 8px; border: none; cursor: pointer; font-size: 13px; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
+        .btn-login { background: rgba(0,0,0,0.3); color: white; border: 1px solid rgba(255,255,255,0.2); }
+        .btn-login:hover { background: rgba(0,0,0,0.6); }
+        .btn-register { background: var(--nav-bg); border: 1px solid rgba(255,255,255,0.3); color: white; }
+        .btn-register:hover { background: var(--text-main); color: var(--nav-bg); }
 
-        /* YENİ: Açılır Profil Menüsü (Dropdown) Tasarımı */
+        /* ANA İÇERİK ALANI */
+        .container { width: 95%; max-width: 1300px; margin: -80px auto 0 auto; padding-bottom: 50px; position: relative; z-index: 5; background: var(--content-bg); border-radius: 20px 20px 0 0; padding: 30px; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); }
+        
+        .section-header { display: flex; align-items: center; gap: 10px; font-size: 20px; font-weight: bold; margin-bottom: 20px; margin-top: 40px; }
+        
+        /* ROZETLER (Görseldeki Gibi Yatay Kutular) */
+        .badges-scroll { display: flex; gap: 15px; overflow-x: auto; padding-bottom: 10px; scrollbar-width: thin; scrollbar-color: var(--nav-bg) var(--content-bg); }
+        .badge-box { background: #fff; min-width: 75px; height: 75px; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; cursor: pointer; transition: 0.2s; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.1); }
+        .badge-box:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .badge-box img { max-width: 50px; max-height: 50px; }
+        .badge-tag { position: absolute; top: -10px; color: white; font-size: 10px; padding: 3px 8px; border-radius: 10px; font-weight: bold; text-transform: uppercase; }
+        
+        /* HABERLER GRİD */
+        .news-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .news-layout { grid-template-columns: 1fr; } }
+        
+        .card { background-color: var(--card-bg); border-radius: 12px; overflow: hidden; transition: 0.3s; border: 1px solid rgba(255,255,255,0.05); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.4); border-color: rgba(255,255,255,0.1); }
+        
+        .news-featured { height: 320px; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1)), url('https://images.habbo.com/web_images/habbo-web-articles/lpromo_gen15_02.png') center/cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; text-decoration: none; color: white;}
+        .news-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 15px; }
+        .news-small { height: 150px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; text-decoration: none; color: white; background-size: cover; background-position: center; position: relative; }
+        .news-small::before { content: ''; position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(to top, rgba(0,0,0,0.9), transparent); z-index: 1;}
+        .news-small > * { position: relative; z-index: 2; }
+        
+        /* MOBİLER VE PİYASA GRİD (Görseldeki Alt Kısım) */
+        .market-layout { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-top: 20px; }
+        
+        .furni-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 15px; }
+        .furni-box { background: #fff; height: 110px; border-radius: 10px; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; box-shadow: inset 0 -4px 0 rgba(0,0,0,0.1);}
+        .furni-box:hover { transform: scale(1.05); }
+        
+        .price-card { background: #fff; color: #333; padding: 20px; border-radius: 12px; text-align: center; position: relative; }
+        .price-value { background: #ff5252; color: white; padding: 10px; font-size: 20px; font-weight: bold; border-radius: 8px; margin-top: 15px; display: flex; justify-content: space-between;}
+
+        /* KULLANICI KARTLARI (En alt) */
+        .user-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 15px; }
+        .user-mini-card { background: var(--card-bg); padding: 15px; border-radius: 10px; display: flex; align-items: center; gap: 15px; border: 1px solid rgba(255,255,255,0.05); }
+        .user-mini-card img { width: 50px; height: 50px; border-radius: 5px; background: rgba(255,255,255,0.1); }
+        .user-info h4 { font-size: 14px; color: white; display: flex; align-items: center; gap: 5px;}
+        .user-info p { font-size: 12px; color: var(--text-muted); margin-top: 3px; }
+
+        /* SOHBET BUTONU (Yüzen) */
+        .floating-chat { position: fixed; bottom: 30px; right: 30px; background: var(--card-bg); border: 2px solid rgba(255,255,255,0.1); border-radius: 30px; padding: 10px 20px; display: flex; align-items: center; gap: 10px; cursor: pointer; z-index: 100; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.5); text-decoration: none; color: white;}
+        .floating-chat:hover { background: var(--nav-bg); transform: scale(1.05); border-color: var(--accent); }
+        .chat-icon { position: relative; width: 35px; height: 35px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .notification-dot { position: absolute; top: -2px; right: -2px; background: #ff5252; color: white; font-size: 10px; font-weight: bold; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+        /* FOOTER */
+        footer { background: #080B10; padding: 40px 20px; border-top: 1px solid rgba(255,255,255,0.05); margin-top: 50px; }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 30px; font-size: 12px; color: var(--text-muted); line-height: 1.8; }
+        .footer-logo img { height: 50px; margin-bottom: 15px; opacity: 0.8;}
+        .footer-stats ul { list-style: none; }
+        .footer-stats span { color: white; font-weight: bold; }
+        .footer-links a { color: var(--nav-bg); text-decoration: none; font-weight: bold; transition: 0.3s;}
+        .footer-links a:hover { color: var(--accent); }
+        .copyright { text-align: center; margin-top: 40px; font-size: 11px; opacity: 0.5; }
+        
+        /* Profil Açılır Menü (Önceki koddan) */
         .user-dropdown { position: relative; display: inline-block; }
-        .dropdown-content { 
-            display: none; position: absolute; right: 0; top: 110%; 
-            background: var(--card-bg); backdrop-filter: blur(15px); 
-            min-width: 160px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 20; overflow: hidden;
-        }
-        .user-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
-        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 14px; transition: 0.3s; border-bottom: 1px solid rgba(255,255,255,0.05);}
-        .dropdown-content a:last-child { border-bottom: none; }
-        .dropdown-content a:hover { background: rgba(102, 252, 241, 0.1); color: var(--accent); padding-left: 20px;}
-        .logout-link:hover { background: rgba(255, 82, 82, 0.1) !important; color: #ff5252 !important; }
-        
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-
-        .container { width: 90%; max-width: 1200px; margin: -50px auto 0 auto; padding-bottom: 50px; position: relative; z-index: 5; }
-        .section-header { display: flex; align-items: center; gap: 10px; font-size: 22px; margin-bottom: 20px; margin-top: 40px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
-
-        .glass-card { background-color: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s ease, box-shadow 0.3s ease; }
-        .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(102, 252, 241, 0.2); border-color: rgba(102, 252, 241, 0.3); }
-
-        .badges-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 15px 5px; scrollbar-width: thin; scrollbar-color: var(--accent) transparent; }
-        .badge-box { background: linear-gradient(145deg, #ffffff, #e6e6e6); min-width: 80px; height: 80px; border-radius: 12px; display: flex; align-items: center; justify-content: center; position: relative; box-shadow: 0 5px 15px rgba(0,0,0,0.4); flex-shrink: 0; cursor: pointer; transition: 0.2s; }
-        .badge-box:hover { transform: scale(1.1); box-shadow: 0 0 20px var(--accent); }
-        .badge-tag { position: absolute; top: -10px; background: #4CAF50; color: white; font-size: 10px; padding: 2px 8px; border-radius: 10px; font-weight: bold; box-shadow: 0 2px 5px rgba(0,0,0,0.3); }
-
-        .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-        @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
-        a.news-link { text-decoration: none; color: inherit; display: block; }
-        .news-featured { height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1)), url('https://images.habbo.com/web_images/habbo-web-articles/lpromo_gen15_02.png') center/cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; }
-        .news-small-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
-        .news-small-card { height: 140px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
-        
-        .online-user-tag { background: rgba(0,0,0,0.4); padding: 8px 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 14px; transition: 0.3s; cursor: default; }
-        .online-user-tag:hover { border-color: #4CAF50; box-shadow: 0 0 10px rgba(76, 175, 80, 0.3); transform: scale(1.05); }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 110%; background: var(--card-bg); min-width: 160px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 20; overflow: hidden; }
+        .user-dropdown:hover .dropdown-content { display: block; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 14px; border-bottom: 1px solid rgba(255,255,255,0.05);}
+        .dropdown-content a:hover { background: rgba(255,255,255,0.05); color: var(--accent); }
 
     </style>
 </head>
 <body>
     <canvas id="galaxyCanvas"></canvas>
 
-    <div class="hero-bg"><div class="skyline"></div></div>
+    <div class="hero-bg">
+        <div class="skyline"></div>
+    </div>
 
     <div class="navbar-container">
         <nav>
-            <a href="index.html" class="logo">Habbo<span>Nox</span></a>
+            <a href="index.html" class="logo">
+                <img src="noxlogo.png" alt="HabboNox">
+            </a>
             
-            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Anasayfa</a>
-            <a href="ekip.html" class="nav-link"><i class="fas fa-users"></i> Ekip Üyeleri</a>
-            <a href="#haberler" class="nav-link"><i class="fas fa-newspaper"></i> Haberler</a>
+            <div class="nav-links">
+                <a href="index.html" class="nav-link"><img src="anasayfa.gif" alt="Anasayfa"> Anasayfa</a>
+                <a href="ekip.html" class="nav-link"><i class="fas fa-users" style="font-size: 32px; color:#c7a7e8;"></i> Topluluk</a>
+                <a href="#haberler" class="nav-link"><img src="haberler.gif" alt="Haberler"> Haberler</a>
+                <a href="#" class="nav-link"><img src="habbohotel.gif" alt="Habbo Hotel"> Habbo Hotel</a>
+                <a href="#" class="nav-link"><img src="fanseite.gif" alt="Fan Merkezi"> Fan Merkezi</a>
+            </div>
             
             <div class="auth-buttons" id="authContainer">
-                <a href="login.html" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
+                <a href="login.html" class="btn btn-login">Giriş Yap</a>
+                <a href="register.html" class="btn btn-register"><i class="fas fa-lock" style="font-size: 10px;"></i> Kayıt Ol</a>
             </div>
         </nav>
     </div>
 
+    <a href="#" class="floating-chat">
+        <span style="font-size: 14px; font-weight: bold;">Sohbet Odası</span>
+        <div class="chat-icon">
+            <i class="fas fa-users"></i>
+            <div class="notification-dot">+0</div>
+        </div>
+    </a>
+
     <div class="container">
-        <div class="section-header"><i class="fas fa-certificate" style="color: var(--accent);"></i> Kazanılabilir Rozetler</div>
+        
+        <div class="section-header"><i class="fas fa-certificate"></i> Kazanılabilir Rozetler</div>
         <div class="badges-scroll">
-            <div class="badge-box"><span class="badge-tag">Kolay</span><i class="fas fa-dragon" style="color: #d32f2f; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag">Kolay</span><i class="fas fa-snowman" style="color: #0288d1; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag">Orta</span><i class="fas fa-chess-knight" style="color: #333; font-size: 30px;"></i></div>
-            <div class="badge-box"><span class="badge-tag" style="background:#ff9800;">Zor</span><i class="fas fa-crown" style="color: #ffc107; font-size: 30px;"></i></div>
+            <div class="badge-box"><span class="badge-tag" style="background: var(--badge-easy);">Kolay</span><i class="fas fa-ghost" style="font-size: 35px; color:#333;"></i></div>
+            <div class="badge-box"><span class="badge-tag" style="background: var(--badge-easy);">Kolay</span><i class="fas fa-mask" style="font-size: 35px; color:#333;"></i></div>
+            <div class="badge-box"><span class="badge-tag" style="background: var(--badge-easy);">Kolay</span><i class="fas fa-leaf" style="font-size: 35px; color:#4CAF50;"></i></div>
+            <div class="badge-box"><span class="badge-tag" style="background: var(--badge-med);">Orta</span><i class="fas fa-star" style="font-size: 35px; color:#FF9800;"></i></div>
+            <div class="badge-box"><span class="badge-tag" style="background: var(--badge-hard);">Zor</span><i class="fas fa-crown" style="font-size: 35px; color:#F44336;"></i></div>
+            <div class="badge-box"><span class="badge-tag" style="background: var(--badge-easy);">Kolay</span><i class="fas fa-heart" style="font-size: 35px; color:#E91E63;"></i></div>
         </div>
 
-        <div class="section-header" id="haberler"><i class="fas fa-newspaper" style="color: var(--accent);"></i> Güncel Habbo Haberleri</div>
-        <div class="news-grid">
+        <div class="section-header" id="haberler"><i class="fas fa-list-ul"></i> Son Haberler</div>
+        <div class="news-layout">
             <div>
-                <a href="haber-detay.html" class="glass-card news-link news-featured">
-                    <h2><i class="fas fa-bullhorn" style="color: var(--accent);"></i> 2026 Yeni Habbo Elçileri Belli Oldu!</h2>
-                    <p style="color: var(--text-muted); margin-top: 10px; font-size: 15px;">Topluluğumuza otellerde rehberlik edecek ve güvenliği sağlayacak yeni elçi kadrosu resmen açıklandı. Listede kimler var?</p>
+                <a href="haber-detay.html" class="card news-featured">
+                    <h2>Habbonox.com Güncellemesi</h2>
+                    <p style="color: #ddd; margin-top: 10px; font-size: 14px;">Habbonox.com Güncellemesi: Chat, Mağaza Yenilikleri ve VIP Baloncuk Satışı!</p>
                 </a>
                 
-                <div class="news-small-grid">
-                    <a href="#" class="glass-card news-link news-small-card">
-                        <span style="color: var(--accent); font-size: 12px; font-weight:bold;"><i class="fas fa-gamepad"></i> RESMİ ETKİNLİK</span>
-                        <h4 style="margin-top: 5px;">Kış Olimpiyatları Rozet Avı Başladı!</h4>
-                        <p style="font-size: 12px; color:#aaa; margin-top:5px;">Dağ evindeki 5 gizli şifreyi bul, özel penguen rozetini kap.</p>
+                <div class="news-grid">
+                    <a href="#" class="card news-small" style="background-image: url('https://images.habbo.com/web_images/habbo-web-articles/lpromo_gen15_02.png');">
+                        <span style="background: rgba(0,0,0,0.5); padding: 3px 8px; border-radius: 5px; font-size: 11px; width: fit-content;"><i class="fas fa-thumbtack" style="color:#ff9800;"></i> 17 Yorum</span>
+                        <h4 style="margin-top: 5px;">Mart 2026: Habbo'da Neler Var?</h4>
                     </a>
-                    <a href="#" class="glass-card news-link news-small-card">
-                        <span style="color: #ff5252; font-size: 12px; font-weight:bold;"><i class="fas fa-gem"></i> MAĞAZA GÜNCELLEMESİ</span>
-                        <h4 style="margin-top: 5px;">Nadir: Kırmızı Ejderha Makinesi</h4>
-                        <p style="font-size: 12px; color:#aaa; margin-top:5px;">Sadece 24 saatliğine mağazada. Kaçırma!</p>
+                    <a href="#" class="card news-small" style="background-image: url('https://images.habbo.com/web_images/habbo-web-articles/lpromo_gen15_02.png');">
+                        <span style="background: rgba(0,0,0,0.5); padding: 3px 8px; border-radius: 5px; font-size: 11px; width: fit-content;"><i class="fas fa-comment" style="color:#ff9800;"></i> 414 Yorum</span>
+                        <h4 style="margin-top: 5px;">HabboNox Mega Çekiliş!</h4>
                     </a>
                 </div>
             </div>
 
-            <div>
-                <a href="#" class="glass-card news-link" style="padding: 20px; height: 100%;">
-                    <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;"><i class="fas fa-bolt" style="color:#ffeb3b;"></i> Kısa Haberler</h3>
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--accent);">
-                        <span style="background: #ffc107; color: #000; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold;">BUGÜN</span>
-                        <h4 style="margin: 10px 0; font-size: 15px;">Klasik HC Koltukları Yenilendi</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">Eski nostaljik Habbo Club koltukları HD çözünürlükle envanterlere eklendi.</p>
-                    </div>
-                </a>
+            <div class="card" style="padding: 20px;">
+                <h3 style="font-size: 16px; margin-bottom: 15px;"><i class="fas fa-bolt"></i> Kısa Haberler</h3>
+                
+                <div style="background: #E8E8E8; padding: 20px; border-radius: 8px; color: #333; text-align: center; position: relative;">
+                    <span style="position:absolute; top:-10px; right:-10px; background:#ffc107; font-weight:bold; font-size:10px; padding:3px 8px; border-radius:10px;">DÜN</span>
+                    <h4 style="color: #ff5252; font-size: 18px; margin-bottom: 10px;">Merhaba HabboNox</h4>
+                    <p style="font-size: 13px; font-weight: 500;">Bugün sizlere anasayfada yayınlanan "Yanlışlıkla aktarılmış Koleksiyonluk Eşyalar" haberini göstereceğim.</p>
+                </div>
             </div>
         </div>
 
-        <div class="section-header" style="margin-top: 50px;">
-            <i class="fas fa-globe" style="color: #4CAF50;"></i> Çevrimiçi Üyeler (<span id="onlineCount">0</span>)
+        <div class="market-layout">
+            <div>
+                <div class="section-header" style="font-size: 16px;"><i class="fas fa-gift"></i> Son Eklenen Mobiler</div>
+                <div class="furni-grid">
+                    <div class="furni-box"><img src="https://images.habbo.com/c_images/catalogue/icon_285.png" alt="Mobi"></div>
+                    <div class="furni-box"><img src="https://images.habbo.com/c_images/catalogue/icon_285.png" alt="Mobi"></div>
+                    <div class="furni-box"><img src="https://images.habbo.com/c_images/catalogue/icon_285.png" alt="Mobi"></div>
+                    <div class="furni-box"><img src="https://images.habbo.com/c_images/catalogue/icon_285.png" alt="Mobi"></div>
+                    <div class="furni-box"><img src="https://images.habbo.com/c_images/catalogue/icon_285.png" alt="Mobi"></div>
+                </div>
+            </div>
+
+            <div>
+                <div class="section-header" style="font-size: 16px;"><i class="fas fa-cog"></i> Güncel Fiyat</div>
+                <div class="price-card">
+                    <div style="font-size: 12px; font-weight: bold; color: #666; margin-bottom: 10px;">Elmas Kırmızı Şapka</div>
+                    <i class="fas fa-hat-cowboy" style="font-size: 40px; color: #888;"></i>
+                    <div class="price-value">
+                        <span>170</span>
+                        <span>-10 <i class="fas fa-arrow-down" style="font-size:14px;"></i></span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="glass-card" style="padding: 20px; display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px;" id="onlineUsersList">
-            <span style="color: var(--text-muted); font-size: 14px;">Bağlantı kuruluyor...</span>
+
+        <div class="section-header" style="font-size: 16px; margin-top: 40px;"><i class="fas fa-users"></i> Ekip ve Üyeler</div>
+        <div class="user-cards-grid">
+            <div class="user-mini-card">
+                <img src="https://www.habbo.com.tr/habbo-imaging/avatarimage?user=Habbo&action=std&direction=2&head_direction=2&gesture=sml&size=m" alt="Avatar">
+                <div class="user-info">
+                    <h4>adaletBekcisi <span style="background:rgba(255,255,255,0.1); padding:2px 5px; border-radius:3px; font-size:9px;">VIP</span></h4>
+                    <p>HabboNox Admin</p>
+                </div>
+            </div>
+            <div class="user-mini-card">
+                <img src="https://www.habbo.com.tr/habbo-imaging/avatarimage?user=Habbo&action=std&direction=2&head_direction=2&gesture=sml&size=m" alt="Avatar">
+                <div class="user-info">
+                    <h4>güldürgüldür <span style="background:rgba(255,255,255,0.1); padding:2px 5px; border-radius:3px; font-size:9px;">VIP</span></h4>
+                    <p>Efsane Geliştirici</p>
+                </div>
+            </div>
+            <div class="user-mini-card">
+                <img src="https://www.habbo.com.tr/habbo-imaging/avatarimage?user=Habbo&action=std&direction=2&head_direction=2&gesture=sml&size=m" alt="Avatar">
+                <div class="user-info">
+                    <h4>-moriarty- <span style="background:rgba(255,255,255,0.1); padding:2px 5px; border-radius:3px; font-size:9px;">VIP</span></h4>
+                    <p>Efsane Habbo</p>
+                </div>
+            </div>
         </div>
-    </div>
+
+        <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); text-align: center;">
+            <p style="font-size: 13px; color: var(--text-muted);"><span id="onlineCount" style="font-weight:bold; color:white;">0</span> kullanıcı şu anda çevrimiçi.</p>
+            <div id="onlineUsersList" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 15px;">
+                </div>
+        </div>
+
+    </div> <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="fanseite.gif" alt="Fan Site">
+                <p>HabboNox, Sulake Oy veya Sulake Oy'un bağlı şirketlerinden herhangi biriyle bağlantılı değildir, onaylanmamıştır, desteklenmemiştir veya özel olarak onaylanmamıştır. HabboNox, Habbo Fan Site Kuralları çerçevesinde Habbo'nun ticari markalarını kullanır.</p>
+            </div>
+            
+            <div class="footer-links">
+                <h4 style="color: white; margin-bottom: 15px;">Habbo Hotel</h4>
+                <a href="#">Habbo hayran siteleri için yeni kurallar</a><br><br>
+                <a href="#">Habbo.com.tr</a> | <a href="#">Sulake.com</a> | <a href="#">Yardım Aracı</a>
+            </div>
+
+            <div class="footer-stats">
+                <ul>
+                    <li>Toplam Üye Sayısı: <span>375</span></li>
+                    <li>En Son Kayıt Olan: <span style="color:#a855f7;">-Sidal-</span></li>
+                    <li>Toplam Haber Sayısı: <span>1230</span></li>
+                    <li>Toplam Mobi Sayısı: <span>17359</span></li>
+                    <li>Toplam Üye yazıları: <span>2216</span></li>
+                    <li>Toplam Mobi Kategorisi: <span>479</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="copyright">
+            © 2025 - 2026 HabboNox. All rights reserved.
+        </div>
+    </footer>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        // YENİ: signOut eklendi
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // KENDİ BİLGİLERİN
         const firebaseConfig = {
             apiKey: "AIzaSyAHul0NGg96YGRLjQ3c_EZERbah5A0Xrt4",
             authDomain: "noxsite-8a850.firebaseapp.com",
@@ -182,20 +316,14 @@
         const authContainer = document.getElementById('authContainer');
         let currentUserRef = null;
 
-        // 1. Kullanıcı Giriş ve Çıkış Kontrolü
         onAuthStateChanged(auth, (user) => {
             if (user) {
-                // Kullanıcı giriş yaptıysa Firestore'a Online yaz
                 currentUserRef = doc(db, "onlineUsers", user.uid);
-                setDoc(currentUserRef, {
-                    username: user.displayName || "İsimsiz",
-                    online: true
-                });
+                setDoc(currentUserRef, { username: user.displayName || "İsimsiz", online: true });
 
-                // YENİ: Giriş butonunu Profil Dropdown menüsüne çevir
                 authContainer.innerHTML = `
                     <div class="user-dropdown">
-                        <button class="btn btn-login" style="background: #4CAF50; color: white; border-color: #4CAF50;">
+                        <button class="btn" style="background: transparent; color: white; border: 1px solid rgba(255,255,255,0.2);">
                             <i class="fas fa-user-circle"></i> ${user.displayName || "Habbo"} <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i>
                         </button>
                         <div class="dropdown-content">
@@ -206,75 +334,43 @@
                     </div>
                 `;
 
-                // Çıkış Yap Butonuna Tıklanma Olayı
                 document.getElementById('logoutBtn').addEventListener('click', (e) => {
-                    e.preventDefault(); // Sayfa atlamasını engelle
-                    
-                    // Önce veritabanından online durumunu sil, sonra oturumu kapat
-                    deleteDoc(currentUserRef).then(() => {
-                        signOut(auth).then(() => {
-                            // Çıkış başarılı, sayfayı yenile
-                            window.location.reload();
-                        });
-                    });
+                    e.preventDefault(); 
+                    deleteDoc(currentUserRef).then(() => { signOut(auth).then(() => { window.location.reload(); }); });
                 });
 
-                // Sayfayı kapatırsa Online durumunu sil
-                window.addEventListener("beforeunload", () => {
-                    if(currentUserRef) deleteDoc(currentUserRef);
-                });
+                window.addEventListener("beforeunload", () => { if(currentUserRef) deleteDoc(currentUserRef); });
 
             } else {
-                // Giriş yapmamışsa standart Giriş Yap butonunu göster
-                authContainer.innerHTML = `<a href="login.html" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>`;
+                authContainer.innerHTML = `
+                    <a href="login.html" class="btn btn-login">Giriş Yap</a>
+                    <a href="register.html" class="btn btn-register"><i class="fas fa-lock" style="font-size: 10px;"></i> Kayıt Ol</a>
+                `;
             }
         });
 
-        // 2. Çevrimiçi Üyeleri Gerçek Zamanlı Gösterme
         const onlineUsersList = document.getElementById('onlineUsersList');
         const onlineCount = document.getElementById('onlineCount');
 
         onSnapshot(collection(db, "onlineUsers"), (snapshot) => {
             onlineUsersList.innerHTML = ''; 
             let count = 0;
-            
             snapshot.forEach((doc) => {
                 const data = doc.data();
                 if(data.online) {
                     count++;
                     onlineUsersList.innerHTML += `
-                        <div class="online-user-tag">
-                            <i class="fas fa-circle" style="color: #4CAF50; font-size: 10px; box-shadow: 0 0 10px #4CAF50; border-radius: 50%;"></i> 
-                            ${data.username}
+                        <div style="background: rgba(255,255,255,0.05); padding: 5px 12px; border-radius: 15px; font-size: 12px; display: flex; align-items: center; gap: 6px; border: 1px solid rgba(255,255,255,0.1);">
+                            <i class="fas fa-circle" style="color: #4CAF50; font-size: 8px;"></i> ${data.username}
                         </div>
                     `;
                 }
             });
-
             onlineCount.innerText = count;
-            if(count === 0) {
-                onlineUsersList.innerHTML = `<span style="color: var(--text-muted); font-size: 14px;">Şu an kimse aktif değil.</span>`;
-            }
         });
-    </script>
 
-    <script>
         // Galaksi Efekti
-        const canvas = document.getElementById('galaxyCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        let particlesArray = [];
-        const colors = ['#66FCF1', '#4A148C', '#36D1DC', '#FFFFFF'];
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-        const mouse = { x: null, y: null };
-        window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; for (let i = 0; i < 3; i++) particlesArray.push(new Particle()); });
-        class Particle {
-            constructor() { this.x = mouse.x; this.y = mouse.y; this.size = Math.random() * 3 + 1; this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5; this.color = colors[Math.floor(Math.random() * colors.length)]; this.life = 1; }
-            update() { this.x += this.speedX; this.y += this.speedY; if (this.size > 0.1) this.size -= 0.05; this.life -= 0.02; }
-            draw() { ctx.fillStyle = this.color; ctx.globalAlpha = Math.max(0, this.life); ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill(); }
-        }
-        function handleParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) { particlesArray.splice(i, 1); i--; } } requestAnimationFrame(handleParticles); }
-        handleParticles();
+        const canvas = document.getElementById('galaxyCanvas'); const ctx = canvas.getContext('2d'); canvas.width = window.innerWidth; canvas.height = window.innerHeight; let particlesArray = []; const colors = ['#66FCF1', '#4A148C', '#36D1DC', '#FFFFFF']; const mouse = { x: null, y: null }; window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; for (let i = 0; i < 3; i++) particlesArray.push(new Particle()); }); class Particle { constructor() { this.x = mouse.x; this.y = mouse.y; this.size = Math.random() * 3 + 1; this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5; this.color = colors[Math.floor(Math.random() * colors.length)]; this.life = 1; } update() { this.x += this.speedX; this.y += this.speedY; if (this.size > 0.1) this.size -= 0.05; this.life -= 0.02; } draw() { ctx.fillStyle = this.color; ctx.globalAlpha = Math.max(0, this.life); ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill(); } } function handleParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) { particlesArray.splice(i, 1); i--; } } requestAnimationFrame(handleParticles); } handleParticles();
     </script>
 </body>
 </html>
