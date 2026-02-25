@@ -1,94 +1,45 @@
-<!DOCTYPE html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giriş Yap - HabboNox</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        :root {
-            --sky-top: #5B86E5; --sky-bottom: #36D1DC;
-            --dark-bg: #0B0C10; --card-bg: rgba(31, 40, 51, 0.6);
-            --text-main: #FFFFFF; --accent: #66FCF1;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
-        body { background: linear-gradient(135deg, var(--dark-bg) 40%, var(--sky-top)); color: var(--text-main); height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        #galaxyCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 1; }
-        
-        /* Giriş Kutusu */
-        .login-box { background: var(--card-bg); backdrop-filter: blur(20px); width: 100%; max-width: 400px; padding: 40px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.2); box-shadow: 0 20px 50px rgba(0,0,0,0.8); position: relative; z-index: 5; text-align: center; }
-        
-        .logo { font-size: 36px; font-family: 'Arial Black', sans-serif; color: #FFF; text-shadow: 2px 2px 0 #000; margin-bottom: 30px; transform: skew(-5deg); display: inline-block;}
-        .logo span { color: var(--accent); }
+<script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 
-        .input-group { margin-bottom: 25px; text-align: left; position: relative; }
-        .input-group i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: var(--accent); font-size: 18px; }
-        .input-group input { width: 100%; padding: 15px 15px 15px 45px; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; font-size: 16px; outline: none; transition: 0.3s; }
-        .input-group input:focus { border-color: var(--accent); box-shadow: 0 0 15px rgba(102, 252, 241, 0.3); background: rgba(0,0,0,0.6); }
-        .input-group input::placeholder { color: #aaa; }
+        // SENİN FİREBASE BİLGİLERİN
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHul0NGg96YGRLjQ3c_EZERbah5A0Xrt4",
+            authDomain: "noxsite-8a850.firebaseapp.com",
+            projectId: "noxsite-8a850",
+            storageBucket: "noxsite-8a850.firebasestorage.app",
+            messagingSenderId: "340490251304",
+            appId: "1:340490251304:web:08d9c4cb50cd6b812e591d",
+            measurementId: "G-N4F6JQMFJN"
+        };
 
-        .login-btn { width: 100%; padding: 15px; background: var(--accent); color: #000; border: none; border-radius: 10px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(102, 252, 241, 0.4); }
-        .login-btn:hover { background: #fff; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(255, 255, 255, 0.4); }
+        // Firebase'i Başlat
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-        .back-link { color: var(--text-main); text-decoration: none; font-size: 14px; opacity: 0.7; transition: 0.3s; }
-        .back-link:hover { opacity: 1; color: var(--accent); }
+        // Form işlemlerini yakala
+        const loginForm = document.getElementById('loginForm');
+        const errorMessage = document.getElementById('errorMessage');
 
-    </style>
-</head>
-<body>
-    <canvas id="galaxyCanvas"></canvas>
-
-    <div class="login-box">
-        <div class="logo">Habbo<span>Nox</span></div>
-        
-        <form action="index.html" method="GET">
-            <div class="input-group">
-                <i class="fas fa-user"></i>
-                <input type="text" placeholder="Kullanıcı Adı" required>
-            </div>
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault(); 
             
-            <div class="input-group">
-                <i class="fas fa-lock"></i>
-                <input type="password" placeholder="Şifre" required>
-            </div>
-            
-            <button type="submit" class="login-btn">Giriş Yap</button>
-        </form>
+            const email = document.getElementById('emailInput').value;
+            const password = document.getElementById('passwordInput').value;
 
-        <a href="index.html" class="back-link"><i class="fas fa-arrow-left"></i> Ana Sayfaya Dön</a>
-    </div>
-
-    <script>
-        // Galaksi Efekti
-        const canvas = document.getElementById('galaxyCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        let particlesArray = [];
-        const colors = ['#66FCF1', '#4A148C', '#36D1DC', '#FFFFFF'];
-        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
-        const mouse = { x: null, y: null };
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x; mouse.y = event.y;
-            for (let i = 0; i < 3; i++) particlesArray.push(new Particle());
+            // Firebase Giriş İsteği
+            signInWithEmailAndPassword(auth, email, password)
+                .then((userCredential) => {
+                    // Giriş başarılıysa anasayfaya yönlendir
+                    window.location.href = "index.html";
+                })
+                .catch((error) => {
+                    errorMessage.style.display = "block";
+                    if(error.code === 'auth/invalid-credential') {
+                        errorMessage.innerText = "Hatalı e-posta veya şifre girdiniz.";
+                    } else {
+                        errorMessage.innerText = "Giriş yapılamadı: " + error.message;
+                    }
+                });
         });
-        class Particle {
-            constructor() {
-                this.x = mouse.x; this.y = mouse.y; this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5;
-                this.color = colors[Math.floor(Math.random() * colors.length)]; this.life = 1;
-            }
-            update() { this.x += this.speedX; this.y += this.speedY; if (this.size > 0.1) this.size -= 0.05; this.life -= 0.02; }
-            draw() { ctx.fillStyle = this.color; ctx.globalAlpha = Math.max(0, this.life); ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill(); }
-        }
-        function handleParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update(); particlesArray[i].draw();
-                if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) { particlesArray.splice(i, 1); i--; }
-            }
-            requestAnimationFrame(handleParticles);
-        }
-        handleParticles();
     </script>
-</body>
-</html>
