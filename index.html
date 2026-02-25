@@ -7,11 +7,11 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
         :root {
-            --nav-bg: rgba(74, 20, 140, 0.85); /* Hafif saydam mor */
+            --nav-bg: rgba(74, 20, 140, 0.85); 
             --sky-top: #5B86E5;
             --sky-bottom: #36D1DC;
             --dark-bg: #0B0C10; 
-            --card-bg: rgba(31, 40, 51, 0.7); /* Saydam koyu lacivert */
+            --card-bg: rgba(31, 40, 51, 0.7); 
             --text-main: #FFFFFF;
             --text-muted: #C5C6C7;
             --accent: #66FCF1;
@@ -28,7 +28,7 @@
         .navbar-container { position: absolute; top: 20px; width: 100%; display: flex; justify-content: center; z-index: 10; }
         nav {
             background-color: var(--nav-bg);
-            backdrop-filter: blur(10px); /* Buzlu cam efekti */
+            backdrop-filter: blur(10px);
             padding: 15px 40px;
             display: flex; align-items: center; border-radius: 15px; width: 90%; max-width: 1200px;
             box-shadow: 0 15px 35px rgba(0,0,0,0.6);
@@ -36,38 +36,39 @@
             gap: 25px;
         }
 
-        /* YENİLENMİŞ KALİTELİ LOGO */
-        .logo {
-            font-size: 34px;
-            font-family: 'Arial Black', Impact, sans-serif;
-            color: #FFF;
-            text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            margin-right: auto;
-            letter-spacing: 1px;
-            transform: skew(-5deg);
-        }
+        .logo { font-size: 34px; font-family: 'Arial Black', Impact, sans-serif; color: #FFF; text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; margin-right: auto; letter-spacing: 1px; transform: skew(-5deg); text-decoration: none;}
         .logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent), 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; }
 
         nav a.nav-link { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.3s; }
         nav a.nav-link i { font-size: 20px; }
         nav a.nav-link:hover { transform: translateY(-3px); color: var(--accent); text-shadow: 0 0 10px var(--accent); }
 
+        .auth-buttons { display: flex; gap: 10px; align-items: center;}
+        
         .btn { padding: 8px 15px; border-radius: 8px; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; text-decoration: none; display: inline-block; }
         .btn-login { background: rgba(0,0,0,0.5); color: white; border: 1px solid rgba(255,255,255,0.2); }
         .btn-login:hover { background: var(--text-main); color: black; box-shadow: 0 0 15px white; }
 
+        /* YENİ: Açılır Profil Menüsü (Dropdown) Tasarımı */
+        .user-dropdown { position: relative; display: inline-block; }
+        .dropdown-content { 
+            display: none; position: absolute; right: 0; top: 110%; 
+            background: var(--card-bg); backdrop-filter: blur(15px); 
+            min-width: 160px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.1); 
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); z-index: 20; overflow: hidden;
+        }
+        .user-dropdown:hover .dropdown-content { display: block; animation: fadeIn 0.3s ease; }
+        .dropdown-content a { color: white; padding: 12px 16px; text-decoration: none; display: flex; align-items: center; gap: 10px; font-size: 14px; transition: 0.3s; border-bottom: 1px solid rgba(255,255,255,0.05);}
+        .dropdown-content a:last-child { border-bottom: none; }
+        .dropdown-content a:hover { background: rgba(102, 252, 241, 0.1); color: var(--accent); padding-left: 20px;}
+        .logout-link:hover { background: rgba(255, 82, 82, 0.1) !important; color: #ff5252 !important; }
+        
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
         .container { width: 90%; max-width: 1200px; margin: -50px auto 0 auto; padding-bottom: 50px; position: relative; z-index: 5; }
         .section-header { display: flex; align-items: center; gap: 10px; font-size: 22px; margin-bottom: 20px; margin-top: 40px; text-shadow: 0 2px 5px rgba(0,0,0,0.5); }
 
-        /* GÖLGELENDİRİLMİŞ KARTLAR */
-        .glass-card {
-            background-color: var(--card-bg);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+        .glass-card { background-color: var(--card-bg); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); transition: transform 0.3s ease, box-shadow 0.3s ease; }
         .glass-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(102, 252, 241, 0.2); border-color: rgba(102, 252, 241, 0.3); }
 
         .badges-scroll { display: flex; gap: 15px; overflow-x: auto; padding: 15px 5px; scrollbar-width: thin; scrollbar-color: var(--accent) transparent; }
@@ -77,12 +78,14 @@
 
         .news-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
         @media (max-width: 768px) { .news-grid { grid-template-columns: 1fr; } }
-
         a.news-link { text-decoration: none; color: inherit; display: block; }
         .news-featured { height: 300px; background: linear-gradient(to top, rgba(0,0,0,0.9), rgba(0,0,0,0.1)), url('https://images.habbo.com/web_images/habbo-web-articles/lpromo_gen15_02.png') center/cover; display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; }
         .news-small-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
         .news-small-card { height: 140px; padding: 15px; display: flex; flex-direction: column; justify-content: space-between; }
         
+        .online-user-tag { background: rgba(0,0,0,0.4); padding: 8px 15px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); display: flex; align-items: center; gap: 8px; font-weight: bold; font-size: 14px; transition: 0.3s; cursor: default; }
+        .online-user-tag:hover { border-color: #4CAF50; box-shadow: 0 0 10px rgba(76, 175, 80, 0.3); transform: scale(1.05); }
+
     </style>
 </head>
 <body>
@@ -92,13 +95,14 @@
 
     <div class="navbar-container">
         <nav>
-            <div class="logo">Habbo<span>Nox</span></div>
+            <a href="index.html" class="logo">Habbo<span>Nox</span></a>
+            
             <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Anasayfa</a>
             <a href="ekip.html" class="nav-link"><i class="fas fa-users"></i> Ekip Üyeleri</a>
             <a href="#haberler" class="nav-link"><i class="fas fa-newspaper"></i> Haberler</a>
             
-            <div class="auth-buttons">
-                <a href="#login" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
+            <div class="auth-buttons" id="authContainer">
+                <a href="login.html" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>
             </div>
         </nav>
     </div>
@@ -112,10 +116,10 @@
             <div class="badge-box"><span class="badge-tag" style="background:#ff9800;">Zor</span><i class="fas fa-crown" style="color: #ffc107; font-size: 30px;"></i></div>
         </div>
 
-        <div class="section-header"><i class="fas fa-newspaper" style="color: var(--accent);"></i> Güncel Habbo Haberleri</div>
+        <div class="section-header" id="haberler"><i class="fas fa-newspaper" style="color: var(--accent);"></i> Güncel Habbo Haberleri</div>
         <div class="news-grid">
             <div>
-                <a href="#" class="glass-card news-link news-featured">
+                <a href="haber-detay.html" class="glass-card news-link news-featured">
                     <h2><i class="fas fa-bullhorn" style="color: var(--accent);"></i> 2026 Yeni Habbo Elçileri Belli Oldu!</h2>
                     <p style="color: var(--text-muted); margin-top: 10px; font-size: 15px;">Topluluğumuza otellerde rehberlik edecek ve güvenliği sağlayacak yeni elçi kadrosu resmen açıklandı. Listede kimler var?</p>
                 </a>
@@ -137,22 +141,122 @@
             <div>
                 <a href="#" class="glass-card news-link" style="padding: 20px; height: 100%;">
                     <h3 style="border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px; margin-bottom: 15px;"><i class="fas fa-bolt" style="color:#ffeb3b;"></i> Kısa Haberler</h3>
-                    
                     <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--accent);">
                         <span style="background: #ffc107; color: #000; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold;">BUGÜN</span>
                         <h4 style="margin: 10px 0; font-size: 15px;">Klasik HC Koltukları Yenilendi</h4>
                         <p style="font-size: 13px; color: var(--text-muted);">Eski nostaljik Habbo Club koltukları HD çözünürlükle envanterlere eklendi.</p>
                     </div>
-
-                    <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 8px; border-left: 3px solid #ff5252;">
-                        <span style="background: #e0e0e0; color: #000; padding: 2px 8px; border-radius: 5px; font-size: 11px; font-weight: bold;">DÜN</span>
-                        <h4 style="margin: 10px 0; font-size: 15px;">Sunucu Bakımı Tamamlandı</h4>
-                        <p style="font-size: 13px; color: var(--text-muted);">Wireddaki gecikme sorunları giderildi.</p>
-                    </div>
                 </a>
             </div>
         </div>
+
+        <div class="section-header" style="margin-top: 50px;">
+            <i class="fas fa-globe" style="color: #4CAF50;"></i> Çevrimiçi Üyeler (<span id="onlineCount">0</span>)
+        </div>
+        <div class="glass-card" style="padding: 20px; display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px;" id="onlineUsersList">
+            <span style="color: var(--text-muted); font-size: 14px;">Bağlantı kuruluyor...</span>
+        </div>
     </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        // YENİ: signOut eklendi
+        import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, doc, setDoc, deleteDoc, collection, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // KENDİ BİLGİLERİN
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHul0NGg96YGRLjQ3c_EZERbah5A0Xrt4",
+            authDomain: "noxsite-8a850.firebaseapp.com",
+            projectId: "noxsite-8a850",
+            storageBucket: "noxsite-8a850.firebasestorage.app",
+            messagingSenderId: "340490251304",
+            appId: "1:340490251304:web:08d9c4cb50cd6b812e591d",
+            measurementId: "G-N4F6JQMFJN"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const authContainer = document.getElementById('authContainer');
+        let currentUserRef = null;
+
+        // 1. Kullanıcı Giriş ve Çıkış Kontrolü
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Kullanıcı giriş yaptıysa Firestore'a Online yaz
+                currentUserRef = doc(db, "onlineUsers", user.uid);
+                setDoc(currentUserRef, {
+                    username: user.displayName || "İsimsiz",
+                    online: true
+                });
+
+                // YENİ: Giriş butonunu Profil Dropdown menüsüne çevir
+                authContainer.innerHTML = `
+                    <div class="user-dropdown">
+                        <button class="btn btn-login" style="background: #4CAF50; color: white; border-color: #4CAF50;">
+                            <i class="fas fa-user-circle"></i> ${user.displayName || "Habbo"} <i class="fas fa-chevron-down" style="font-size: 10px; margin-left: 5px;"></i>
+                        </button>
+                        <div class="dropdown-content">
+                            <a href="#"><i class="fas fa-id-badge"></i> Profilim</a>
+                            <a href="#"><i class="fas fa-cog"></i> Ayarlar</a>
+                            <a href="#" id="logoutBtn" class="logout-link"><i class="fas fa-sign-out-alt"></i> Çıkış Yap</a>
+                        </div>
+                    </div>
+                `;
+
+                // Çıkış Yap Butonuna Tıklanma Olayı
+                document.getElementById('logoutBtn').addEventListener('click', (e) => {
+                    e.preventDefault(); // Sayfa atlamasını engelle
+                    
+                    // Önce veritabanından online durumunu sil, sonra oturumu kapat
+                    deleteDoc(currentUserRef).then(() => {
+                        signOut(auth).then(() => {
+                            // Çıkış başarılı, sayfayı yenile
+                            window.location.reload();
+                        });
+                    });
+                });
+
+                // Sayfayı kapatırsa Online durumunu sil
+                window.addEventListener("beforeunload", () => {
+                    if(currentUserRef) deleteDoc(currentUserRef);
+                });
+
+            } else {
+                // Giriş yapmamışsa standart Giriş Yap butonunu göster
+                authContainer.innerHTML = `<a href="login.html" class="btn btn-login"><i class="fas fa-sign-in-alt"></i> Giriş Yap</a>`;
+            }
+        });
+
+        // 2. Çevrimiçi Üyeleri Gerçek Zamanlı Gösterme
+        const onlineUsersList = document.getElementById('onlineUsersList');
+        const onlineCount = document.getElementById('onlineCount');
+
+        onSnapshot(collection(db, "onlineUsers"), (snapshot) => {
+            onlineUsersList.innerHTML = ''; 
+            let count = 0;
+            
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                if(data.online) {
+                    count++;
+                    onlineUsersList.innerHTML += `
+                        <div class="online-user-tag">
+                            <i class="fas fa-circle" style="color: #4CAF50; font-size: 10px; box-shadow: 0 0 10px #4CAF50; border-radius: 50%;"></i> 
+                            ${data.username}
+                        </div>
+                    `;
+                }
+            });
+
+            onlineCount.innerText = count;
+            if(count === 0) {
+                onlineUsersList.innerHTML = `<span style="color: var(--text-muted); font-size: 14px;">Şu an kimse aktif değil.</span>`;
+            }
+        });
+    </script>
 
     <script>
         // Galaksi Efekti
@@ -163,33 +267,13 @@
         const colors = ['#66FCF1', '#4A148C', '#36D1DC', '#FFFFFF'];
         window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
         const mouse = { x: null, y: null };
-        window.addEventListener('mousemove', (event) => {
-            mouse.x = event.x; mouse.y = event.y;
-            for (let i = 0; i < 3; i++) particlesArray.push(new Particle());
-        });
+        window.addEventListener('mousemove', (event) => { mouse.x = event.x; mouse.y = event.y; for (let i = 0; i < 3; i++) particlesArray.push(new Particle()); });
         class Particle {
-            constructor() {
-                this.x = mouse.x; this.y = mouse.y;
-                this.size = Math.random() * 3 + 1;
-                this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5;
-                this.color = colors[Math.floor(Math.random() * colors.length)];
-                this.life = 1;
-            }
+            constructor() { this.x = mouse.x; this.y = mouse.y; this.size = Math.random() * 3 + 1; this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5; this.color = colors[Math.floor(Math.random() * colors.length)]; this.life = 1; }
             update() { this.x += this.speedX; this.y += this.speedY; if (this.size > 0.1) this.size -= 0.05; this.life -= 0.02; }
-            draw() {
-                ctx.fillStyle = this.color; ctx.globalAlpha = Math.max(0, this.life);
-                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill();
-            }
+            draw() { ctx.fillStyle = this.color; ctx.globalAlpha = Math.max(0, this.life); ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill(); }
         }
-        function handleParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            for (let i = 0; i < particlesArray.length; i++) {
-                particlesArray[i].update(); particlesArray[i].draw();
-                if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) { particlesArray.splice(i, 1); i--; }
-            }
-            requestAnimationFrame(handleParticles);
-        }
+        function handleParticles() { ctx.clearRect(0, 0, canvas.width, canvas.height); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); particlesArray[i].draw(); if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) { particlesArray.splice(i, 1); i--; } } requestAnimationFrame(handleParticles); }
         handleParticles();
     </script>
 </body>
