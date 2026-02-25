@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026 Yeni Habbo Elçileri Belli Oldu! - HabboNox</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --nav-bg: rgba(74, 20, 140, 0.85); 
+            --sky-top: #5B86E5; --sky-bottom: #36D1DC;
+            --dark-bg: #0B0C10; --card-bg: rgba(31, 40, 51, 0.85);
+            --text-main: #FFFFFF; --text-muted: #C5C6C7; --accent: #66FCF1;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: var(--dark-bg); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+        #galaxyCanvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; }
+        
+        /* Üst Menü Tasarımı (Sabit) */
+        .navbar-container { position: sticky; top: 20px; width: 100%; display: flex; justify-content: center; z-index: 10; margin-bottom: 40px;}
+        nav { background-color: var(--nav-bg); backdrop-filter: blur(10px); padding: 15px 40px; display: flex; align-items: center; border-radius: 15px; width: 90%; max-width: 1200px; box-shadow: 0 15px 35px rgba(0,0,0,0.6); border: 1px solid rgba(255,255,255,0.1); gap: 25px; }
+        .logo { font-size: 28px; font-family: 'Arial Black', sans-serif; color: #FFF; text-shadow: 2px 2px 0 #000; margin-right: auto; transform: skew(-5deg); text-decoration: none;}
+        .logo span { color: var(--accent); }
+        nav a.nav-link { color: var(--text-main); text-decoration: none; font-size: 14px; font-weight: bold; display: flex; flex-direction: column; align-items: center; gap: 5px; transition: 0.3s; }
+        nav a.nav-link:hover { transform: translateY(-3px); color: var(--accent); }
+        
+        /* Haber Detay Konteyneri */
+        .article-container { width: 90%; max-width: 900px; margin: 0 auto 50px auto; background: var(--card-bg); backdrop-filter: blur(15px); border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); box-shadow: 0 15px 40px rgba(0,0,0,0.6); overflow: hidden; position: relative; z-index: 5;}
+        
+        .article-hero { width: 100%; height: 350px; background: url('https://images.habbo.com/web_images/habbo-web-articles/lpromo_gen15_02.png') center/cover; position: relative; }
+        .article-hero-overlay { position: absolute; bottom: 0; width: 100%; height: 100%; background: linear-gradient(to top, var(--card-bg) 5%, transparent); }
+        
+        .article-content { padding: 40px; }
+        .article-category { display: inline-block; background: var(--accent); color: #000; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; margin-bottom: 15px; box-shadow: 0 0 10px var(--accent); }
+        .article-title { font-size: 32px; font-family: 'Arial Black', sans-serif; margin-bottom: 20px; text-shadow: 2px 2px 5px rgba(0,0,0,0.5); }
+        
+        .article-meta { display: flex; align-items: center; gap: 15px; margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.1); color: var(--text-muted); font-size: 14px; }
+        .author-avatar { width: 40px; height: 40px; background: #ffc107; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #000; font-size: 18px; border: 2px solid #fff; }
+        
+        .article-body p { font-size: 16px; margin-bottom: 20px; color: #E0E0E0; }
+        .article-body h3 { font-size: 22px; margin: 30px 0 15px 0; color: var(--accent); }
+        .article-body img { width: 100%; border-radius: 10px; margin: 20px 0; border: 1px solid rgba(255,255,255,0.1); }
+        
+    </style>
+</head>
+<body>
+    <canvas id="galaxyCanvas"></canvas>
+
+    <div class="navbar-container">
+        <nav>
+            <a href="index.html" class="logo">Habbo<span>Nox</span></a>
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Anasayfa</a>
+            <a href="ekip.html" class="nav-link"><i class="fas fa-users"></i> Ekip Üyeleri</a>
+            <a href="index.html" class="nav-link"><i class="fas fa-arrow-left"></i> Geri Dön</a>
+        </nav>
+    </div>
+
+    <div class="article-container">
+        <div class="article-hero">
+            <div class="article-hero-overlay"></div>
+        </div>
+        
+        <div class="article-content">
+            <div class="article-category"><i class="fas fa-bullhorn"></i> RESMİ HABER</div>
+            <h1 class="article-title">2026 Yeni Habbo Elçileri Belli Oldu!</h1>
+            
+            <div class="article-meta">
+                <div class="author-avatar"><i class="fas fa-crown"></i></div>
+                <div><strong>XHem</strong> tarafından yazıldı.</div>
+                <div><i class="far fa-clock"></i> 25 Şubat 2026</div>
+                <div><i class="far fa-eye"></i> 1,240 Okunma</div>
+            </div>
+
+            <div class="article-body">
+                <p>Merhaba HabboNox takipçileri! Otellerimizde huzuru, güvenliği ve yeni gelen oyunculara rehberlik etmeyi amaçlayan Elçilik programının 2026 yılı yeni kadrosu nihayet Habbo personelleri tarafından açıklandı.</p>
+                
+                <p>Geçtiğimiz ay yapılan başvuruların ardından, topluluk içerisinde aktif olan ve kurallara uyan birçok oyuncu mülakatlara katıldı. Uzun süren değerlendirmeler sonucunda yeni elçilerimiz görevlerine başladı.</p>
+                
+                <h3><i class="fas fa-star"></i> Yeni Elçilerimiz Kimler?</h3>
+                <p>Resmi listeye göre bu dönem otelde sıkça göreceğimiz ve yardım isteyebileceğimiz isimler şunlar oldu:</p>
+                <ul>
+                    <li style="margin-left: 20px; margin-bottom: 10px;"><strong>-moriarty-</strong> (Baş Elçi)</li>
+                    <li style="margin-left: 20px; margin-bottom: 10px;"><strong>superazadyusuf</strong></li>
+                    <li style="margin-left: 20px; margin-bottom: 10px;"><strong>güldürgüldür</strong></li>
+                </ul>
+
+                <p style="margin-top: 20px;">Yeni elçilerimizi tebrik ediyor, görevlerinde başarılar diliyoruz. Onları resmi odalarda dolaşırken gördüğünüzde selam vermeyi unutmayın!</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Galaksi Efekti
+        const canvas = document.getElementById('galaxyCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particlesArray = [];
+        const colors = ['#66FCF1', '#4A148C', '#36D1DC', '#FFFFFF'];
+        window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+        const mouse = { x: null, y: null };
+        window.addEventListener('mousemove', (event) => {
+            mouse.x = event.x; mouse.y = event.y;
+            for (let i = 0; i < 3; i++) particlesArray.push(new Particle());
+        });
+        class Particle {
+            constructor() {
+                this.x = mouse.x; this.y = mouse.y; this.size = Math.random() * 3 + 1;
+                this.speedX = Math.random() * 3 - 1.5; this.speedY = Math.random() * 3 - 1.5;
+                this.color = colors[Math.floor(Math.random() * colors.length)]; this.life = 1;
+            }
+            update() { this.x += this.speedX; this.y += this.speedY; if (this.size > 0.1) this.size -= 0.05; this.life -= 0.02; }
+            draw() { ctx.fillStyle = this.color; ctx.globalAlpha = Math.max(0, this.life); ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.shadowBlur = 10; ctx.shadowColor = this.color; ctx.fill(); }
+        }
+        function handleParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particlesArray.length; i++) {
+                particlesArray[i].update(); particlesArray[i].draw();
+                if (particlesArray[i].life <= 0 || particlesArray[i].size <= 0.1) { particlesArray.splice(i, 1); i--; }
+            }
+            requestAnimationFrame(handleParticles);
+        }
+        handleParticles();
+    </script>
+</body>
+</html>
