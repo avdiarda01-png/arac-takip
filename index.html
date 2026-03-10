@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TekGPS - Profesyonel Takip</title>
+    <title>TekGPS & Ege Otopark</title>
     
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
     
     <style>
         /* --- GENEL TASARIM (NEON TEMA) --- */
@@ -161,7 +161,7 @@
             z-index: 1;
         }
 
-        /* --- METİN & SUNUM KUTULARI --- */
+        /* --- METİN KUTULARI --- */
         .info-box {
             background: rgba(255, 255, 255, 0.05);
             padding: 40px;
@@ -175,27 +175,102 @@
         .info-box h2 { color: #00f2fe; font-family: 'Orbitron', sans-serif; }
         .info-box h3 { color: #ff0055; margin-top: 30px; }
         
-        .poster-img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-top: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        .poster-img { max-width: 100%; border-radius: 10px; margin-top: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .tech-tags { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
+        .tech-tag { background: #111; padding: 10px 20px; border-radius: 30px; font-size: 14px; color: #00f2fe; border: 1px solid #00f2fe; font-family: 'Orbitron', sans-serif; }
+
+        /* ==================================================== */
+        /* --- EGE ÜNİ OTOPARK STİLLERİ (Senin Kodun) --- */
+        /* ==================================================== */
+        #otopark-section {
+            background-color: #0d1117;
+            font-family: 'Rajdhani', sans-serif;
+            background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #0d1117 70%);
+            display: none; /* JavaScript ile açılacak */
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
         }
 
-        .tech-tags {
-            display: flex;
-            gap: 15px;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-        .tech-tag {
-            background: #111;
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 14px;
-            color: #00f2fe;
-            border: 1px solid #00f2fe;
+        .otopark-title {
             font-family: 'Orbitron', sans-serif;
+            color: #58a6ff;
+            text-shadow: 0 0 15px rgba(88, 166, 255, 0.5);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            font-size: 2.5rem;
+        }
+
+        .otopark-subtitle {
+            font-size: 1.2rem;
+            color: #8b949e;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+        }
+
+        .status-panel {
+            background: rgba(22, 27, 34, 0.8);
+            border: 2px solid #30363d;
+            border-radius: 15px;
+            padding: 1.5rem 3rem;
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 3rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .status-panel.active-panel { border-color: #3fb950; color: #3fb950; box-shadow: 0 0 25px rgba(63, 185, 80, 0.4); }
+        .status-panel.full { border-color: #f85149; color: #f85149; box-shadow: 0 0 25px rgba(248, 81, 73, 0.4); }
+
+        .otopark-layout {
+            display: flex;
+            flex-direction: column;
+            width: 900px;
+            max-width: 100%;
+            position: relative;
+            gap: 10px;
+            margin: 0 auto;
+        }
+
+        .otopark-row { display: flex; justify-content: space-between; width: 100%; }
+
+        .road-container {
+            height: 100px; width: 100%; position: relative;
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 2px dashed #30363d; border-bottom: 2px dashed #30363d;
+            display: flex; align-items: center;
+        }
+
+        .road-svg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; }
+
+        .route-path {
+            fill: none; stroke: #3fb950; stroke-width: 8; stroke-dasharray: 15, 15;
+            stroke-linecap: round; opacity: 0; transition: opacity 0.4s ease;
+            filter: drop-shadow(0 0 8px #3fb950);
+            animation: moveLight 1s linear infinite;
+        }
+        @keyframes moveLight { from { stroke-dashoffset: 30; } to { stroke-dashoffset: 0; } }
+        .route-path.active-path { opacity: 1; }
+
+        .spot {
+            background: #161b22; border: 3px solid #30363d; border-radius: 12px;
+            width: 260px; height: 140px; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; font-size: 1.5rem;
+            font-weight: bold; transition: all 0.4s ease; position: relative;
+        }
+        .spot span.num {
+            font-size: 3rem; font-family: 'Orbitron', sans-serif; opacity: 0.2;
+            position: absolute; top: 5px; left: 10px;
+        }
+        .spot.bos {
+            border-color: #3fb950; background: rgba(63, 185, 80, 0.1); color: #3fb950;
+            box-shadow: inset 0 0 20px rgba(63, 185, 80, 0.2), 0 0 15px rgba(63, 185, 80, 0.3);
+        }
+        .spot.dolu {
+            border-color: #f85149; background: rgba(248, 81, 73, 0.1); color: #f85149;
+            box-shadow: inset 0 0 20px rgba(248, 81, 73, 0.2), 0 0 15px rgba(248, 81, 73, 0.3);
         }
 
         /* MOBİL UYUM */
@@ -203,6 +278,9 @@
             nav { flex-direction: column; text-align: center; }
             .nav-item { font-size: 12px; width: 100%; padding: 5px 0;}
             #harita { height: 350px; }
+            .otopark-layout { width: 100%; }
+            .spot { width: 30%; height: 100px; font-size: 1rem;}
+            .spot span.num { font-size: 1.5rem; }
         }
     </style>
 </head>
@@ -212,24 +290,19 @@
         <div class="nav-item" onclick="sayfaDegistir('setup')">🔧 Kurulum</div>
         <div class="nav-item" onclick="sayfaDegistir('presentation')">📊 Proje Sunumu</div>
         <div class="nav-center" onclick="sayfaDegistir('home')">TEK<span>GPS</span></div>
-        <div class="nav-item" onclick="sayfaDegistir('tracking')">🚀 Sisteme Giriş</div>
-        <div class="nav-item" onclick="sayfaDegistir('about')">ℹ️ Hakkımızda</div>
+        <div class="nav-item" onclick="sayfaDegistir('tracking')">🚀 GPS Takip</div>
+        <div class="nav-item" onclick="sayfaDegistir('otopark')" style="color: #ffaa00;">🅿️ Ege Üni - Otopark</div>
     </nav>
 
     <section id="home-section" class="active-section" style="display: flex;">
         <img src="tekgpslogo.jpg" alt="TekGPS Logo" class="neon-logo-img">
-        
         <h1 style="font-family: 'Orbitron'; font-size: 2.5em; margin-bottom: 10px;">ARACINIZ GÜVENDE</h1>
         <p style="color: #aaa; margin-bottom: 40px;">Kesintisiz uydu takibi ve anlık konum hizmeti.</p>
-        
-        <button class="big-btn" onclick="sayfaDegistir('tracking')">
-            🚀 SİSTEME GİRİŞ / SORGULAMA
-        </button>
+        <button class="big-btn" onclick="sayfaDegistir('tracking')">🚀 GPS TAKİBE GİR</button>
     </section>
 
     <section id="tracking-section" class="page-section">
         <h2 style="font-family: 'Orbitron'; color: #00f2fe;">CANLI KONUM İZLEME</h2>
-        
         <div class="kontrol-kutusu">
             <p style="color: #ccc; margin-bottom: 15px;">Cihaz üzerindeki Seri Numarasını giriniz.</p>
             <input type="text" id="seriNo" placeholder="Seri No (Örn: 1001)">
@@ -237,7 +310,6 @@
             <button class="search-btn" onclick="cihaziBul()">🛰️ UYDU BAĞLANTISI KUR</button>
             <div id="durumMesaji" style="margin-top: 15px; font-weight: bold;"></div>
         </div>
-
         <div id="harita"></div>
     </section>
 
@@ -245,19 +317,12 @@
         <div class="info-box">
             <h2>📊 Sistem Mimarisi ve Donanım</h2>
             <p>TekGPS, araç güvenliğinde yüksek hassasiyetli konumlandırma ve kesintisiz iletişim sağlamak amacıyla en güncel modüllerle entegre edilmiş yerli bir tasarımdır.</p>
-            
             <h3>Donanım Altyapımız</h3>
             <div class="tech-tags">
                 <div class="tech-tag">ESP8266 Mikrodenetleyici</div>
                 <div class="tech-tag">NEO-6M GPS Modülü</div>
                 <div class="tech-tag">SIM800L GSM Modülü</div>
             </div>
-
-            <p style="margin-top: 25px; color: #ccc;">Bu sistem, uydu verilerini GSM ağı üzerinden doğrudan Firebase sunucularına aktararak size anlık ve gecikmesiz bir takip deneyimi sunar.</p>
-
-            <h3>Vizyonumuz</h3>
-            <h4 style="color: #00f2fe; font-size: 1.5em; font-family: 'Orbitron', sans-serif;">"Tek Ödeme. Ömür Boyu Özgürlük"</h4>
-
             <img src="tekgpsposter.jpg" alt="TekGPS Tanıtım Posteri" class="poster-img">
         </div>
     </section>
@@ -265,29 +330,44 @@
     <section id="setup-section" class="page-section">
         <div class="info-box">
             <h2>🔧 Cihaz Kurulumu Nasıl Yapılır?</h2>
-            <p>TekGPS cihazınızı aracınıza monte etmek oldukça basittir. Aşağıdaki adımları takip edin:</p>
-            
+            <p>TekGPS cihazınızı aracınıza monte etmek oldukça basittir.</p>
             <h3>Adım 1: SIM Kartı Takın</h3>
             <p>Cihazın yan kapağını açın ve PIN kodu kaldırılmış aktif bir SIM kartı yuvaya yerleştirin.</p>
-            
             <h3>Adım 2: Kablo Bağlantısı</h3>
-            <p>Kırmızı kabloyu aracın (+) kutbuna, Siyah kabloyu (-) şaseye bağlayın. Cihaz üzerindeki ışıklar yanmaya başlayacaktır.</p>
-            
-            <h3>Adım 3: Aktivasyon</h3>
-            <p>Cihaz ışıkları sabitlendiğinde, bu sitedeki "Sisteme Giriş" ekranına seri numaranızı girerek takibe başlayabilirsiniz.</p>
+            <p>Kırmızı kabloyu aracın (+) kutbuna, Siyah kabloyu (-) şaseye bağlayın.</p>
         </div>
     </section>
 
-    <section id="about-section" class="page-section">
-        <div class="info-box">
-            <h2>Biz Kimiz?</h2>
-            <p>TekGPS, 2025 yılında İzmir'de kurulmuş yerli bir teknoloji girişimidir. Amacımız, araç güvenliğini herkes için ulaşılabilir ve uygun fiyatlı hale getirmektir.</p>
-            
-            <h3>Neden Aidat Yok?</h3>
-            <p>Klasik sistemlerin aksine, sunucu maliyetlerini optimize ederek kullanıcılarımızdan aylık ücret talep etmiyoruz. Cihazı bir kere alırsınız, ömür boyu kullanırsınız.</p>
-            
-            <br>
-            <p style="text-align: center; color: #888;">&copy; 2026 TekGPS - Tüm Hakları Saklıdır.</p>
+    <section id="otopark-section" class="page-section">
+        <h1 class="otopark-title">EGE ÜNİVERSİTESİ</h1>
+        <div class="otopark-subtitle">YAPAY ZEKA DESTEKLİ OTOPARK YÖNLENDİRME SİSTEMİ</div>
+
+        <div id="yonlendirme" class="status-panel">Sistem Bağlantısı Bekleniyor...</div>
+
+        <div class="otopark-layout">
+            <div class="otopark-row">
+                <div id="spot-5" class="spot"><span class="num">5</span><div class="txt">Yükleniyor</div></div>
+                <div id="spot-3" class="spot"><span class="num">3</span><div class="txt">Yükleniyor</div></div>
+                <div id="spot-1" class="spot"><span class="num">1</span><div class="txt">Yükleniyor</div></div>
+            </div>
+
+            <div class="road-container">
+                <svg class="road-svg" viewBox="0 0 900 100">
+                    <text x="860" y="55" fill="#ffaa00" font-family="Orbitron" font-weight="bold" font-size="22" text-anchor="middle" alignment-baseline="middle" filter="drop-shadow(0 0 5px #ffaa00)">GİRİŞ</text>
+                    <path id="path-1" class="route-path" d="M 810,50 L 790,50 Q 770,50 770,30 L 770,0" />
+                    <path id="path-2" class="route-path" d="M 810,50 L 790,50 Q 770,50 770,70 L 770,100" />
+                    <path id="path-3" class="route-path" d="M 810,50 L 470,50 Q 450,50 450,30 L 450,0" />
+                    <path id="path-4" class="route-path" d="M 810,50 L 470,50 Q 450,50 450,70 L 450,100" />
+                    <path id="path-5" class="route-path" d="M 810,50 L 150,50 Q 130,50 130,30 L 130,0" />
+                    <path id="path-6" class="route-path" d="M 810,50 L 150,50 Q 130,50 130,70 L 130,100" />
+                </svg>
+            </div>
+
+            <div class="otopark-row">
+                <div id="spot-6" class="spot"><span class="num">6</span><div class="txt">Yükleniyor</div></div>
+                <div id="spot-4" class="spot"><span class="num">4</span><div class="txt">Yükleniyor</div></div>
+                <div id="spot-2" class="spot"><span class="num">2</span><div class="txt">Yükleniyor</div></div>
+            </div>
         </div>
     </section>
 
@@ -296,32 +376,33 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // --- MENÜ GEÇİŞ SİSTEMİ ---
+        // --- 1. MENÜ GEÇİŞ SİSTEMİ ---
         function sayfaDegistir(sayfaId) {
             // Tüm sayfaları gizle
             document.getElementById('home-section').style.display = 'none';
             document.getElementById('tracking-section').style.display = 'none';
             document.getElementById('setup-section').style.display = 'none';
-            document.getElementById('about-section').style.display = 'none';
             document.getElementById('presentation-section').style.display = 'none';
+            document.getElementById('otopark-section').style.display = 'none';
 
             // İstenen sayfayı aç
             if(sayfaId === 'home') {
                 document.getElementById('home-section').style.display = 'flex';
+            } else if (sayfaId === 'otopark') {
+                // Otopark sayfası kendi Flex tasarımına sahip
+                document.getElementById('otopark-section').style.display = 'flex';
             } else {
                 document.getElementById(sayfaId + '-section').style.display = 'block';
             }
 
-            // Harita sekmesi açıldığında Leaflet boyutlandırma hatasını çöz (Gri ekran fix)
+            // Harita sekmesi açıldığında boyut hatasını çöz
             if(sayfaId === 'tracking') {
-                setTimeout(function(){ 
-                    if(map) { map.invalidateSize(); }
-                }, 300);
+                setTimeout(function(){ if(map) { map.invalidateSize(); } }, 300);
             }
         }
 
-        // --- FIREBASE BAĞLANTISI ---
-        const firebaseConfig = {
+        // --- 2. TEKGPS FIREBASE BAĞLANTISI ---
+        const firebaseConfigGPS = {
           apiKey: "AIzaSyDKIGjt_USZ7Xc1gw8vEEt7fZbVfzE0-FI",
           authDomain: "arac-takip-sistemi-536e0.firebaseapp.com",
           databaseURL: "https://arac-takip-sistemi-536e0-default-rtdb.firebaseio.com",
@@ -331,57 +412,90 @@
           appId: "1:363603708186:web:d7aad0022a33eb4c5b04a3"
         };
 
-        if (!firebase.apps.length) {
-            firebase.initializeApp(firebaseConfig);
-        }
-        const db = firebase.database();
+        if (!firebase.apps.length) { firebase.initializeApp(firebaseConfigGPS); }
+        const dbGPS = firebase.database();
         var mevcutMarker = null;
 
-        // --- HARİTA BAŞLATMA ---
         var map = L.map('harita').setView([39.0, 35.0], 6);
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-        }).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { attribution: '© OSMC' }).addTo(map);
 
-        // --- CİHAZ BULMA FONKSİYONU ---
         function cihaziBul() {
             var seriNo = document.getElementById("seriNo").value.trim();
             var mesajKutusu = document.getElementById("durumMesaji");
 
             if(seriNo === "") {
                 mesajKutusu.innerHTML = "⚠️ Lütfen seri numarası girin!";
-                mesajKutusu.style.color = "#ff4d4d";
-                return;
+                mesajKutusu.style.color = "#ff4d4d"; return;
             }
 
             mesajKutusu.innerHTML = "📡 " + seriNo + " uydudan aranıyor...";
             mesajKutusu.style.color = "#00f2fe";
 
-            var aracYolu = db.ref('araclar/' + seriNo);
-            aracYolu.on('value', (snapshot) => {
+            dbGPS.ref('araclar/' + seriNo).on('value', (snapshot) => {
                 const veri = snapshot.val();
-
                 if (veri) {
-                    var enlem = veri.enlem;
-                    var boylam = veri.boylam;
-                    var hiz = veri.hiz || 0;
-
                     if (mevcutMarker) { map.removeLayer(mevcutMarker); }
-
-                    mevcutMarker = L.marker([enlem, boylam]).addTo(map)
-                        .bindPopup("<b>Araç: " + seriNo + "</b><br>Hız: " + hiz + " km/s<br>Durum: Bağlantı Aktif")
-                        .openPopup();
-
-                    map.setView([enlem, boylam], 15);
-                    mesajKutusu.innerHTML = "✅ Sinyal Alındı! Canlı izleniyor.";
-                    mesajKutusu.style.color = "#00ff00";
+                    mevcutMarker = L.marker([veri.enlem, veri.boylam]).addTo(map).bindPopup("<b>Araç: " + seriNo + "</b>").openPopup();
+                    map.setView([veri.enlem, veri.boylam], 15);
+                    mesajKutusu.innerHTML = "✅ Sinyal Alındı!"; mesajKutusu.style.color = "#00ff00";
                 } else {
-                    mesajKutusu.innerHTML = "❌ Cihaz bulunamadı veya kapalı!";
-                    mesajKutusu.style.color = "#ff4d4d";
-                    if (mevcutMarker) { map.removeLayer(mevcutMarker); }
+                    mesajKutusu.innerHTML = "❌ Cihaz bulunamadı!"; mesajKutusu.style.color = "#ff4d4d";
                 }
             });
         }
+
+        // --- 3. EGE ÜNİ OTOPARK FIREBASE ÇEKME FONKSİYONU ---
+        const OTOPARK_FIREBASE_URL = "https://otopark-33791-default-rtdb.firebaseio.com/otopark_sistemi.json";
+        
+        async function otoparkSistemiGuncelle() {
+            try {
+                const response = await fetch(OTOPARK_FIREBASE_URL);
+                const data = await response.json();
+                
+                if(data) {
+                    const panel = document.getElementById("yonlendirme");
+                    const hedef = data.hedef_led;
+
+                    // Yönlendirme Paneli
+                    if(hedef > 0) {
+                        panel.className = "status-panel active-panel";
+                        panel.innerHTML = `🚀 Lütfen <span style="color:white; text-decoration:underline;">${hedef}. BOŞ PARK YERİNE</span> İlerleyiniz`;
+                    } else {
+                        panel.className = "status-panel full";
+                        panel.innerHTML = `⛔ OTOPARK TAMAMEN DOLU`;
+                    }
+
+                    // Kutuların Renkleri
+                    if(data.spotlar) {
+                        for(let i = 1; i <= 6; i++) {
+                            const spotDiv = document.getElementById(`spot-${i}`);
+                            const txtDiv = spotDiv.querySelector('.txt');
+                            
+                            if(data.spotlar[i] === "BOS") {
+                                spotDiv.className = "spot bos"; txtDiv.innerText = "BOŞ";
+                            } else {
+                                spotDiv.className = "spot dolu"; txtDiv.innerText = "DOLU";
+                            }
+                        }
+                    }
+
+                    // Hareketli Işıklar
+                    document.querySelectorAll('.route-path').forEach(path => {
+                        path.classList.remove('active-path');
+                    });
+                    if(hedef > 0) {
+                        const aktifYol = document.getElementById(`path-${hedef}`);
+                        if(aktifYol) { aktifYol.classList.add('active-path'); }
+                    }
+                }
+            } catch(error) {
+                console.error("Otopark Firebase Hatası:", error);
+            }
+        }
+
+        // Otopark verisini her 2 saniyede bir çek
+        otoparkSistemiGuncelle();
+        setInterval(otoparkSistemiGuncelle, 2000);
     </script>
 </body>
 </html>
