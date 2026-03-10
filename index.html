@@ -13,7 +13,7 @@
         body {
             margin: 0;
             padding: 0;
-            background-color: #050505; /* Çok koyu siyah */
+            background-color: #050505;
             color: #fff;
             font-family: 'Roboto', sans-serif;
             overflow-x: hidden;
@@ -26,12 +26,14 @@
             align-items: center;
             padding: 20px 40px;
             background: rgba(0, 0, 0, 0.8);
-            border-bottom: 2px solid #00f2fe; /* Neon Mavi Çizgi */
+            border-bottom: 2px solid #00f2fe;
             position: sticky;
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
             box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .nav-item {
@@ -55,21 +57,20 @@
             color: #fff;
             text-align: center;
             cursor: pointer;
+            flex-grow: 1;
         }
-        .nav-center span { color: #ff0055; } /* Kırmızı GPS yazısı */
+        .nav-center span { color: #ff0055; }
 
         /* --- SAYFA İÇERİKLERİ --- */
         .page-section {
-            display: none; /* Başlangıçta hepsi gizli */
+            display: none;
             padding: 40px 20px;
             min-height: 80vh;
             animation: fadeIn 0.5s ease;
             text-align: center;
         }
 
-        .active-section {
-            display: block; /* Sadece aktif olan görünür */
-        }
+        .active-section { display: block; }
 
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
@@ -78,7 +79,7 @@
 
         /* --- ANA SAYFA (HOME) --- */
         #home-section {
-            display: flex; /* Flexbox ile ortalama */
+            display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -91,9 +92,7 @@
             margin-bottom: 30px;
             transition: transform 0.3s;
         }
-        .neon-logo-img:hover {
-            transform: scale(1.05);
-        }
+        .neon-logo-img:hover { transform: scale(1.05); }
 
         .big-btn {
             background: linear-gradient(90deg, #ff0055, #ff4d4d);
@@ -162,7 +161,7 @@
             z-index: 1;
         }
 
-        /* --- METİN KUTULARI (Hakkımızda & Kurulum) --- */
+        /* --- METİN & SUNUM KUTULARI --- */
         .info-box {
             background: rgba(255, 255, 255, 0.05);
             padding: 40px;
@@ -175,11 +174,34 @@
         }
         .info-box h2 { color: #00f2fe; font-family: 'Orbitron', sans-serif; }
         .info-box h3 { color: #ff0055; margin-top: 30px; }
+        
+        .poster-img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 30px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+        }
+
+        .tech-tags {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        .tech-tag {
+            background: #111;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            color: #00f2fe;
+            border: 1px solid #00f2fe;
+            font-family: 'Orbitron', sans-serif;
+        }
 
         /* MOBİL UYUM */
         @media (max-width: 600px) {
-            nav { flex-direction: column; gap: 15px; padding: 15px; }
-            .nav-item { font-size: 12px; }
+            nav { flex-direction: column; text-align: center; }
+            .nav-item { font-size: 12px; width: 100%; padding: 5px 0;}
             #harita { height: 350px; }
         }
     </style>
@@ -187,21 +209,15 @@
 <body>
 
     <nav>
-        <div class="nav-item" onclick="sayfaDegistir('setup')">
-            🔧 Cihaz Kurulumu
-        </div>
-
-        <div class="nav-center" onclick="sayfaDegistir('home')">
-            TEK<span>GPS</span>
-        </div>
-
-        <div class="nav-item" onclick="sayfaDegistir('about')">
-            ℹ️ Hakkımızda
-        </div>
+        <div class="nav-item" onclick="sayfaDegistir('setup')">🔧 Kurulum</div>
+        <div class="nav-item" onclick="sayfaDegistir('presentation')">📊 Proje Sunumu</div>
+        <div class="nav-center" onclick="sayfaDegistir('home')">TEK<span>GPS</span></div>
+        <div class="nav-item" onclick="sayfaDegistir('tracking')">🚀 Sisteme Giriş</div>
+        <div class="nav-item" onclick="sayfaDegistir('about')">ℹ️ Hakkımızda</div>
     </nav>
 
     <section id="home-section" class="active-section" style="display: flex;">
-        <img src="logo.jpg" alt="TekGPS Logo" class="neon-logo-img">
+        <img src="tekgpslogo.jpg" alt="TekGPS Logo" class="neon-logo-img">
         
         <h1 style="font-family: 'Orbitron'; font-size: 2.5em; margin-bottom: 10px;">ARACINIZ GÜVENDE</h1>
         <p style="color: #aaa; margin-bottom: 40px;">Kesintisiz uydu takibi ve anlık konum hizmeti.</p>
@@ -225,6 +241,27 @@
         <div id="harita"></div>
     </section>
 
+    <section id="presentation-section" class="page-section">
+        <div class="info-box">
+            <h2>📊 Sistem Mimarisi ve Donanım</h2>
+            <p>TekGPS, araç güvenliğinde yüksek hassasiyetli konumlandırma ve kesintisiz iletişim sağlamak amacıyla en güncel modüllerle entegre edilmiş yerli bir tasarımdır.</p>
+            
+            <h3>Donanım Altyapımız</h3>
+            <div class="tech-tags">
+                <div class="tech-tag">ESP8266 Mikrodenetleyici</div>
+                <div class="tech-tag">NEO-6M GPS Modülü</div>
+                <div class="tech-tag">SIM800L GSM Modülü</div>
+            </div>
+
+            <p style="margin-top: 25px; color: #ccc;">Bu sistem, uydu verilerini GSM ağı üzerinden doğrudan Firebase sunucularına aktararak size anlık ve gecikmesiz bir takip deneyimi sunar.</p>
+
+            <h3>Vizyonumuz</h3>
+            <h4 style="color: #00f2fe; font-size: 1.5em; font-family: 'Orbitron', sans-serif;">"Tek Ödeme. Ömür Boyu Özgürlük"</h4>
+
+            <img src="tekgpsposter.jpg" alt="TekGPS Tanıtım Posteri" class="poster-img">
+        </div>
+    </section>
+
     <section id="setup-section" class="page-section">
         <div class="info-box">
             <h2>🔧 Cihaz Kurulumu Nasıl Yapılır?</h2>
@@ -237,7 +274,7 @@
             <p>Kırmızı kabloyu aracın (+) kutbuna, Siyah kabloyu (-) şaseye bağlayın. Cihaz üzerindeki ışıklar yanmaya başlayacaktır.</p>
             
             <h3>Adım 3: Aktivasyon</h3>
-            <p>Cihaz ışıkları sabitlendiğinde, bu sitedeki "Sorgulama" ekranına seri numaranızı girerek takibe başlayabilirsiniz.</p>
+            <p>Cihaz ışıkları sabitlendiğinde, bu sitedeki "Sisteme Giriş" ekranına seri numaranızı girerek takibe başlayabilirsiniz.</p>
         </div>
     </section>
 
@@ -250,7 +287,7 @@
             <p>Klasik sistemlerin aksine, sunucu maliyetlerini optimize ederek kullanıcılarımızdan aylık ücret talep etmiyoruz. Cihazı bir kere alırsınız, ömür boyu kullanırsınız.</p>
             
             <br>
-            <p style="text-align: center; color: #888;">&copy; 2025 TekGPS - Tüm Hakları Saklıdır.</p>
+            <p style="text-align: center; color: #888;">&copy; 2026 TekGPS - Tüm Hakları Saklıdır.</p>
         </div>
     </section>
 
@@ -259,28 +296,31 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // --- 1. MENÜ GEÇİŞ SİSTEMİ ---
+        // --- MENÜ GEÇİŞ SİSTEMİ ---
         function sayfaDegistir(sayfaId) {
             // Tüm sayfaları gizle
             document.getElementById('home-section').style.display = 'none';
             document.getElementById('tracking-section').style.display = 'none';
             document.getElementById('setup-section').style.display = 'none';
             document.getElementById('about-section').style.display = 'none';
+            document.getElementById('presentation-section').style.display = 'none';
 
-            // İstenen sayfayı aç (Flex veya Block olarak)
-            if(sayfaId === 'home-section') {
-                document.getElementById(sayfaId + '-section').style.display = 'flex';
+            // İstenen sayfayı aç
+            if(sayfaId === 'home') {
+                document.getElementById('home-section').style.display = 'flex';
             } else {
                 document.getElementById(sayfaId + '-section').style.display = 'block';
             }
 
-            // Eğer harita ekranı açıldıysa haritayı güncelle (Gri ekran sorununu çözer)
+            // Harita sekmesi açıldığında Leaflet boyutlandırma hatasını çöz (Gri ekran fix)
             if(sayfaId === 'tracking') {
-                setTimeout(function(){ map.invalidateSize(); }, 200);
+                setTimeout(function(){ 
+                    if(map) { map.invalidateSize(); }
+                }, 300);
             }
         }
 
-        // --- 2. FIREBASE VE HARİTA AYARLARI (SENİN ESKİ KODUN) ---
+        // --- FIREBASE BAĞLANTISI ---
         const firebaseConfig = {
           apiKey: "AIzaSyDKIGjt_USZ7Xc1gw8vEEt7fZbVfzE0-FI",
           authDomain: "arac-takip-sistemi-536e0.firebaseapp.com",
@@ -291,19 +331,21 @@
           appId: "1:363603708186:web:d7aad0022a33eb4c5b04a3"
         };
 
-        firebase.initializeApp(firebaseConfig);
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
         const db = firebase.database();
         var mevcutMarker = null;
 
-        // Haritayı Başlat
+        // --- HARİTA BAŞLATMA ---
         var map = L.map('harita').setView([39.0, 35.0], 6);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Cihaz Bulma Fonksiyonu
+        // --- CİHAZ BULMA FONKSİYONU ---
         function cihaziBul() {
-            var seriNo = document.getElementById("seriNo").value;
+            var seriNo = document.getElementById("seriNo").value.trim();
             var mesajKutusu = document.getElementById("durumMesaji");
 
             if(seriNo === "") {
@@ -326,9 +368,8 @@
 
                     if (mevcutMarker) { map.removeLayer(mevcutMarker); }
 
-                    // Özel İkon (Opsiyonel, şimdilik standart)
                     mevcutMarker = L.marker([enlem, boylam]).addTo(map)
-                        .bindPopup("<b>Cihaz: " + seriNo + "</b><br>Hız: " + hiz + " km/s<br>Durum: Aktif")
+                        .bindPopup("<b>Araç: " + seriNo + "</b><br>Hız: " + hiz + " km/s<br>Durum: Bağlantı Aktif")
                         .openPopup();
 
                     map.setView([enlem, boylam], 15);
@@ -337,6 +378,7 @@
                 } else {
                     mesajKutusu.innerHTML = "❌ Cihaz bulunamadı veya kapalı!";
                     mesajKutusu.style.color = "#ff4d4d";
+                    if (mevcutMarker) { map.removeLayer(mevcutMarker); }
                 }
             });
         }
