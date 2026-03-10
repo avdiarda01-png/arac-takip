@@ -161,7 +161,7 @@
             z-index: 1;
         }
 
-        /* --- METİN KUTULARI --- */
+        /* --- METİN KUTULARI (Hakkımızda, Sunum vb.) --- */
         .info-box {
             background: rgba(255, 255, 255, 0.05);
             padding: 40px;
@@ -179,14 +179,36 @@
         .tech-tags { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
         .tech-tag { background: #111; padding: 10px 20px; border-radius: 30px; font-size: 14px; color: #00f2fe; border: 1px solid #00f2fe; font-family: 'Orbitron', sans-serif; }
 
+        /* --- İNDİRME / GÖRÜNTÜLEME BUTONLARI --- */
+        .action-btn {
+            background: rgba(0, 242, 254, 0.1);
+            color: #00f2fe;
+            padding: 12px 25px;
+            font-size: 16px;
+            border: 2px solid #00f2fe;
+            border-radius: 8px;
+            cursor: pointer;
+            font-family: 'Orbitron', sans-serif;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: inline-block;
+            text-align: center;
+        }
+        .action-btn:hover {
+            background: #00f2fe;
+            color: #000;
+            box-shadow: 0 0 15px #00f2fe;
+        }
+        .btn-container { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+
         /* ==================================================== */
-        /* --- EGE ÜNİ OTOPARK STİLLERİ (Senin Kodun) --- */
+        /* --- EGE ÜNİ OTOPARK STİLLERİ --- */
         /* ==================================================== */
         #otopark-section {
             background-color: #0d1117;
             font-family: 'Rajdhani', sans-serif;
             background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #0d1117 70%);
-            display: none; /* JavaScript ile açılacak */
+            display: none; 
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
@@ -281,6 +303,7 @@
             .otopark-layout { width: 100%; }
             .spot { width: 30%; height: 100px; font-size: 1rem;}
             .spot span.num { font-size: 1.5rem; }
+            .btn-container { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
@@ -291,6 +314,7 @@
         <div class="nav-item" onclick="sayfaDegistir('presentation')">📊 Proje Sunumu</div>
         <div class="nav-center" onclick="sayfaDegistir('home')">TEK<span>GPS</span></div>
         <div class="nav-item" onclick="sayfaDegistir('tracking')">🚀 GPS Takip</div>
+        <div class="nav-item" onclick="sayfaDegistir('about')">ℹ️ Hakkımızda</div>
         <div class="nav-item" onclick="sayfaDegistir('otopark')" style="color: #ffaa00;">🅿️ Ege Üni - Otopark</div>
     </nav>
 
@@ -323,6 +347,12 @@
                 <div class="tech-tag">NEO-6M GPS Modülü</div>
                 <div class="tech-tag">SIM800L GSM Modülü</div>
             </div>
+            
+            <div class="btn-container">
+                <a href="tekgps.pptx" download class="action-btn">📥 Proje Sunumu (.pptx)</a>
+                <a href="tekgpsposter.jpg" target="_blank" class="action-btn">🖼️ Proje Posteri (Görüntüle)</a>
+            </div>
+
             <img src="tekgpsposter.jpg" alt="TekGPS Tanıtım Posteri" class="poster-img">
         </div>
     </section>
@@ -335,6 +365,19 @@
             <p>Cihazın yan kapağını açın ve PIN kodu kaldırılmış aktif bir SIM kartı yuvaya yerleştirin.</p>
             <h3>Adım 2: Kablo Bağlantısı</h3>
             <p>Kırmızı kabloyu aracın (+) kutbuna, Siyah kabloyu (-) şaseye bağlayın.</p>
+        </div>
+    </section>
+
+    <section id="about-section" class="page-section">
+        <div class="info-box">
+            <h2>Biz Kimiz?</h2>
+            <p>TekGPS, 2025 yılında İzmir'de kurulmuş yerli bir teknoloji girişimidir. Amacımız, araç güvenliğini herkes için ulaşılabilir ve uygun fiyatlı hale getirmektir.</p>
+            
+            <h3>Neden Aidat Yok?</h3>
+            <p>Klasik sistemlerin aksine, sunucu maliyetlerini optimize ederek kullanıcılarımızdan aylık ücret talep etmiyoruz. Cihazı bir kere alırsınız, ömür boyu kullanırsınız.</p>
+            
+            <br>
+            <p style="text-align: center; color: #888;">&copy; 2026 TekGPS - Tüm Hakları Saklıdır.</p>
         </div>
     </section>
 
@@ -383,13 +426,13 @@
             document.getElementById('tracking-section').style.display = 'none';
             document.getElementById('setup-section').style.display = 'none';
             document.getElementById('presentation-section').style.display = 'none';
+            document.getElementById('about-section').style.display = 'none';
             document.getElementById('otopark-section').style.display = 'none';
 
             // İstenen sayfayı aç
             if(sayfaId === 'home') {
                 document.getElementById('home-section').style.display = 'flex';
             } else if (sayfaId === 'otopark') {
-                // Otopark sayfası kendi Flex tasarımına sahip
                 document.getElementById('otopark-section').style.display = 'flex';
             } else {
                 document.getElementById(sayfaId + '-section').style.display = 'block';
