@@ -59,7 +59,7 @@
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 34px; /* Logoyu büyüttük */
+            font-size: 34px;
             font-weight: bold;
             color: #fff;
             text-align: center;
@@ -157,6 +157,16 @@
             transition: 0.3s;
         }
         .search-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+
+        /* YENİ EKLENEN HIZ GÖSTERGESİ STİLİ */
+        #hizGostergesi {
+            display: none;
+            margin-top: 15px;
+            font-size: 22px;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: bold;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
 
         #harita {
             height: 500px;
@@ -348,6 +358,8 @@
             <br>
             <button class="search-btn" onclick="cihaziBul()">🛰️ UYDU BAĞLANTISI KUR</button>
             <div id="durumMesaji" style="margin-top: 15px; font-weight: bold;"></div>
+            <!-- YENİ EKLENEN HIZ GÖSTERGESİ DIV'I -->
+            <div id="hizGostergesi">🏎️ Hız: 0 km/s</div>
         </div>
         <div id="harita"></div>
     </section>
@@ -480,24 +492,53 @@
         function cihaziBul() {
             var seriNo = document.getElementById("seriNo").value.trim();
             var mesajKutusu = document.getElementById("durumMesaji");
+            var hizGostergesi = document.getElementById("hizGostergesi");
 
             if(seriNo === "") {
                 mesajKutusu.innerHTML = "⚠️ Lütfen seri numarası girin!";
-                mesajKutusu.style.color = "#ff4d4d"; return;
+                mesajKutusu.style.color = "#ff4d4d"; 
+                hizGostergesi.style.display = "none";
+                return;
             }
 
             mesajKutusu.innerHTML = "📡 " + seriNo + " uydudan aranıyor...";
             mesajKutusu.style.color = "#00f2fe";
+            hizGostergesi.style.display = "none";
 
             dbGPS.ref('araclar/' + seriNo).on('value', (snapshot) => {
                 const veri = snapshot.val();
                 if (veri) {
                     if (mevcutMarker) { map.removeLayer(mevcutMarker); }
-                    mevcutMarker = L.marker([veri.enlem, veri.boylam]).addTo(map).bindPopup("<b>Araç: " + seriNo + "</b>").openPopup();
+                    
+                    // Firebase'deki veri 'hiz' veya 'speed' olabilir, ikisini de kapsıyoruz. Yoksa 0 yazsın.
+                    let guncelHiz = veri.hiz !== undefined ? veri.hiz : (veri.speed !== undefined ? veri.speed : 0);
+                    
+                    // Harita pini içeriğini güncelledik (Hızı da yazacak)
+                    let popupIcerik = "<b>Araç: " + seriNo + "</b><br>Durum: Çevrimiçi<br>Hız: " + guncelHiz + " km/s";
+                    
+                    mevcutMarker = L.marker([veri.enlem, veri.boylam]).addTo(map).bindPopup(popupIcerik).openPopup();
                     map.setView([veri.enlem, veri.boylam], 15);
-                    mesajKutusu.innerHTML = "✅ Sinyal Alındı!"; mesajKutusu.style.color = "#00ff00";
+                    
+                    mesajKutusu.innerHTML = "✅ Sinyal Alındı!"; 
+                    mesajKutusu.style.color = "#00ff00";
+
+                    // Hız göstergesini güncelle ve ekranda göster
+                    hizGostergesi.style.display = "block";
+                    hizGostergesi.innerHTML = "🏎️ Hız: " + guncelHiz + " km/s";
+                    
+                    // Hız 90'ı geçerse renk kırmızıya dönsün (opsiyonel estetik)
+                    if (guncelHiz >= 90) {
+                        hizGostergesi.style.color = "#ff4d4d";
+                        hizGostergesi.style.textShadow = "0 0 10px #ff4d4d";
+                    } else {
+                        hizGostergesi.style.color = "#00f2fe";
+                        hizGostergesi.style.textShadow = "0 0 10px #00f2fe";
+                    }
+
                 } else {
-                    mesajKutusu.innerHTML = "❌ Cihaz bulunamadı!"; mesajKutusu.style.color = "#ff4d4d";
+                    mesajKutusu.innerHTML = "❌ Cihaz bulunamadı!"; 
+                    mesajKutusu.style.color = "#ff4d4d";
+                    hizGostergesi.style.display = "none";
                 }
             });
         }
