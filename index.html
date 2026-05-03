@@ -34,11 +34,7 @@
             box-shadow: 0 0 20px rgba(0, 242, 254, 0.2);
         }
 
-        .nav-group {
-            display: flex;
-            gap: 20px;
-            align-items: center;
-        }
+        .nav-group { display: flex; gap: 20px; align-items: center; }
 
         .nav-item {
             cursor: pointer;
@@ -49,34 +45,21 @@
             text-transform: uppercase;
         }
 
-        .nav-item:hover {
-            color: #00f2fe;
-            text-shadow: 0 0 10px #00f2fe;
-        }
+        .nav-item:hover { color: #00f2fe; text-shadow: 0 0 10px #00f2fe; }
 
         /* ORTA LOGO ALANI */
         .nav-center {
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 34px;
-            font-weight: bold;
-            color: #fff;
-            text-align: center;
-            cursor: pointer;
-            text-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
+            position: absolute; left: 50%; transform: translateX(-50%);
+            font-size: 34px; font-weight: bold; color: #fff;
+            text-align: center; cursor: pointer; text-shadow: 0 0 15px rgba(255, 0, 85, 0.4);
         }
         .nav-center span { color: #ff0055; }
 
         /* --- SAYFA İÇERİKLERİ --- */
         .page-section {
-            display: none;
-            padding: 40px 20px;
-            min-height: 80vh;
-            animation: fadeIn 0.5s ease;
-            text-align: center;
+            display: none; padding: 40px 20px; min-height: 80vh;
+            animation: fadeIn 0.5s ease; text-align: center;
         }
-
         .active-section { display: block; }
 
         @keyframes fadeIn {
@@ -85,232 +68,90 @@
         }
 
         /* --- ANA SAYFA (HOME) --- */
-        #home-section {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .neon-logo-img {
-            max-width: 300px;
-            border-radius: 20px;
-            box-shadow: 0 0 30px rgba(0, 242, 254, 0.3), 0 0 60px rgba(255, 0, 85, 0.2);
-            margin-bottom: 30px;
-            transition: transform 0.3s;
-        }
+        #home-section { display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .neon-logo-img { max-width: 300px; border-radius: 20px; box-shadow: 0 0 30px rgba(0, 242, 254, 0.3), 0 0 60px rgba(255, 0, 85, 0.2); margin-bottom: 30px; transition: transform 0.3s; }
         .neon-logo-img:hover { transform: scale(1.05); }
 
         .big-btn {
-            background: linear-gradient(90deg, #ff0055, #ff4d4d);
-            color: white;
-            padding: 15px 40px;
-            font-size: 20px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
+            background: linear-gradient(90deg, #ff0055, #ff4d4d); color: white; padding: 15px 40px;
+            font-size: 20px; border: none; border-radius: 50px; cursor: pointer;
+            font-family: 'Orbitron', sans-serif; box-shadow: 0 0 20px rgba(255, 0, 85, 0.6);
+            transition: all 0.3s; text-decoration: none; display: inline-block;
         }
-        
-        .big-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 40px rgba(255, 0, 85, 1);
-        }
+        .big-btn:hover { transform: scale(1.1); box-shadow: 0 0 40px rgba(255, 0, 85, 1); }
 
         /* --- TAKİP EKRANI TASARIMI --- */
-        .kontrol-kutusu {
-            background: rgba(20, 20, 20, 0.9);
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid #333;
-            max-width: 500px;
-            margin: 0 auto 30px auto;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-        }
-
-        input[type="text"] {
-            width: 70%;
-            padding: 12px;
-            background: #000;
-            border: 2px solid #333;
-            color: #00f2fe;
-            border-radius: 8px;
-            font-family: 'Orbitron', sans-serif;
-            text-align: center;
-            outline: none;
-        }
+        .kontrol-kutusu { background: rgba(20, 20, 20, 0.9); padding: 30px; border-radius: 15px; border: 1px solid #333; max-width: 500px; margin: 0 auto 30px auto; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        input[type="text"] { width: 70%; padding: 12px; background: #000; border: 2px solid #333; color: #00f2fe; border-radius: 8px; font-family: 'Orbitron', sans-serif; text-align: center; outline: none; }
         input:focus { border-color: #00f2fe; box-shadow: 0 0 15px rgba(0, 242, 254, 0.3); }
-
-        .search-btn {
-            background: #00f2fe;
-            color: #000;
-            font-weight: bold;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin-top: 10px;
-            transition: 0.3s;
-        }
+        .search-btn { background: #00f2fe; color: #000; font-weight: bold; border: none; padding: 12px 25px; border-radius: 8px; cursor: pointer; margin-top: 10px; transition: 0.3s; }
         .search-btn:hover { background: #fff; box-shadow: 0 0 15px #fff; }
+        #hizGostergesi { display: none; margin-top: 15px; font-size: 22px; font-family: 'Orbitron', sans-serif; font-weight: bold; transition: color 0.3s, text-shadow 0.3s; }
+        #harita { height: 500px; width: 90%; max-width: 1000px; margin: 0 auto; border-radius: 15px; border: 2px solid #333; z-index: 1; }
 
-        /* YENİ EKLENEN HIZ GÖSTERGESİ STİLİ */
-        #hizGostergesi {
-            display: none;
-            margin-top: 15px;
-            font-size: 22px;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: bold;
-            transition: color 0.3s, text-shadow 0.3s;
-        }
-
-        #harita {
-            height: 500px;
-            width: 90%;
-            max-width: 1000px;
-            margin: 0 auto;
-            border-radius: 15px;
-            border: 2px solid #333;
-            z-index: 1;
-        }
-
-        /* --- METİN KUTULARI (Hakkımızda, Sunum vb.) --- */
-        .info-box {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 40px;
-            border-radius: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-            line-height: 1.6;
-            border-left: 4px solid #00f2fe;
-            text-align: left;
-        }
+        /* --- BİLGİ KUTULARI VE TABLOLAR --- */
+        .info-box { background: rgba(255, 255, 255, 0.05); padding: 40px; border-radius: 20px; max-width: 800px; margin: 0 auto; line-height: 1.6; border-left: 4px solid #00f2fe; text-align: left; }
         .info-box h2 { color: #00f2fe; font-family: 'Orbitron', sans-serif; }
         .info-box h3 { color: #ff0055; margin-top: 30px; }
-        
-        .poster-img { max-width: 100%; border-radius: 10px; margin-top: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
-        .tech-tags { display: flex; gap: 15px; flex-wrap: wrap; margin-top: 20px; }
-        .tech-tag { background: #111; padding: 10px 20px; border-radius: 30px; font-size: 14px; color: #00f2fe; border: 1px solid #00f2fe; font-family: 'Orbitron', sans-serif; }
 
-        /* --- İNDİRME / GÖRÜNTÜLEME BUTONLARI --- */
-        .action-btn {
-            background: rgba(0, 242, 254, 0.1);
-            color: #00f2fe;
-            padding: 12px 25px;
-            font-size: 16px;
-            border: 2px solid #00f2fe;
-            border-radius: 8px;
-            cursor: pointer;
-            font-family: 'Orbitron', sans-serif;
-            text-decoration: none;
-            transition: all 0.3s;
-            display: inline-block;
-            text-align: center;
-        }
-        .action-btn:hover {
-            background: #00f2fe;
-            color: #000;
-            box-shadow: 0 0 15px #00f2fe;
-        }
-        .btn-container { display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px; }
+        /* --- YENİ EKLENEN: SUNUM SLIDER SİSTEMİ --- */
+        .slider-container { position: relative; width: 100%; max-width: 900px; margin: 0 auto; background: #0d0d0d; border-radius: 15px; border: 2px solid #333; overflow: hidden; min-height: 550px; display: flex; flex-direction: column; box-shadow: 0 10px 40px rgba(0,0,0,0.8); }
+        .slide { display: none; padding: 50px; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 100%; animation: fadeIn 0.4s ease; flex-grow: 1; }
+        .slide.active { display: flex; }
+        .slide h2 { font-family: 'Orbitron'; font-size: 32px; color: #ff0055; text-shadow: 0 0 10px rgba(255,0,85,0.4); margin-bottom: 20px; }
+        .slide p { font-size: 18px; color: #ccc; line-height: 1.6; max-width: 700px; }
+        .slider-controls { display: flex; justify-content: space-between; padding: 20px 40px; background: rgba(0,0,0,0.5); border-top: 1px solid #333; }
+        .slider-btn { background: transparent; color: #00f2fe; border: 2px solid #00f2fe; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-family: 'Orbitron'; font-weight: bold; transition: 0.3s; }
+        .slider-btn:hover { background: #00f2fe; color: #000; box-shadow: 0 0 15px #00f2fe; }
+        
+        /* Versiyon Karşılaştırma Tablosu */
+        .version-table { width: 100%; margin-top: 20px; border-collapse: collapse; text-align: left; background: rgba(255,255,255,0.02); border-radius: 10px; overflow: hidden;}
+        .version-table th, .version-table td { padding: 15px; border-bottom: 1px solid #222; }
+        .version-table th { background: rgba(0, 242, 254, 0.1); color: #00f2fe; font-family: 'Orbitron'; }
+        .badge-std { background: #333; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 12px; border: 1px solid #777;}
+        .badge-pro { background: #ff0055; color: #fff; padding: 4px 8px; border-radius: 4px; font-size: 12px; border: 1px solid #ff0055; box-shadow: 0 0 10px rgba(255,0,85,0.5);}
+
+        /* --- YENİ EKLENEN: MOBİL ARAYÜZ PROTOTİPİ --- */
+        .phone-mockup { width: 340px; height: 680px; background: #0a0a0a; border: 12px solid #1a1a1a; border-radius: 40px; margin: 0 auto; position: relative; padding: 25px 20px; box-sizing: border-box; box-shadow: 0 0 40px rgba(0, 242, 254, 0.15), inset 0 0 20px rgba(0,0,0,1); overflow-y: auto; text-align: left;}
+        .phone-mockup::-webkit-scrollbar { display: none; }
+        .phone-header { text-align: center; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 15px; }
+        .phone-header h3 { font-family: 'Orbitron'; color: #fff; margin: 0; font-size: 20px; }
+        .phone-header span { color: #ff0055; }
+        
+        .dash-card { background: rgba(255,255,255,0.03); padding: 18px; border-radius: 16px; margin-bottom: 15px; border-left: 3px solid #00f2fe; position: relative; overflow: hidden; transition: 0.3s;}
+        .dash-card:hover { background: rgba(255,255,255,0.07); transform: translateY(-2px); }
+        .dash-card h4 { margin: 0 0 8px 0; color: #888; font-family: 'Roboto'; font-size: 13px; font-weight: normal; text-transform: uppercase; letter-spacing: 1px;}
+        .dash-card .value { font-size: 24px; color: #fff; font-weight: bold; font-family: 'Orbitron'; }
+        
+        /* Kart Renk Varyasyonları */
+        .card-speed { border-left-color: #00f2fe; }
+        .card-fuel { border-left-color: #3fb950; }
+        .card-weather { border-left-color: #ffaa00; }
+        .card-km { border-left-color: #a371f7; }
+
+        .add-device-btn { background: transparent; border: 2px dashed #ff0055; color: #ff0055; width: 100%; padding: 15px; border-radius: 16px; cursor: pointer; font-family: 'Orbitron'; font-size: 14px; transition: 0.3s; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;}
+        .add-device-btn:hover { background: rgba(255,0,85,0.1); border-color: #ff4d4d; color: #ff4d4d; }
 
         /* ==================================================== */
         /* --- EGE ÜNİ OTOPARK STİLLERİ --- */
         /* ==================================================== */
-        #otopark-section {
-            background-color: #0d1117;
-            font-family: 'Rajdhani', sans-serif;
-            background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #0d1117 70%);
-            display: none; 
-            flex-direction: column;
-            align-items: center;
-            min-height: 100vh;
-            padding: 2rem;
-        }
-
-        .otopark-title {
-            font-family: 'Orbitron', sans-serif;
-            color: #58a6ff;
-            text-shadow: 0 0 15px rgba(88, 166, 255, 0.5);
-            margin-bottom: 0.5rem;
-            text-align: center;
-            font-size: 2.5rem;
-        }
-
-        .otopark-subtitle {
-            font-size: 1.2rem;
-            color: #8b949e;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-        }
-
-        .status-panel {
-            background: rgba(22, 27, 34, 0.8);
-            border: 2px solid #30363d;
-            border-radius: 15px;
-            padding: 1.5rem 3rem;
-            font-size: 2rem;
-            font-weight: bold;
-            text-align: center;
-            margin-bottom: 3rem;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            transition: all 0.3s ease;
-        }
+        #otopark-section { background-color: #0d1117; font-family: 'Rajdhani', sans-serif; background-image: radial-gradient(circle at 50% 0%, #1f2937 0%, #0d1117 70%); display: none; flex-direction: column; align-items: center; min-height: 100vh; padding: 2rem; }
+        .otopark-title { font-family: 'Orbitron', sans-serif; color: #58a6ff; text-shadow: 0 0 15px rgba(88, 166, 255, 0.5); margin-bottom: 0.5rem; text-align: center; font-size: 2.5rem; }
+        .otopark-subtitle { font-size: 1.2rem; color: #8b949e; margin-bottom: 2rem; letter-spacing: 2px; }
+        .status-panel { background: rgba(22, 27, 34, 0.8); border: 2px solid #30363d; border-radius: 15px; padding: 1.5rem 3rem; font-size: 2rem; font-weight: bold; text-align: center; margin-bottom: 3rem; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transition: all 0.3s ease; }
         .status-panel.active-panel { border-color: #3fb950; color: #3fb950; box-shadow: 0 0 25px rgba(63, 185, 80, 0.4); }
         .status-panel.full { border-color: #f85149; color: #f85149; box-shadow: 0 0 25px rgba(248, 81, 73, 0.4); }
-
-        .otopark-layout {
-            display: flex;
-            flex-direction: column;
-            width: 900px;
-            max-width: 100%;
-            position: relative;
-            gap: 10px;
-            margin: 0 auto;
-        }
-
+        .otopark-layout { display: flex; flex-direction: column; width: 900px; max-width: 100%; position: relative; gap: 10px; margin: 0 auto; }
         .otopark-row { display: flex; justify-content: space-between; width: 100%; }
-
-        .road-container {
-            height: 100px; width: 100%; position: relative;
-            background: rgba(255, 255, 255, 0.02);
-            border-top: 2px dashed #30363d; border-bottom: 2px dashed #30363d;
-            display: flex; align-items: center;
-        }
-
+        .road-container { height: 100px; width: 100%; position: relative; background: rgba(255, 255, 255, 0.02); border-top: 2px dashed #30363d; border-bottom: 2px dashed #30363d; display: flex; align-items: center; }
         .road-svg { position: absolute; width: 100%; height: 100%; top: 0; left: 0; pointer-events: none; }
-
-        .route-path {
-            fill: none; stroke: #3fb950; stroke-width: 8; stroke-dasharray: 15, 15;
-            stroke-linecap: round; opacity: 0; transition: opacity 0.4s ease;
-            filter: drop-shadow(0 0 8px #3fb950);
-            animation: moveLight 1s linear infinite;
-        }
+        .route-path { fill: none; stroke: #3fb950; stroke-width: 8; stroke-dasharray: 15, 15; stroke-linecap: round; opacity: 0; transition: opacity 0.4s ease; filter: drop-shadow(0 0 8px #3fb950); animation: moveLight 1s linear infinite; }
         @keyframes moveLight { from { stroke-dashoffset: 30; } to { stroke-dashoffset: 0; } }
         .route-path.active-path { opacity: 1; }
-
-        .spot {
-            background: #161b22; border: 3px solid #30363d; border-radius: 12px;
-            width: 260px; height: 140px; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; font-size: 1.5rem;
-            font-weight: bold; transition: all 0.4s ease; position: relative;
-        }
-        .spot span.num {
-            font-size: 3rem; font-family: 'Orbitron', sans-serif; opacity: 0.2;
-            position: absolute; top: 5px; left: 10px;
-        }
-        .spot.bos {
-            border-color: #3fb950; background: rgba(63, 185, 80, 0.1); color: #3fb950;
-            box-shadow: inset 0 0 20px rgba(63, 185, 80, 0.2), 0 0 15px rgba(63, 185, 80, 0.3);
-        }
-        .spot.dolu {
-            border-color: #f85149; background: rgba(248, 81, 73, 0.1); color: #f85149;
-            box-shadow: inset 0 0 20px rgba(248, 81, 73, 0.2), 0 0 15px rgba(248, 81, 73, 0.3);
-        }
+        .spot { background: #161b22; border: 3px solid #30363d; border-radius: 12px; width: 260px; height: 140px; display: flex; flex-direction: column; justify-content: center; align-items: center; font-size: 1.5rem; font-weight: bold; transition: all 0.4s ease; position: relative; }
+        .spot span.num { font-size: 3rem; font-family: 'Orbitron', sans-serif; opacity: 0.2; position: absolute; top: 5px; left: 10px; }
+        .spot.bos { border-color: #3fb950; background: rgba(63, 185, 80, 0.1); color: #3fb950; box-shadow: inset 0 0 20px rgba(63, 185, 80, 0.2), 0 0 15px rgba(63, 185, 80, 0.3); }
+        .spot.dolu { border-color: #f85149; background: rgba(248, 81, 73, 0.1); color: #f85149; box-shadow: inset 0 0 20px rgba(248, 81, 73, 0.2), 0 0 15px rgba(248, 81, 73, 0.3); }
 
         /* MOBİL UYUM */
         @media (max-width: 800px) {
@@ -322,7 +163,6 @@
             .otopark-layout { width: 100%; }
             .spot { width: 30%; height: 100px; font-size: 1rem; }
             .spot span.num { font-size: 1.5rem; }
-            .btn-container { flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
@@ -332,6 +172,8 @@
         <div class="nav-group">
             <div class="nav-item" onclick="sayfaDegistir('setup')">🔧 Kurulum</div>
             <div class="nav-item" onclick="sayfaDegistir('presentation')">📊 Proje Sunumu</div>
+            <!-- YENİ EKLENEN MOBİL ARAYÜZ BUTONU -->
+            <div class="nav-item" onclick="sayfaDegistir('mobile')" style="color: #a371f7;">📱 Mobil Arayüz</div>
         </div>
 
         <div class="nav-center" onclick="sayfaDegistir('home')">TEK<span>GPS</span></div>
@@ -358,29 +200,151 @@
             <br>
             <button class="search-btn" onclick="cihaziBul()">🛰️ UYDU BAĞLANTISI KUR</button>
             <div id="durumMesaji" style="margin-top: 15px; font-weight: bold;"></div>
-            <!-- YENİ EKLENEN HIZ GÖSTERGESİ DIV'I -->
+            <!-- HIZ GÖSTERGESİ -->
             <div id="hizGostergesi">🏎️ Hız: 0 km/s</div>
         </div>
         <div id="harita"></div>
     </section>
 
+    <!-- YENİ: İNTERAKTİF SUNUM BÖLÜMÜ -->
     <section id="presentation-section" class="page-section">
-        <div class="info-box">
-            <h2>📊 Sistem Mimarisi ve Donanım</h2>
-            <p>TekGPS, araç güvenliğinde yüksek hassasiyetli konumlandırma ve kesintisiz iletişim sağlamak amacıyla en güncel modüllerle entegre edilmiş yerli bir tasarımdır.</p>
-            <h3>Donanım Altyapımız</h3>
-            <div class="tech-tags">
-                <div class="tech-tag">ESP8266 Mikrodenetleyici</div>
-                <div class="tech-tag">NEO-6M GPS Modülü</div>
-                <div class="tech-tag">SIM800L GSM Modülü</div>
-            </div>
-            
-            <div class="btn-container">
-                <a href="tekgps.pptx" download class="action-btn">📥 Proje Sunumu (.pptx)</a>
-                <a href="tekgpsposter.jpg" target="_blank" class="action-btn">🖼️ Proje Posteri (Görüntüle)</a>
+        <h2 style="font-family: 'Orbitron'; color: #00f2fe; margin-bottom: 30px;">TEKGPS İNTERAKTİF SUNUM</h2>
+        
+        <div class="slider-container">
+            <!-- Slayt 1: Başlık -->
+            <div class="slide active" id="slide-0">
+                <h2 style="font-size: 45px; color:#fff;">TEK<span style="color:#ff0055;">GPS</span></h2>
+                <h3 style="color: #00f2fe; font-family: 'Orbitron';">IoT Tabanlı Yeni Nesil Araç Takip Sistemi</h3>
+                <p style="font-style: italic; margin-top:30px;">"Tek Ödeme. Ömür Boyu Özgürlük."</p>
+                <p style="font-size: 14px; color: #555; position: absolute; bottom: 20px; right: 20px;">Hazırlayan: Avdi Arda Sancaklı<br>Danışman: Dr. Öğr. Üyesi Mustafa Berkant Selek</p>
             </div>
 
-            <img src="tekgpsposter.jpg" alt="TekGPS Tanıtım Posteri" class="poster-img">
+            <!-- Slayt 2: Amaç -->
+            <div class="slide" id="slide-1">
+                <h2>PROJENİN AMACI</h2>
+                <div style="text-align: left; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 10px;">
+                    <strong style="color: #ff4d4d;">❌ Sorun:</strong> Mevcut sistemlerdeki yüksek abonelik ücretleri ve taahhüt zorunluluğu.
+                </div>
+                <div style="text-align: left; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px; margin-bottom: 10px;">
+                    <strong style="color: #3fb950;">✅ Çözüm:</strong> Bireysel kullanıcılar için "Tak-Çalıştır" kolaylığında bir sistem.
+                </div>
+                <div style="text-align: left; background: rgba(255,255,255,0.05); padding: 20px; border-radius: 10px;">
+                    <strong style="color: #00f2fe;">🌍 Vizyon:</strong> Herhangi bir teknik bilgi gerektirmeden araç güvenliğini sağlamak.
+                </div>
+            </div>
+
+            <!-- Slayt 3: Donanım Mimarisi & Versiyonlar -->
+            <div class="slide" id="slide-2">
+                <h2>DONANIM & VERSİYON FARKLARI</h2>
+                <p>TekGPS, kullanım senaryosuna göre iki farklı donanım mimarisi sunar.</p>
+                
+                <table class="version-table">
+                    <thead>
+                        <tr>
+                            <th>Özellik</th>
+                            <th><span class="badge-std">Standard Sürüm</span></th>
+                            <th><span class="badge-pro">PRO Sürüm</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Mikrodenetleyici</strong></td>
+                            <td>ESP8266 (Tek Çekirdek, Wi-Fi)</td>
+                            <td><strong>ESP32</strong> (Çift Çekirdek, Wi-Fi + Bluetooth)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>GPS Modülü</strong></td>
+                            <td>NEO-6M (Sadece GPS)</td>
+                            <td><strong>NEO-M8N</strong> (Concurrent GNSS)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uydu Algılama</strong></td>
+                            <td>Tekli Ağ (Daha yavaş konum tespiti)</td>
+                            <td>GPS + GLONASS + Galileo (Aynı anda)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bağlantı & İletişim</strong></td>
+                            <td>SIM800L GSM (2G)</td>
+                            <td>SIM800L / LTE Modül Seçeneği</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size:14px; margin-top:15px; color:#aaa;">* Pro sürümdeki NEO-8M (M8N) modülü, çoklu uydu ağlarına (Concurrent GNSS) aynı anda bağlanarak şehir içi kör noktalarda bile yüksek hassasiyet sağlar.</p>
+            </div>
+
+            <!-- Slayt 4: Firebase -->
+            <div class="slide" id="slide-3">
+                <h2>FİREBASE TEKNOLOJİSİ</h2>
+                <p>Google tarafından sunulan, sunucusuz (serverless) bir bulut altyapısıdır.</p>
+                <div style="text-align: left; max-width: 600px; margin: 0 auto; margin-top:20px;">
+                    <p>🔥 <strong>Realtime Database:</strong> Verilerimiz klasik tablolarda değil, anlık senkronize olan JSON ağaçlarında tutulur.</p>
+                    <p>⚡ <strong>Hız:</strong> Cihazdan gelen konum ve hız verisi, milisaniyeler içinde web sitesine yansır.</p>
+                    <p>🛡️ <strong>Güvenlik:</strong> Google'ın sunucu güvenliği sayesinde veriler şifreli ve koruma altındadır.</p>
+                </div>
+            </div>
+
+            <!-- Slayt 5: Kaynakça & Teşekkür -->
+            <div class="slide" id="slide-4">
+                <h2>TEŞEKKÜRLER</h2>
+                <p>Dinlediğiniz için teşekkür ederim.</p>
+                <p style="color: #00f2fe; margin-top: 40px; cursor: pointer;">Sorularınız?</p>
+            </div>
+
+            <!-- Slider Butonları -->
+            <div class="slider-controls">
+                <button class="slider-btn" onclick="prevSlide()">◀ Önceki</button>
+                <button class="slider-btn" onclick="nextSlide()">Sonraki ▶</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- YENİ: MOBİL ARAYÜZ PROTOTİBİ -->
+    <section id="mobile-section" class="page-section">
+        <h2 style="font-family: 'Orbitron'; color: #00f2fe; margin-bottom: 10px;">MOBİL UYGULAMA PROTOTİPİ</h2>
+        <p style="color: #aaa; margin-bottom: 40px;">Pro versiyon için tasarlanan sensör veri ekranı.</p>
+        
+        <div class="phone-mockup">
+            <div class="phone-header">
+                <h3>TEK<span>GPS</span> PRO</h3>
+            </div>
+            
+            <!-- Hız Kartı -->
+            <div class="dash-card card-speed">
+                <h4>Anlık Hız</h4>
+                <div class="value">45 <span style="font-size: 14px; color:#888;">km/s</span></div>
+            </div>
+            
+            <!-- Yakıt Kartı -->
+            <div class="dash-card card-fuel">
+                <h4>Yakıt Durumu</h4>
+                <div class="value">%68</div>
+                <div style="width: 100%; height: 6px; background:#333; border-radius:3px; margin-top:8px; overflow:hidden;">
+                    <div style="width: 68%; height: 100%; background: #3fb950;"></div>
+                </div>
+            </div>
+
+            <!-- İklim Kartı (Sıcaklık ve Nem) -->
+            <div style="display: flex; gap: 10px;">
+                <div class="dash-card card-weather" style="flex: 1;">
+                    <h4>Sıcaklık</h4>
+                    <div class="value">24°C</div>
+                </div>
+                <div class="dash-card card-weather" style="flex: 1; border-left-color: #00f2fe;">
+                    <h4>Kabin Nemi</h4>
+                    <div class="value">%45</div>
+                </div>
+            </div>
+
+            <!-- Mesafe Kartı -->
+            <div class="dash-card card-km">
+                <h4>Aylık Yapılan Yol</h4>
+                <div class="value">1,240 <span style="font-size: 14px; color:#888;">km</span></div>
+            </div>
+
+            <!-- Cihaz Ekleme Butonu -->
+            <button class="add-device-btn">
+                + Yeni Cihaz Ekle
+            </button>
         </div>
     </section>
 
@@ -399,10 +363,8 @@
         <div class="info-box">
             <h2>Biz Kimiz?</h2>
             <p>TekGPS, 2025 yılında İzmir'de kurulmuş yerli bir teknoloji girişimidir. Amacımız, araç güvenliğini herkes için ulaşılabilir ve uygun fiyatlı hale getirmektir.</p>
-            
             <h3>Neden Aidat Yok?</h3>
             <p>Klasik sistemlerin aksine, sunucu maliyetlerini optimize ederek kullanıcılarımızdan aylık ücret talep etmiyoruz. Cihazı bir kere alırsınız, ömür boyu kullanırsınız.</p>
-            
             <br>
             <p style="text-align: center; color: #888;">&copy; 2026 TekGPS - Tüm Hakları Saklıdır.</p>
         </div>
@@ -446,21 +408,37 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
 
     <script>
-        // --- 1. MENÜ GEÇİŞ SİSTEMİ ---
+        // --- SUNUM SLIDER FONKSİYONLARI ---
+        let currentSlide = 0;
+        const totalSlides = 5;
+
+        function showSlide(index) {
+            // Sınır kontrolleri
+            if (index >= totalSlides) currentSlide = 0;
+            if (index < 0) currentSlide = totalSlides - 1;
+
+            // Tüm slaytları gizle, sadece aktifi göster
+            for (let i = 0; i < totalSlides; i++) {
+                document.getElementById('slide-' + i).classList.remove('active');
+            }
+            document.getElementById('slide-' + currentSlide).classList.add('active');
+        }
+
+        function nextSlide() { currentSlide++; showSlide(currentSlide); }
+        function prevSlide() { currentSlide--; showSlide(currentSlide); }
+
+
+        // --- MENÜ GEÇİŞ SİSTEMİ ---
         function sayfaDegistir(sayfaId) {
             // Tüm sayfaları gizle
-            document.getElementById('home-section').style.display = 'none';
-            document.getElementById('tracking-section').style.display = 'none';
-            document.getElementById('setup-section').style.display = 'none';
-            document.getElementById('presentation-section').style.display = 'none';
-            document.getElementById('about-section').style.display = 'none';
-            document.getElementById('otopark-section').style.display = 'none';
+            const sayfalar = ['home', 'tracking', 'setup', 'presentation', 'mobile', 'about', 'otopark'];
+            sayfalar.forEach(id => {
+                document.getElementById(id + '-section').style.display = 'none';
+            });
 
             // İstenen sayfayı aç
-            if(sayfaId === 'home') {
-                document.getElementById('home-section').style.display = 'flex';
-            } else if (sayfaId === 'otopark') {
-                document.getElementById('otopark-section').style.display = 'flex';
+            if(sayfaId === 'home' || sayfaId === 'otopark') {
+                document.getElementById(sayfaId + '-section').style.display = 'flex';
             } else {
                 document.getElementById(sayfaId + '-section').style.display = 'block';
             }
@@ -471,7 +449,7 @@
             }
         }
 
-        // --- 2. TEKGPS FIREBASE BAĞLANTISI ---
+        // --- TEKGPS FIREBASE BAĞLANTISI ---
         const firebaseConfigGPS = {
           apiKey: "AIzaSyDKIGjt_USZ7Xc1gw8vEEt7fZbVfzE0-FI",
           authDomain: "arac-takip-sistemi-536e0.firebaseapp.com",
@@ -510,10 +488,7 @@
                 if (veri) {
                     if (mevcutMarker) { map.removeLayer(mevcutMarker); }
                     
-                    // Firebase'deki veri 'hiz' veya 'speed' olabilir, ikisini de kapsıyoruz. Yoksa 0 yazsın.
                     let guncelHiz = veri.hiz !== undefined ? veri.hiz : (veri.speed !== undefined ? veri.speed : 0);
-                    
-                    // Harita pini içeriğini güncelledik (Hızı da yazacak)
                     let popupIcerik = "<b>Araç: " + seriNo + "</b><br>Durum: Çevrimiçi<br>Hız: " + guncelHiz + " km/s";
                     
                     mevcutMarker = L.marker([veri.enlem, veri.boylam]).addTo(map).bindPopup(popupIcerik).openPopup();
@@ -522,11 +497,9 @@
                     mesajKutusu.innerHTML = "✅ Sinyal Alındı!"; 
                     mesajKutusu.style.color = "#00ff00";
 
-                    // Hız göstergesini güncelle ve ekranda göster
                     hizGostergesi.style.display = "block";
                     hizGostergesi.innerHTML = "🏎️ Hız: " + guncelHiz + " km/s";
                     
-                    // Hız 90'ı geçerse renk kırmızıya dönsün (opsiyonel estetik)
                     if (guncelHiz >= 90) {
                         hizGostergesi.style.color = "#ff4d4d";
                         hizGostergesi.style.textShadow = "0 0 10px #ff4d4d";
@@ -543,7 +516,7 @@
             });
         }
 
-        // --- 3. EGE ÜNİ OTOPARK FIREBASE ÇEKME FONKSİYONU ---
+        // --- EGE ÜNİ OTOPARK FIREBASE ÇEKME FONKSİYONU ---
         const OTOPARK_FIREBASE_URL = "https://otopark-33791-default-rtdb.firebaseio.com/otopark_sistemi.json";
         
         async function otoparkSistemiGuncelle() {
@@ -555,7 +528,6 @@
                     const panel = document.getElementById("yonlendirme");
                     const hedef = data.hedef_led;
 
-                    // Yönlendirme Paneli
                     if(hedef > 0) {
                         panel.className = "status-panel active-panel";
                         panel.innerHTML = `🚀 Lütfen <span style="color:white; text-decoration:underline;">${hedef}. BOŞ PARK YERİNE</span> İlerleyiniz`;
@@ -564,7 +536,6 @@
                         panel.innerHTML = `⛔ OTOPARK TAMAMEN DOLU`;
                     }
 
-                    // Kutuların Renkleri
                     if(data.spotlar) {
                         for(let i = 1; i <= 6; i++) {
                             const spotDiv = document.getElementById(`spot-${i}`);
@@ -578,7 +549,6 @@
                         }
                     }
 
-                    // Hareketli Işıklar
                     document.querySelectorAll('.route-path').forEach(path => {
                         path.classList.remove('active-path');
                     });
@@ -592,7 +562,6 @@
             }
         }
 
-        // Otopark verisini her 2 saniyede bir çek
         otoparkSistemiGuncelle();
         setInterval(otoparkSistemiGuncelle, 2000);
     </script>
